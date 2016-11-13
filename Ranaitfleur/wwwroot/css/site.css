@@ -1,0 +1,56 @@
+﻿body {
+    font-family: Raleway;
+    font-size: 14px;
+    margin: 0;
+}
+
+a {
+    font-size: 20px;
+    text-decoration: none;
+}
+
+    a:link, a:visited {
+        color: grey;
+    }
+
+     a:hover, a:active {
+        color: #e6ae48;
+    }
+
+#main {
+    padding: 4px;
+    margin: 0;
+}
+
+#footer {
+    padding: 8px 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#sidebar {
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    overflow: hidden;
+    left: 0;
+    margin: 0;
+}
+
+#wrapper {
+    margin: 0 0 0 250px;
+}
+
+.logo {
+    position: center;
+    width: 200px;
+    padding: 10px;
+}
+
+.menu {
+    color: grey;
+}
+    .menu li {
+        list-style-type: none;
+    }
