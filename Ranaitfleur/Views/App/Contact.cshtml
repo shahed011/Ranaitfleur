@@ -1,0 +1,27 @@
+﻿@model Ranaitfleur.ViewModels.ContactViewModel
+@{
+    ViewBag.Title = "Contact us";
+}
+
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<h1>Work in progress...Contact us page</h1>
+
+<form method="post">
+    <span asp-validation-summary="ModelOnly"></span>
+    <label asp-for="Name"></label>
+    <input asp-for="Name"/>
+    <span asp-validation-for="Name"></span>
+    <label asp-for="Email"></label>
+    <input type="email" asp-for="Email"/>
+    <span asp-validation-for="Email"></span>
+    <label asp-for="Message"></label>
+    <textarea cols="40" rows="4" asp-for="Message"></textarea>
+    <span asp-validation-for="Message"></span>
+    <div>
+        <input type="submit" value="Contact us"/>
+    </div>
+</form>

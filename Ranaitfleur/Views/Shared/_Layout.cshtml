@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Ranaitfleur - @ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+<body>
+
+    <div id="sidebar">
+        <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo" />
+        <ul class="menu">
+            <li><a asp-controller="App" asp-action="Index">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Social</a></li>
+            <li><a asp-controller="App" asp-action="About">About us</a></li>
+            <li><a asp-controller="App" asp-action="Contact">Contact us</a></li>
+        </ul>
+    </div>
+
+    <div id="wrapper">
+        <div id="main">
+            @RenderBody()
+        </div>
+
+        <div id="footer">
+            &copy; Ranaitfleur Ltd.
+        </div>
+    </div>
+
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    @RenderSection("scripts", false)
+    <script type="text/javascript" src="~/js/site.js"></script>
+</body>
+</html>
