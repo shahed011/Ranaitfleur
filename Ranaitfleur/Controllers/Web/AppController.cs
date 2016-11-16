@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
 
@@ -6,11 +7,13 @@ namespace Ranaitfleur.Controllers.Web
 {
     public class AppController : Controller
     {
-        private IMailService _mailService;
+        private readonly IMailService _mailService;
+        private readonly IConfigurationRoot _config;
 
-        public AppController(IMailService mailService)
+        public AppController(IMailService mailService, IConfigurationRoot config)
         {
             _mailService = mailService;
+            _config = config;
         }
         public IActionResult Index()
         {
@@ -25,7 +28,14 @@ namespace Ranaitfleur.Controllers.Web
         [HttpPost]
         public IActionResult Contact(ContactViewModel viewModel)
         {
-            _mailService.SendMail("shahed011@hotmail.com", viewModel.Email, "From Ranaitfleur", viewModel.Message);
+            if (ModelState.IsValid)
+            {
+                _mailService.SendMail(_config["MailSettings:ToAddress"], viewModel.Email, "From Ranaitfleur",
+                    viewModel.Message);
+
+                ModelState.Clear();
+                ViewBag.UserMessage = "Message sent";
+            }
 
             return View();
         }

@@ -3,14 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <title>Ranaitfleur - @ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/lib/bootswatch/yeti/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
 <body>
 
     <div id="sidebar">
-        <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo" />
-        <ul class="menu">
+        <a asp-controller="App" asp-action="Index">
+            <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo" />
+        </a>
+        <ul class="nav">
             <li><a asp-controller="App" asp-action="Index">Home</a></li>
             <li><a href="#">Shop</a></li>
             <li><a href="#">Social</a></li>
@@ -20,16 +25,35 @@
     </div>
 
     <div id="wrapper">
-        <div id="main">
+        <nav class="nav navbar">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" class="btn btn-sm btn-link">
+                            <i class="fa fa-sign-in"> Log in</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="btn btn-sm btn-link">
+                            <i class="fa fa-shopping-cart">  Cart</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="main" class="container-fluid">
             @RenderBody()
         </div>
 
-        <div id="footer">
-            &copy; Ranaitfleur Ltd.
+        <div class="container-fluid">
+            <div class="nav navbar navbar-fixed-bottom">
+                <h4 class="text-center">&copy; Ranaitfleur Ltd.</h4>
+            </div>
         </div>
     </div>
 
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript", src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     @RenderSection("scripts", false)
     <script type="text/javascript" src="~/js/site.js"></script>
 </body>

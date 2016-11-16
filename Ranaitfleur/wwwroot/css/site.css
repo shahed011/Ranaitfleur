@@ -1,4 +1,4 @@
-﻿body {
+﻿/*body {
     font-family: Raleway;
     font-size: 14px;
     margin: 0;
@@ -11,7 +11,7 @@ label {
 
 input[type=text], input[type=password], textarea {
     width: 150px;
-}
+}*/
 
 a {
     font-size: 20px;
@@ -26,7 +26,7 @@ a {
         color: #e6ae48;
     }
 
-#main {
+/*#main {
     padding: 4px;
     margin: 0;
 }
@@ -36,7 +36,7 @@ a {
     position: fixed;
     bottom: 0;
     width: 100%;
-}
+}*/
 
 #sidebar {
     position: fixed;
@@ -57,9 +57,42 @@ a {
     padding: 10px;
 }
 
-.menu {
+.btn.btn-sm.btn-link:hover {
+    background-color: transparent;
+    color: #e6ae48;
+}
+
+.btn.btn-success:hover {
+    background-color: #43ac6a;
+    color: #e6ae48;
+    border-color: transparent;
+}
+
+/*.menu {
     color: grey;
 }
     .menu li {
         list-style-type: none;
-    }
+    }*/
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+/* Carousel base class */
+.carousel {
+  margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 1;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 550px;
+  background-color:#555;
+}
+
+.carousel img {
+    min-height: 550px;
+    max-height: 100%;
+}

@@ -2,4 +2,40 @@
     ViewBag.Title = "Home";
 }
 
-<h1>Work in progress...</h1>
+<!-- Carousel
+================================================== -->
+<div id="myCarousel" class="carousel slide">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="~/img/Shortdress.jpg" class="img-responsive center-block" alt="Short Dress">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Short dress</h1>
+                    <p>Description of the dress</p>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/img/Dress3.jpg" class="img-responsive center-block">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Dress 3</h1>
+                    <p>Description of dress 3</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
+</div>
+<!-- /.carousel -->
