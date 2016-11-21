@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1 class="text-center">Say Hello</h1>
+        <h2 class="text-center">Say Hello</h2>
 
         <form method="post">
             <div asp-validation-summary="ModelOnly"></div>
@@ -20,17 +20,17 @@
             }
             <div class="form-group">
                 <label asp-for="Name"></label>
-                <input class="form-control" asp-for="Name" />
+                <input class="form-control" asp-for="Name" placeholder="Full Name"/>
                 <span asp-validation-for="Name" class="text-muted"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input class="form-control" type="email" asp-for="Email" />
+                <input class="form-control" type="email" asp-for="Email" placeholder="Email"/>
                 <span asp-validation-for="Email" class="text-muted"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Message"></label>
-                <textarea class="form-control" cols="40" rows="4" asp-for="Message"></textarea>
+                <textarea class="form-control" cols="40" rows="4" asp-for="Message" placeholder="Enter your message..."></textarea>
                 <span asp-validation-for="Message" class="text-muted"></span>
             </div>
             <div class="form-group">

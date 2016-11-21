@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Ranaitfleur.Model.Item>
+@{
+    ViewBag.Title = "Women's Collection";
+}
+
+<div class="container">
+    <h2>Women's Collection</h2>
+    <hr class="divider-title">
+
+    @{ foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="womcoll">
+                    <figure class="img-responsive">
+                        <img src="@Url.Content(item.ImagePath.Split(',').FirstOrDefault())">
+                        <figcaption>
+                            <span class="womcoll-name">@item.Name</span>
+                            <span class="womcoll-price">@string.Format("{0:C}", item.Price)<strong></strong></span>
+                            <span class="womcoll-description">creator name</span>
+                        </figcaption>
+                        <span class="actions">
+                            <button class="btn btn-warning btn-action" type="submit">View </button>
+                        </span>
+                    </figure>
+                </div>
+            </div>
+        }
+    }
+</div>

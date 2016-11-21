@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 
 namespace Ranaitfleur
@@ -30,11 +31,15 @@ namespace Ranaitfleur
         {
             services.AddSingleton(_config);
             services.AddScoped<IMailService, MailService>();
+            services.AddDbContext<RanaitfleurContext>();
+            services.AddScoped<IRanaitfleurRepository, RanaitfleurRepository>();
+            services.AddTransient<RanaitfleurContextSeedData>();
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+            RanaitfleurContextSeedData seeder)
         {
             loggerFactory.AddConsole();
 
@@ -52,6 +57,8 @@ namespace Ranaitfleur
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "App", action = "Index" });
             });
+
+            seeder.EnsureSeedData().Wait();
         }
     }
 }

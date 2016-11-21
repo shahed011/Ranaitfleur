@@ -13,6 +13,14 @@ input[type=text], input[type=password], textarea {
     width: 150px;
 }*/
 
+/*body, select, input[type=text] {
+    background-color: white;
+}*/
+
+body {
+    padding-top: 160px;
+}
+
 a {
     font-size: 20px;
     text-decoration: none;
@@ -25,6 +33,10 @@ a {
      a:hover, a:active {
         color: #e6ae48;
     }
+
+/*ul.nav li.dropdown:hover ul.dropdown-menu {
+    display: block;
+}*/
 
 /*#main {
     padding: 4px;
@@ -51,9 +63,19 @@ a {
     margin: 0 0 0 250px;
 }
 
+.sidebar-nav .dropdown-menu {
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    border: none;
+    background-color: #eeeeee;
+    box-shadow: none;
+}
+
 .logo {
     position: center;
-    width: 200px;
+    width: 150px;
     padding: 10px;
 }
 
@@ -67,6 +89,13 @@ a {
     color: #e6ae48;
     border-color: transparent;
 }
+
+.navbar-fixed-top {
+    padding: 0;
+    margin: 0;
+    background-color: #25211e
+}
+
 
 /*.menu {
     color: grey;
@@ -87,7 +116,7 @@ a {
 }
 
 /* Declare heights because of positioning of img element */
-.carousel .item {
+/*.carousel .item {
   height: 550px;
   background-color:#555;
 }
@@ -95,4 +124,199 @@ a {
 .carousel img {
     min-height: 550px;
     max-height: 100%;
+}*/
+
+#myCarousel .item {
+  height: 450px;
+  background-color:#555;
 }
+
+#myCarousel img {
+    min-height: 450px;
+    max-height: 100%;
+}
+
+#shopCarousel1 .item, #shopCarousel2 .item, #shopCarousel3 .item {
+  height: 350px;
+  background-color:#555;
+}
+
+#shopCarousel1 img, #shopCarousel2 img, #shopCarousel3 img {
+    min-height: 350px;
+    max-height: 100%;
+}
+
+/*--------------------------------------------*/
+
+.divider-title{
+    border:1px solid #dddddd;
+}
+
+.womcoll {
+    margin-bottom: 30px;
+    vertical-align: top;
+    margin-right: 30px;
+    float: left;
+    cursor: pointer;
+    width:100%;
+}
+
+    .womcoll figure {
+        position: relative;
+        display: inline-block;
+        width: 283px;
+        -moz-box-shadow: 0 3px 0 #e2e2e2,transparent 0 0 0;
+        -webkit-box-shadow: 0 3px 0 #e2e2e2,transparent 0 0 0;
+        -webkit-box-shadow: 0 3px 0 #e2e2e2;
+        -moz-box-shadow: 0 3px 0 #e2e2e2;
+        box-shadow: 0 3px 0 #e2e2e2,transparent 0 0 0;
+        box-shadow: 0 3px 0 #e2e2e2;
+    }
+
+    .womcoll figure figcaption {
+    position: relative;
+    z-index: 10;
+    padding: 8px 18px 11px;
+    background: #fff;
+    -ms-transition: all .2s ease-out;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    -o-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+    text-align: left;
+    color: #555;
+    }
+
+    .womcoll figure:hover .actions {
+        opacity: 1;
+    }
+
+
+    .womcoll figure .actions {
+        display: block;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        background-color: rgba(29,29,29,.7);
+        -ms-transition: all .2s ease-out;
+        -webkit-transition: all .2s ease-out;
+        -moz-transition: all .2s ease-out;
+        -o-transition: all .2s ease-out;
+        transition: all .2s ease-out;
+    }
+
+    .womcoll figure img {
+        border: 0;
+        width: 100%;
+    }
+
+    .btn-warning .btn-action {
+        margin: 0 0 auto;
+        position: center;
+    }
+
+figcaption .womcoll-name {
+    display: block;
+    font-size: 16px;
+    line-height: 33px;
+    color: #0093d0;
+    height: 27px;
+    width: 85%;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+figcaption .womcoll-price {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 22px;
+    text-align: right;
+    margin-top: 8px;
+    letter-spacing: -1px;
+    -webkit-font-smoothing: antialiased;
+}
+
+figcaption .womcoll-description {
+    font-size: 13px;
+    color: #545454;
+    display: block;
+}
+
+.project figure .actions button {
+    padding: 13px 20px;
+    font-size: 16px;
+    top: 32%;
+    position: absolute;
+    left: 50%;
+    width: 90%;
+    margin-left: -45%;
+    line-height: 18px;
+    letter-spacing: 1px;
+}
+
+/*----------------------------------------------*/
+
+#carousel-custom {
+    width: 400px !important;
+    height: 400px !important;
+}
+
+/*#carousel-custom .item {
+  position: center;
+  background-color:#555;
+}
+
+#carousel-custom img {
+    min-height: 400px;
+    max-height: 100%;
+}*/
+
+#carousel-custom .carousel-indicators {
+    margin: 10px 0 0;
+    overflow: auto;
+    position: static;
+    text-align: left;
+    white-space: nowrap;
+    width: 100%;
+    overflow:hidden;
+}
+
+#carousel-custom .carousel-indicators li {
+    background-color: transparent;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    display: inline-block;
+    height: 66px !important;
+    margin: 0 !important;
+    width: 66px !important;
+}
+
+#carousel-custom .carousel-indicators li img {
+    display: block;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    max-height: 66px !important;
+    max-width: 66px !important;
+}
+
+#carousel-custom .carousel-indicators li.active img {
+    opacity: 1;
+}
+
+#carousel-custom .carousel-indicators li:hover img {
+    opacity: 0.75;
+}
+
+#carousel-custom .carousel-outer {
+    position: relative;
+}
+
+/*.carousel-indicators li img {
+    height: 66px;
+    width: 52px;
+}*/

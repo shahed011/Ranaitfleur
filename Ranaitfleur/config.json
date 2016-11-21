@@ -1,5 +1,8 @@
 {
   "MailSettings": {
     "ToAddress": "shahed011@hotmail.com"
+  },
+  "ConnectionStrings": {
+    "RanaitfleurContextConnection": "Server=(localdb)\\MSSQLLocalDB;Database=RanaitfleurDb;Trusted_Connection=true;MultipleActiveResultSets=true;" 
   } 
 }
