@@ -18,11 +18,20 @@ input[type=text], input[type=password], textarea {
 }*/
 
 body {
-    padding-top: 160px;
+    padding-top: 180px;
 }
 
-a {
+.navbar-fixed-top a b {
     font-size: 20px;
+}
+
+.navbar-fixed-top a {
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.container-fluid a {
+    font-size: 13px;
     text-decoration: none;
 }
 
@@ -31,7 +40,7 @@ a {
     }
 
      a:hover, a:active {
-        color: #e6ae48;
+         color: #e6ae48;
     }
 
 /*ul.nav li.dropdown:hover ul.dropdown-menu {
@@ -49,6 +58,10 @@ a {
     bottom: 0;
     width: 100%;
 }*/
+
+#smallLogo {
+    margin-top: 20px;
+}
 
 #sidebar {
     position: fixed;
@@ -74,7 +87,6 @@ a {
 }
 
 .logo {
-    position: center;
     width: 150px;
     padding: 10px;
 }
@@ -96,6 +108,25 @@ a {
     background-color: #25211e
 }
 
+.navbar {
+    padding: 0;
+    margin: 0;
+    background-color: #25211e;
+    color: #999;
+}
+
+.footerItem {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.footerItem li {
+    list-style-type: none;
+}
+
+.text-left {
+    margin-left: 20px;
+}
 
 /*.menu {
     color: grey;

@@ -69,7 +69,12 @@ namespace Ranaitfleur.Controllers.Web
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult OurEthics()
+        {
+            return View();
+        }
+
+        public IActionResult TermsConditions()
         {
             return View();
         }

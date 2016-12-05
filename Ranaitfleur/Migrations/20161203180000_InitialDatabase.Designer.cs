@@ -8,7 +8,7 @@ using Ranaitfleur.Model;
 namespace Ranaitfleur.Migrations
 {
     [DbContext(typeof(RanaitfleurContext))]
-    [Migration("20161119014101_InitialDatabase")]
+    [Migration("20161203180000_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
