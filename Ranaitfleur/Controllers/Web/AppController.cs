@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
@@ -12,12 +14,15 @@ namespace Ranaitfleur.Controllers.Web
         private readonly IMailService _mailService;
         private readonly IConfigurationRoot _config;
         private readonly IRanaitfleurRepository _repository;
+        private ILogger<AppController> _logger;
 
-        public AppController(IMailService mailService, IConfigurationRoot config, IRanaitfleurRepository repository)
+        public AppController(IMailService mailService, IConfigurationRoot config, IRanaitfleurRepository repository,
+            ILogger<AppController> logger)
         {
             _mailService = mailService;
             _config = config;
             _repository = repository;
+            _logger = logger;
         }
         public IActionResult Index()
         {
@@ -46,7 +51,16 @@ namespace Ranaitfleur.Controllers.Web
 
         public IActionResult Product(int id)
         {
-            return View(_repository.GetAllDresses().FirstOrDefault(d => d.ItemId == id));
+            try
+            {
+                return View(_repository.GetAllDresses().FirstOrDefault(d => d.ItemId == id));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get dress products: {ex.Message}");
+                return View();
+                //return Redirect("/error"); // Need to make one
+            }
         }
 
         public IActionResult Contact()

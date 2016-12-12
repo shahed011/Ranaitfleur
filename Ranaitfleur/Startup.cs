@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 
@@ -34,7 +35,10 @@ namespace Ranaitfleur
             services.AddDbContext<RanaitfleurContext>();
             services.AddScoped<IRanaitfleurRepository, RanaitfleurRepository>();
             services.AddTransient<RanaitfleurContextSeedData>();
+            services.AddLogging();
             services.AddMvc();
+            //.AddJsonOptions(config =>
+            //        config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,8 +50,12 @@ namespace Ranaitfleur
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                loggerFactory.AddDebug(LogLevel.Information);
             }
-
+            else
+            {
+                loggerFactory.AddDebug(LogLevel.Error);
+            }
             //app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc(config =>
