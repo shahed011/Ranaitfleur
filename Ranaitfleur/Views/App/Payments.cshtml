@@ -1,0 +1,35 @@
+﻿@section scripts {
+    <script src="https://pi-test.sagepay.com/api/v1/js/sagepay.js"></script>
+
+    <script>
+        var tokenReceivedCallback = function (tokenisationResult) {
+            if (tokenisationResult.success) {
+                $("#cardIdentifier").val(tokenisationResult.cardIdentifier);
+            }
+        };
+
+        var sagePay = sagepayCheckout({
+            merchantSessionKey: '@ViewBag.MerchantSessionKey',
+            containerSelector: '#payment-details',
+            onTokenise: tokenReceivedCallback
+        });
+
+        $("#getCardIdBtn").click(function () {
+            sagePay.tokenise()
+        });
+
+    </script>
+
+}
+
+<form id="paymentForm" asp-controller="App" asp-action="Payments">
+    @Html.AntiForgeryToken()
+
+    <div id="payment-details">
+
+    </div>
+    <input id="cardIdentifier" type="hidden" name="cardIdentifier" />
+    <input id="sessionId" type="hidden" name="sessionId" value="@ViewBag.MerchantSessionKey" />
+    <button id="getCardIdBtn" type="button">Get card id</button>
+    <button type="submit">Submit</button>
+</form>
