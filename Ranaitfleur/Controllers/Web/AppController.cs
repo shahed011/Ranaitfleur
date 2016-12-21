@@ -53,7 +53,7 @@ namespace Ranaitfleur.Controllers.Web
         {
             try
             {
-                return View(_repository.GetAllDresses().FirstOrDefault(d => d.ItemId == id));
+                return View(_repository.GetAllDresses().FirstOrDefault(d => d.Id == id));
             }
             catch (Exception ex)
             {

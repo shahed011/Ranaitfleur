@@ -1,33 +1,57 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Ranaitfleur.Model;
 using Ranaitfleur.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ranaitfleur.Controllers.Api
 {
     [Route("api/products")]
     public class ProductController : Controller
     {
+        private ILogger<ProductController> _logger;
         private readonly IRanaitfleurRepository _repository;
 
-        public ProductController(IRanaitfleurRepository repository)
+        public ProductController(IRanaitfleurRepository repository, ILogger<ProductController> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         [HttpGet("")]
         public IActionResult Get()
         {
-            return Ok(_repository.GetAllDresses());
+            try
+            {
+                var results = _repository.GetAllDresses();
+
+                return Ok(Mapper.Map<IEnumerable<ItemViewModel>>(results));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get all dresses: {ex}");
+                return BadRequest("Error occured");
+            }
         }
 
         [HttpPost("")]
-        public IActionResult Post([FromBody]ItemViewModel item)
+        public async Task<IActionResult> Post([FromBody]ItemViewModel item)
         {
             if (ModelState.IsValid)
             {
-                return Created($"api/products/{item.Name}", item);
+                var newItem = Mapper.Map<Item>(item);
+                _repository.AddDress(newItem);
+
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Created($"api/products/{item.Name}", Mapper.Map<ItemViewModel>(newItem));
+                }
             }
-            return BadRequest(ModelState);
+
+            return BadRequest("Failed to save product");
         }
     }
 }

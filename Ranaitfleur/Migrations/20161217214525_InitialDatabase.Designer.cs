@@ -8,7 +8,7 @@ using Ranaitfleur.Model;
 namespace Ranaitfleur.Migrations
 {
     [DbContext(typeof(RanaitfleurContext))]
-    [Migration("20161203180000_InitialDatabase")]
+    [Migration("20161217214525_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,8 +30,6 @@ namespace Ranaitfleur.Migrations
 
                     b.Property<string>("ImagePath");
 
-                    b.Property<int>("ItemId");
-
                     b.Property<int>("ItemType");
 
                     b.Property<string>("Name");
@@ -45,29 +43,6 @@ namespace Ranaitfleur.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("Ranaitfleur.Model.Sizes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("ItemId");
-
-                    b.Property<int>("Size");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("Sizes");
-                });
-
-            modelBuilder.Entity("Ranaitfleur.Model.Sizes", b =>
-                {
-                    b.HasOne("Ranaitfleur.Model.Item")
-                        .WithMany("AvailableSize")
-                        .HasForeignKey("ItemId");
                 });
         }
     }

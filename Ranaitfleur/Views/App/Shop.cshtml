@@ -36,7 +36,7 @@
                     foreach (var item in Model.Where(i => i.ItemType == type1))
                     {
                         <div class="item @(itemCount == 0 ? "active" : "")">
-                            <a asp-controller="App" asp-action="Product" asp-route-id="@item.ItemId">
+                            <a asp-controller="App" asp-action="Product" asp-route-id="@item.Id">
                                 <img src="@Url.Content(item.ImagePath.Split(',').FirstOrDefault())" class="img-responsive center-block" alt="@item.Name">
                                 <div class="container">
                                     <div class="carousel-caption">

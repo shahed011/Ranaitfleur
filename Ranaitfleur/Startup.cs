@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using Ranaitfleur.Model;
 using Ranaitfleur.Services;
+using Ranaitfleur.ViewModels;
 
 namespace Ranaitfleur
 {
@@ -45,6 +47,11 @@ namespace Ranaitfleur
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
             RanaitfleurContextSeedData seeder)
         {
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<ItemViewModel, Item>().ReverseMap();
+            });
+
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment())

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Ranaitfleur.Model
 {
@@ -15,14 +17,19 @@ namespace Ranaitfleur.Model
             _logger = logger;
         }
 
+        public void AddDress(Item newItem)
+        {
+            _context.Add(newItem);
+        }
+
         public IEnumerable<Item> GetAllDresses()
         {
             return _context.Items.ToList();
         }
 
-        public IEnumerable<Sizes> GetAllSizes()
+        public async Task<bool> SaveChangesAsync()
         {
-            return _context.Sizes.ToList();
+            return (await _context.SaveChangesAsync()) > 0;
         }
     }
 }

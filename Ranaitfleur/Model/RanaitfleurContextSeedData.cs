@@ -15,21 +15,13 @@ namespace Ranaitfleur.Model
 
         public async Task EnsureSeedData()
         {
-            if (!_context.Sizes.Any())
-            {
-                _context.Sizes.AddRange(new Sizes {Size = 4}, new Sizes {Size = 6}, new Sizes {Size = 8},
-                    new Sizes {Size = 10}, new Sizes {Size = 12});
-            }
-
             if (!_context.Items.Any())
             {
                 var item = new Item
                 {
-                    ItemId = 1,
                     ItemType = 1,
                     Name = "Discotheque Dreams",
                     NoOfItemInStock = 5,
-                    AvailableSize = new List<Sizes>(_context.Sizes),
                     Price = 2500,
                     Weight = 0.2f,
                     Dimentions = "30 x 20 x 20",
@@ -41,11 +33,9 @@ namespace Ranaitfleur.Model
 
                 item = new Item
                 {
-                    ItemId = 2,
                     ItemType = 1,
                     Name = "Duchess Royal",
                     NoOfItemInStock = 5,
-                    AvailableSize = new List<Sizes>(_context.Sizes),
                     Price = 2500,
                     Weight = 0.95f,
                     Dimentions = "30 x 20 x 20",
@@ -57,11 +47,9 @@ namespace Ranaitfleur.Model
 
                 item = new Item
                 {
-                    ItemId = 3,
                     ItemType = 1,
                     Name = "Gold Chain Gown",
                     NoOfItemInStock = 5,
-                    AvailableSize = new List<Sizes>(_context.Sizes),
                     Price = 2500,
                     Weight = 0.95f,
                     Dimentions = "30 x 20 x 20",

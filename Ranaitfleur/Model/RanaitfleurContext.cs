@@ -7,7 +7,6 @@ namespace Ranaitfleur.Model
     {
         private readonly IConfigurationRoot _config;
         public DbSet<Item> Items { get; set; }
-        public DbSet<Sizes> Sizes { get; set; }
 
         public RanaitfleurContext(IConfigurationRoot config, DbContextOptions options) : base(options)
         {
