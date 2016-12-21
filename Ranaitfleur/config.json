@@ -3,6 +3,6 @@
     "ToAddress": "shahed011@hotmail.com"
   },
   "ConnectionStrings": {
-    "RanaitfleurContextConnection": "Server=(localdb)\\MSSQLLocalDB;Database=RanaitfleurDb;Trusted_Connection=true;MultipleActiveResultSets=true;" 
+    "RanaitfleurContextConnection": "Data Source=DESKTOP-PLGVP20;Database=RanaitfleurDb;Trusted_Connection=true;Integrated Security=true;"
   } 
 }

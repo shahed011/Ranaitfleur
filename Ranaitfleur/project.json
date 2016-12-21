@@ -19,7 +19,9 @@
     "Microsoft.EntityFrameworkCore.Design": "1.1.0",
     "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
     "Microsoft.EntityFrameworkCore.Tools.DotNet": "1.0.0-preview3-final",
-    "Microsoft.Extensions.Logging.Debug": "1.1.0"
+    "Microsoft.Extensions.Logging.Debug": "1.1.0",
+    "Microsoft.AspNet.WebApi.Client": "5.2.3",
+    "System.Runtime.Serialization.Xml": "4.3.0"
   },
 
   "tools": {
