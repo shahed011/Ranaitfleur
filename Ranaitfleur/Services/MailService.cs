@@ -1,12 +1,19 @@
 ﻿using System.Diagnostics;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Extensions.Logging;
 using MimeKit;
 
 namespace Ranaitfleur.Services
 {
     public class MailService : IMailService
     {
+        private ILogger<MailService> _logger;
+
+        public MailService(ILogger<MailService> logger)
+        {
+            _logger = logger;
+        }
         public void SendMailDummy(string to, string from, string subject, string body)
         {
             Debug.WriteLine($"Sending Mail: To:{to} From:{from} Subject:{subject}");

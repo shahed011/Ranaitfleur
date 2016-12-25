@@ -7,14 +7,14 @@ namespace Ranaitfleur.Infrastructure.HttpSender
 {
     public class HttpRequestSender : IHttpRequestSender
     {
-        HttpClient client;
+        private readonly HttpClient _client;
 
         public HttpRequestSender(AuthenticationHeaderValue authHeader, string contentType)
         {
-            client = new HttpClient();
+            _client = new HttpClient();
 
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Authorization = authHeader;
+            _client.DefaultRequestHeaders.Clear();
+            _client.DefaultRequestHeaders.Authorization = authHeader;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Ranaitfleur.Infrastructure.HttpSender
         {
             var uri = new Uri(url);
 
-            var response = await client.PostAsJsonAsync(uri, postData);
+            var response = await _client.PostAsJsonAsync(uri, postData);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsAsync<TResponse>();

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Ranaitfleur.Model
 {
-    public class RanaitfleurContext : DbContext
+    public class RanaitfleurContext : IdentityDbContext<RanaitfleurUser>
     {
         private readonly IConfigurationRoot _config;
         public DbSet<Item> Items { get; set; }

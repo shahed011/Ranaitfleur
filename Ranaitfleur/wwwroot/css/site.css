@@ -18,7 +18,7 @@ input[type=text], input[type=password], textarea {
 }*/
 
 body {
-    padding-top: 180px;
+    padding-top: 220px;
 }
 
 .navbar-fixed-top a b {
@@ -126,6 +126,10 @@ body {
 
 .text-left {
     margin-left: 20px;
+}
+
+.verticalLine {
+    border-left: thick solid goldenrod;
 }
 
 /*.menu {

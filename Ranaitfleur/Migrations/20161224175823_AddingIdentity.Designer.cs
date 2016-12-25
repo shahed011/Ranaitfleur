@@ -8,9 +8,10 @@ using Ranaitfleur.Model;
 namespace Ranaitfleur.Migrations
 {
     [DbContext(typeof(RanaitfleurContext))]
-    partial class RanaitfleurContextModelSnapshot : ModelSnapshot
+    [Migration("20161224175823_AddingIdentity")]
+    partial class AddingIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")

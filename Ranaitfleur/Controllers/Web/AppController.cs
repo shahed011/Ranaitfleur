@@ -8,6 +8,7 @@ using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
 using Ranaitfleur.Infrastructure.SagePayApi;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ranaitfleur.Controllers.Web
 {
@@ -16,7 +17,7 @@ namespace Ranaitfleur.Controllers.Web
         private readonly IMailService _mailService;
         private readonly IConfigurationRoot _config;
         private readonly IRanaitfleurRepository _repository;
-        private ILogger<AppController> _logger;
+        private readonly ILogger<AppController> _logger;
 
         public AppController(IMailService mailService, IConfigurationRoot config, IRanaitfleurRepository repository,
             ILogger<AppController> logger)
@@ -63,6 +64,12 @@ namespace Ranaitfleur.Controllers.Web
                 return View();
                 //return Redirect("/error"); // Need to make one
             }
+        }
+
+        [Authorize]
+        public IActionResult MyAccount()
+        {
+            return View();
         }
 
         public IActionResult Contact()

@@ -1,0 +1,40 @@
+﻿@model Ranaitfleur.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-2">
+        <h3 class="text-center">Login</h3>
+        <form method="post" novalidate>
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control"/>
+                <span asp-validation-for="Username" class="text-muted"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input type="password" asp-for="Password" class="form-control"/>
+                <span asp-validation-for="Password" class="text-muted"></span>
+            </div>
+            <div class="form-group">
+                <a asp-controller="App" asp-action="Index" class="btn btn-default">Cancel</a>
+                <input type="submit" value="Login" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-1" style="border-left:1px solid grey; height:250px"></div>
+
+    <div class="col-md-4">
+        <h3 class="text-left">Don't have an account?</h3>
+        <br/>
+        <a asp-controller="Auth" asp-action="Register" class="btn btn-default text-left">Create account</a>
+    </div>
+</div>

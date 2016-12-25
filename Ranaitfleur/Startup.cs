@@ -1,10 +1,13 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
 using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
@@ -21,7 +24,7 @@ namespace Ranaitfleur
             _env = env;
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(_env.ContentRootPath)
+                .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("config.json")
                 .AddEnvironmentVariables();
 
@@ -38,9 +41,42 @@ namespace Ranaitfleur
             services.AddScoped<IRanaitfleurRepository, RanaitfleurRepository>();
             services.AddTransient<RanaitfleurContextSeedData>();
             services.AddLogging();
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                if (_env.IsProduction())
+                {
+                    config.Filters.Add(new RequireHttpsAttribute());
+                }
+            });
             //.AddJsonOptions(config =>
             //        config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+            services.AddIdentity<RanaitfleurUser, IdentityRole>(config =>
+            {
+                config.User.RequireUniqueEmail = true;
+                config.Password.RequiredLength = 8;
+                config.Password.RequireDigit = true;
+                config.Password.RequireLowercase = true;
+                config.Password.RequireNonAlphanumeric = true;
+                config.Password.RequireUppercase = true;
+                config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+                config.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = async ctx =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api") &&
+                            ctx.Response.StatusCode == 200)
+                        {
+                            ctx.Response.StatusCode = 401;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+                        await Task.Yield();
+                    }
+                };
+            })
+            .AddEntityFrameworkStores<RanaitfleurContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +101,7 @@ namespace Ranaitfleur
             }
             //app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseIdentity();
             app.UseMvc(config =>
             {
                 config.MapRoute(

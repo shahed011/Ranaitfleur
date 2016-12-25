@@ -6,13 +6,15 @@ using Ranaitfleur.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ranaitfleur.Controllers.Api
 {
+    [Authorize]
     [Route("api/products")]
     public class ProductController : Controller
     {
-        private ILogger<ProductController> _logger;
+        private readonly ILogger<ProductController> _logger;
         private readonly IRanaitfleurRepository _repository;
 
         public ProductController(IRanaitfleurRepository repository, ILogger<ProductController> logger)

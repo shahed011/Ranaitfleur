@@ -14,31 +14,60 @@
 <body>
 <div class="container-fluid">
     <div class="navbar-fixed-top">
-            <div class="text-center">
-                <a asp-controller="App" asp-action="Index">
-                    <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo" />
-                    <b>Ranaitfleur</b>
-                </a>
-            </div>
-            <div>
-                <ul class="list-inline text-center">
-                    <li><a asp-controller="App" asp-action="Index">Home</a></li>
-                    <li><a asp-controller="App" asp-action="ShopWomensCollection">Women's Collection</a></li>
-                    <li><a asp-controller="App" asp-action="ShopRfSlipDress">RF Slip Dress</a></li>
-                    <li><a asp-controller="App" asp-action="ShopMensCollection">Men's Collection</a></li>
-                    <li><a asp-controller="App" asp-action="Payments">Payments</a></li>
-                    @*<li class="dropdown">
-                        <a asp-controller="App" asp-action="Shop" class="dropdown-toggle" data-toggle="dropdown">Shop <b class="caret"></b></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a asp-controller="App" asp-action="Shop">Shop Home</a></li>
-                            <li><a asp-controller="App" asp-action="ShopWomensCollection">Women's Collection</a></li>
-                            <li><a asp-controller="App" asp-action="ShopRfSlipDress">RF Slip Dress</a></li>
-                            <li><a asp-controller="App" asp-action="ShopMensCollection">Men's Collection</a></li>
-                        </ul>
-                    </li*@>
-                    @*<li><a href="#">Social</a></li>*@
-                </ul>
-            </div>
+        
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a asp-controller="App" asp-action="MyAccount" class="btn btn-sm btn-link">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span> @User.Identity.Name</span>
+                        }
+                        else
+                        {
+                            <i class="fa fa-sign-in"> Log in / Register</i>
+                        }
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="btn btn-sm btn-link">
+                        <span class="fa fa-shopping-cart"> Cart</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="text-center">
+            <a asp-controller="App" asp-action="Index">
+                <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo"/>
+                <b>Ranaitfleur</b>
+            </a>
+        </div>
+
+        <div>
+            <ul class="list-inline text-center">
+                <li><a asp-controller="App" asp-action="Index">Home</a></li>
+                <li><a asp-controller="App" asp-action="ShopWomensCollection">Women's Collection</a></li>
+                <li><a asp-controller="App" asp-action="ShopRfSlipDress">RF Slip Dress</a></li>
+                <li><a asp-controller="App" asp-action="ShopMensCollection">Men's Collection</a></li>
+                <li><a asp-controller="App" asp-action="Payments">Payments</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
+                }
+                @*<li class="dropdown">
+                    <a asp-controller="App" asp-action="Shop" class="dropdown-toggle" data-toggle="dropdown">Shop <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a asp-controller="App" asp-action="Shop">Shop Home</a></li>
+                        <li><a asp-controller="App" asp-action="ShopWomensCollection">Women's Collection</a></li>
+                        <li><a asp-controller="App" asp-action="ShopRfSlipDress">RF Slip Dress</a></li>
+                        <li><a asp-controller="App" asp-action="ShopMensCollection">Men's Collection</a></li>
+                    </ul>
+                </li*@>
+                @*<li><a href="#">Social</a></li>*@
+            </ul>
+        </div>
     </div>
     <div id="main" class="container-fluid">
         @RenderBody()

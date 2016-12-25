@@ -1,20 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Ranaitfleur.Model
 {
     public class RanaitfleurContextSeedData
     {
-        private RanaitfleurContext _context;
+        private readonly RanaitfleurContext _context;
+        private readonly UserManager<RanaitfleurUser> _userManager;
 
-        public RanaitfleurContextSeedData(RanaitfleurContext context)
+        public RanaitfleurContextSeedData(RanaitfleurContext context, UserManager<RanaitfleurUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task EnsureSeedData()
         {
+            if (await _userManager.FindByEmailAsync("shahed@ranaitfleur.com") == null)
+            {
+                var user = new RanaitfleurUser
+                {
+                    UserName = "Shahed",
+                    Email = "shahed@ranaitfleur.com",
+                    LockoutEnabled = false
+                };
+
+                await _userManager.CreateAsync(user, "#Compaq#11#");
+            }
+
             if (!_context.Items.Any())
             {
                 var item = new Item
