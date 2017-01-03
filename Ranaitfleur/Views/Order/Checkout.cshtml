@@ -1,0 +1,76 @@
+﻿@model Ranaitfleur.Model.Order
+
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<h2>Check out now</h2>
+<p>Please enter your details, and we'll ship your goods right away!</p>
+
+<form asp-action="Checkout" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <h3>Ship to</h3>
+    <div class="form-group">
+        <label>First Name</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-muted"></span>
+    </div>
+    <div class="form-group">
+        <label>Last Name</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-muted"></span>
+    </div>
+
+    <h3>Address</h3>
+    <div class="form-group">
+        <label>Line 1</label>
+        <input asp-for="Line1" class="form-control" />
+        <span asp-validation-for="Line1" class="text-muted"></span>
+    </div>
+    <div class="form-group">
+        <label>Line 2</label>
+        <input asp-for="Line2" class="form-control" />
+        <span asp-validation-for="Line2" class="text-muted"></span>
+    </div>
+    <div class="form-group">
+        <label>Line 3</label>
+        <input asp-for="Line3" class="form-control" />
+        <span asp-validation-for="Line3" class="text-muted"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="City"></label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-muted"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Postcode"></label>
+        <input asp-for="Postcode" class="form-control" />
+        <span asp-validation-for="Postcode" class="text-muted"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Country"></label>
+        <input asp-for="Country" class="form-control" />
+        <span asp-validation-for="Country" class="text-muted"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-muted"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-muted"></span>
+    </div>
+
+    <h3>Options</h3>
+    <div class="checkbox">
+        <label>
+            <input asp-for="GiftWrap" /> Gift wrap these items
+        </label>
+    </div>
+    <div class="text-center">
+        <input class="btn btn-success" type="submit" value="Complete Order" />
+    </div>
+</form>

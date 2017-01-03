@@ -62,8 +62,19 @@
                             <option>12</option>
                         </select>
                     </b>
+                    <form id="@Model.Id" asp-action="AddToCart"
+                            asp-controller="Cart" method="post">
+                        <input type="hidden" name="productId" value="@Model.Id"/>
+                        <input type="hidden" name="returnUrl"
+                                value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+                        <span>
+                            <button type="submit" class="btn btn-success btn-sm pull-right">
+                                Add To Cart
+                            </button>
+                        </span>
+                    </form>
                 </div>
-                <div class="action">
+                @*<div>
                     <p>
                     <div class="quantity buttons_added">
                         <input class="minus" type="button" value="-"/>
@@ -72,7 +83,7 @@
                         <button class="add-to-cart btn btn-default" type="button">add to cart</button>
                     </div>
                     </p>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

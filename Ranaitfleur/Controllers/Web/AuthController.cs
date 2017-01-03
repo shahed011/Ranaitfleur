@@ -9,15 +9,19 @@ using Ranaitfleur.ViewModels;
 
 namespace Ranaitfleur.Controllers.Web
 {
+    [RequireHttps]
     public class AuthController : Controller
     {
         private readonly SignInManager<RanaitfleurUser> _signInManager;
         private readonly UserManager<RanaitfleurUser> _userManager;
+        private readonly IRanaitfleurRepository _repository;
 
-        public AuthController(SignInManager<RanaitfleurUser> signInManager, UserManager<RanaitfleurUser> userManager)
+        public AuthController(SignInManager<RanaitfleurUser> signInManager, UserManager<RanaitfleurUser> userManager,
+            IRanaitfleurRepository repository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _repository = repository;
         }
 
         public IActionResult Login()
@@ -43,15 +47,14 @@ namespace Ranaitfleur.Controllers.Web
                         ? RedirectToAction("MyAccount", "App")
                         : (IActionResult)Redirect(returnUrl);
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Username or password incorrect");
-                }
+
+                ModelState.AddModelError("", "Username or password incorrect");
             }
 
             return View();
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             if (User.Identity.IsAuthenticated)
@@ -115,6 +118,20 @@ namespace Ranaitfleur.Controllers.Web
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Subscribe(Subscribers newSubscriber)
+        {
+            if (_repository.GetAllSubscribers().Select(s => s.Email).Contains(newSubscriber.Email))
+            {
+                return View((object) "You are already subscribed");
+            }
+
+            _repository.AddSubscriber(newSubscriber);
+            await _repository.SaveChangesAsync();
+            return View((object)"Thank you for subscribing to Ranaitfleur");
         }
     }
 }

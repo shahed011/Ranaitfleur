@@ -122,6 +122,26 @@ namespace Ranaitfleur.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Ranaitfleur.Model.CartLine", b =>
+                {
+                    b.Property<int>("CartLineId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ItemId");
+
+                    b.Property<int?>("OrderId");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("CartLineId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("CartLine");
+                });
+
             modelBuilder.Entity("Ranaitfleur.Model.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -148,6 +168,53 @@ namespace Ranaitfleur.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("Ranaitfleur.Model.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City")
+                        .IsRequired();
+
+                    b.Property<string>("Country")
+                        .IsRequired();
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(160);
+
+                    b.Property<bool>("GiftWrap");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(160);
+
+                    b.Property<string>("Line1")
+                        .IsRequired();
+
+                    b.Property<string>("Line2");
+
+                    b.Property<string>("Line3");
+
+                    b.Property<string>("PaymentTransactionId");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(24);
+
+                    b.Property<string>("Postcode");
+
+                    b.Property<int>("Status");
+
+                    b.Property<decimal>("Total");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Ranaitfleur.Model.RanaitfleurUser", b =>
@@ -200,6 +267,19 @@ namespace Ranaitfleur.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Ranaitfleur.Model.Subscribers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subscriberses");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
@@ -235,6 +315,17 @@ namespace Ranaitfleur.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Ranaitfleur.Model.CartLine", b =>
+                {
+                    b.HasOne("Ranaitfleur.Model.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId");
+
+                    b.HasOne("Ranaitfleur.Model.Order")
+                        .WithMany("Lines")
+                        .HasForeignKey("OrderId");
                 });
         }
     }

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Ranaitfleur.Model.Item>
+@{
+    ViewBag.Title = "Shop";
+}
+
+<div>
+    @for (var type = 1; type <= 3; type++)
+    {
+        if (type == 1)
+        {
+            <h2>Women's Collection</h2>
+        }
+        else if (type == 2)
+        {
+            <h2>RF Slip Dress</h2>
+        }
+        else
+        {
+            <h2>Men's Collection</h2>
+        }
+
+        <div id="@("shopCarousel"+type)" class="carousel slide">
+            <ol class="carousel-indicators">
+                @{
+                    for (var count = 0; count < Model.Count(i => i.ItemType == type); count++)
+                    {
+                        <li data-target="@("#shopCarousel"+type)" data-slide-to=@count @(count == 0 ? "active" : "")></li>
+                    }
+                }
+            </ol>
+
+            <div class="carousel-inner">
+                @{
+                    var itemCount = 0;
+                    var type1 = type;
+                    foreach (var item in Model.Where(i => i.ItemType == type1))
+                    {
+                        <div class="item @(itemCount == 0 ? "active" : "")">
+                            <a asp-controller="App" asp-action="Product" asp-route-id="@item.Id">
+                                <img src="@Url.Content(item.ImagePath.Split(',').FirstOrDefault())" class="img-responsive center-block" alt="@item.Name">
+                                <div class="container">
+                                    <div class="carousel-caption">
+                                        <h1>@item.Name</h1>
+                                        <p>Description of item</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        itemCount++;
+                    }
+                }
+            </div>
+
+            <a class="left carousel-control" href="@("#shopCarousel"+type)" data-slide="prev">
+                <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="@("#shopCarousel"+type)" data-slide="next">
+                <span class="icon-next"></span>
+            </a>
+        </div>
+    }
+</div>

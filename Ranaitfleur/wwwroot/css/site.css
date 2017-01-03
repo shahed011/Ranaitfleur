@@ -17,8 +17,12 @@ input[type=text], input[type=password], textarea {
     background-color: white;
 }*/
 
+::selection {
+  background: #e6ae48; /* WebKit/Blink Browsers */
+}
+
 body {
-    padding-top: 220px;
+    padding-top: 160px;
 }
 
 .navbar-fixed-top a b {
@@ -59,6 +63,22 @@ body {
     width: 100%;
 }*/
 
+.mainBody {
+    padding-bottom: 80pt;
+}
+
+#topComponents {
+    text-align: center;
+}
+
+.clearPrevious {
+    clear: both;
+}
+
+.component {
+    display: inline-block
+}
+
 #smallLogo {
     margin-top: 20px;
 }
@@ -87,7 +107,7 @@ body {
 }
 
 .logo {
-    width: 150px;
+    width: 160px;
     padding: 10px;
 }
 
@@ -115,9 +135,13 @@ body {
     color: #999;
 }
 
+.footerBody {
+    padding-bottom: 20pt
+}
+
 .footerItem {
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 50px
 }
 
 .footerItem li {
@@ -296,8 +320,8 @@ figcaption .womcoll-description {
 /*----------------------------------------------*/
 
 #carousel-custom {
-    width: 400px !important;
-    height: 400px !important;
+    width: 300px !important;
+    height: 300px !important;
 }
 
 /*#carousel-custom .item {
@@ -355,3 +379,41 @@ figcaption .womcoll-description {
     height: 66px;
     width: 52px;
 }*/
+
+.c0 {
+    orphans: 2;
+    widows: 2;
+}
+
+.c1 {
+    font-weight: 700;
+}
+
+.c2 {
+    height: 11pt;
+}
+
+.c3 {
+    background-color: #ffffff;
+    padding: 20pt 72pt 72pt 72pt;
+}
+
+.c4 {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.c5 {
+    color: #1155cc;
+    text-decoration: underline;
+}
+
+.c6 {
+        font-size: 12pt;
+}
+
+.cart-row {
+  margin: 10px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #e1e1e1;
+}

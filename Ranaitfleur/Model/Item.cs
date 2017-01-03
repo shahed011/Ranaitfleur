@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Ranaitfleur.Model
+﻿namespace Ranaitfleur.Model
 {
     public class Item
     {

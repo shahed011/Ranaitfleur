@@ -8,6 +8,8 @@ namespace Ranaitfleur.Model
     {
         private readonly IConfigurationRoot _config;
         public DbSet<Item> Items { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Subscribers> Subscriberses { get; set; }
 
         public RanaitfleurContext(IConfigurationRoot config, DbContextOptions options) : base(options)
         {

@@ -72,6 +72,104 @@ namespace Ranaitfleur.Model
                     Description2 = "Model Wears UK size 8 as a loose fit, slightly loose fitted on the waist. Recommend taking one size smaller depending on desired fit."
                 };
                 _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Discotheque Dress",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/DemiCouture/DiscothequeDress/1.jpg,~/img/DemiCouture/DiscothequeDress/2.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Princess Pearl Jumpsuit",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/DemiCouture/PrincessPearlJumpsuit/1.jpg,~/img/DemiCouture/PrincessPearlJumpsuit/2.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Sapphire Lace Pencil Dress",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/DemiCouture/SapphireLacePencilDress/1.jpg,~/img/DemiCouture/SapphireLacePencilDress/2.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 3,
+                    Name = "Black Crushed Velvet Slip With Pearl Bead Straps",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/1.jpg,~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/2.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 3,
+                    Name = "Blue Silk Slip Dress",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/ReadyToWear/BlueSilkSlipDress/1.jpg,~/img/ReadyToWear/BlueSilkSlipDress/2.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 3,
+                    Name = "Gold Chain Backless Gown",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/ReadyToWear/GoldChainBacklessGown/1.jpg,~/img/ReadyToWear/GoldChainBacklessGown/2.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 3,
+                    Name = "Thick Strap Backless Gown",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/ReadyToWear/ThickStrapBacklessGown/1.jpg,~/img/ReadyToWear/ThickStrapBacklessGown/2.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
             }
 
             await _context.SaveChangesAsync();

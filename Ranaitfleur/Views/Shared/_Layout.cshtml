@@ -12,105 +12,131 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container-fluid footerBody">
     <div class="navbar-fixed-top">
-        
-        <div class="container-fluid">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a asp-controller="App" asp-action="MyAccount" class="btn btn-sm btn-link">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <span> @User.Identity.Name</span>
-                        }
-                        else
-                        {
-                            <i class="fa fa-sign-in"> Log in / Register</i>
-                        }
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="btn btn-sm btn-link">
-                        <span class="fa fa-shopping-cart"> Cart</span>
-                    </a>
-                </li>
-            </ul>
-
+        <div class="pull-right" id="topComponents">
+            <div class="component">
+                <a asp-controller="App" asp-action="MyAccount" class="btn btn-sm btn-link">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span> @User.Identity.Name</span>
+                    }
+                    else
+                    {
+                        <i class="fa fa-sign-in"> Log in / Register</i>
+                    }
+                </a>
+            </div>
+            <div class="component">
+                @await Component.InvokeAsync("CartSummary")
+            </div>
         </div>
 
-        <div class="text-center">
+        @*<div class="text-center clearPrevious">
             <a asp-controller="App" asp-action="Index">
                 <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo"/>
                 <b>Ranaitfleur</b>
             </a>
-        </div>
+        </div>*@
 
         <div>
-            <ul class="list-inline text-center">
-                <li><a asp-controller="App" asp-action="Index">Home</a></li>
-                <li><a asp-controller="App" asp-action="ShopWomensCollection">Women's Collection</a></li>
-                <li><a asp-controller="App" asp-action="ShopRfSlipDress">RF Slip Dress</a></li>
-                <li><a asp-controller="App" asp-action="ShopMensCollection">Men's Collection</a></li>
-                <li><a asp-controller="App" asp-action="Payments">Payments</a></li>
+            <ul class="list-inline pull-left">
+                <li>
+                    <a asp-controller="App" asp-action="Index">
+                        <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo" />
+                        <b>Ranaitfleur</b>
+                    </a>
+                </li>
+                @*<li><a asp-controller="App" asp-action="Index"><b>Home</b></a></li>*@
+                <li><a asp-controller="App" asp-action="Shop" asp-route-id="1"><b>Couture</b></a></li>
+                <li><a asp-controller="App" asp-action="Shop" asp-route-id="2"><b>Demi couture</b></a></li>
+                <li><a asp-controller="App" asp-action="Shop" asp-route-id="3"><b>Ready to wear</b></a></li>
+                @*<li><a asp-controller="App" asp-action="Payments"><b>Payments</b></a></li>*@
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
+                    <li><a asp-controller="Auth" asp-action="Logout"><b>Logout</b></a></li>
                 }
-                @*<li class="dropdown">
-                    <a asp-controller="App" asp-action="Shop" class="dropdown-toggle" data-toggle="dropdown">Shop <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a asp-controller="App" asp-action="Shop">Shop Home</a></li>
-                        <li><a asp-controller="App" asp-action="ShopWomensCollection">Women's Collection</a></li>
-                        <li><a asp-controller="App" asp-action="ShopRfSlipDress">RF Slip Dress</a></li>
-                        <li><a asp-controller="App" asp-action="ShopMensCollection">Men's Collection</a></li>
-                    </ul>
-                </li*@>
-                @*<li><a href="#">Social</a></li>*@
             </ul>
         </div>
     </div>
-    <div id="main" class="container-fluid">
+    <div id="main" class="container-fluid mainBody">
         @RenderBody()
     </div>
     <div class="container-fluid">
         <div class="navbar">
-            <div class="text-center">
-                <img src="~/img/SmallLogo.png" alt="LOGO" id="smallLogo"/>
-            </div>
-            <div class="text-center">All our creations are tailor made in London.</div>
-            <div class="text-center">All our textiles are sourced within Britain.</div>
             <div class="row">
-                <div class="col-md-2 col-md-offset-2 footerItem">
-                    <b>Find more about us</b>
-                    <div>
-                        <a asp-controller="App" asp-action="Contact">Contact us</a>
+                <div class="col-md-7">
+                    <div class="text-center">
+                        <img src="~/img/SmallLogo.png" alt="LOGO" id="smallLogo" />
+                    </div>
+                    <div class="text-center">All our creations are tailor made in London.</div>
+                    <div class="text-center">All our textiles are sourced within Britain.</div>
+                    <div class="row footerItem">
+                        <div class="col-md-4">
+                            <b>Find more about us</b>
+                            <div>
+                                <a asp-controller="App" asp-action="Contact">Contact us</a>
+                            </div>
+                            <div>
+                                <a href="#">Email Unsubscribe</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <b>About us</b>
+                            <div>
+                                <a asp-controller="App" asp-action="OurEthics">Our Ethics</a>
+                            </div>
+                            <div>
+                                <a asp-controller="App" asp-action="TermsConditions">Terms & Conditions</a>
+                            </div>
+                            <div>
+                                <a asp-controller="App" asp-action="PrivacyPolicy">Privacy and Cookie Policy</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <b>Find us on</b>
+                            <div style="margin-left: 25px">
+                                <div>
+                                    <a href="https://www.facebook.com/ruanefleur/" target="_blank">
+                                        <span class="fa fa-facebook"></span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="https://twitter.com/rfleurtwit" target="_blank">
+                                        <span class="fa fa-twitter"></span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="https://vine.co/u/1337063062477447168" target="_blank">
+                                        <span class="fa fa-vine"></span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="https://foursquare.com/user/175788810" target="_blank">
+                                        <span class="fa fa-foursquare"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-2 footerItem">
-                    <b>About us</b>
-                    <div><a asp-controller="App" asp-action="OurEthics">Our Ethics</a></div>
-                    <div><a asp-controller="App" asp-action="TermsConditions">Terms & Conditions</a></div>
-                    <div>3</div>
-                </div>
-                <div class="col-md-2 footerItem">
-                    <b>Find us on</b>
-                    <ul>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                    </ul>
-                </div>
-                <div class="col-md-2 footerItem">
-                    <section></section>
-                    <b>Find us on</b>
-                    <ul>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                    </ul>
+                
+                <div class="col-md-1" style="border-left:1px solid grey; height: 250px; margin-top: 10px;"></div>
+
+                <div class="col-md-4" style="margin-left: -80px; margin-top: 20px;">
+                    <div class="text-center">
+                        <h5><b>Subscribe for Ranaitfleur updates</b></h5>
+                    </div>
+                    <p style="padding-bottom: 20px"></p>
+                    <div>
+                        <span>Enter your email address to subscribe and receive our newsletter</span>
+                    </div>
+                    <p></p>
+                    @await Component.InvokeAsync("Subscribe")
                 </div>
             </div>
-            <b class="text-left">&copy; Ranaitfleur Ltd.</b>
+            <b class="text-left">&copy; 2017 Ranaitfleur Ltd. - All rights reserved</b>
+            <p></p>
         </div>
     </div>
 </div>
@@ -169,5 +195,24 @@
     <script type="text/javascript", src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     @RenderSection("scripts", false)
     <script type="text/javascript" src="~/js/site.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+    <script>
+        window.addEventListener("load", function(){
+        window.cookieconsent.initialise({
+          "palette": {
+            "popup": {
+              "background": "#000"
+            },
+            "button": {
+              "background": "#f1d600"
+            }
+          },
+          "content": {
+            "href": "App/PrivacyPolicy"
+          }
+        })});
+    </script>
 </body>
 </html>

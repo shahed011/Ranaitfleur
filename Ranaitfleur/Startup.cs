@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -40,25 +42,35 @@ namespace Ranaitfleur
             services.AddDbContext<RanaitfleurContext>();
             services.AddScoped<IRanaitfleurRepository, RanaitfleurRepository>();
             services.AddTransient<RanaitfleurContextSeedData>();
+            services.AddScoped(SessionCart.GetCart);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddLogging();
             services.AddMvc(config =>
             {
-                if (_env.IsProduction())
-                {
-                    config.Filters.Add(new RequireHttpsAttribute());
-                }
+                config.Filters.Add(new RequireHttpsAttribute());
             });
             //.AddJsonOptions(config =>
             //        config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
             services.AddIdentity<RanaitfleurUser, IdentityRole>(config =>
             {
+                // Sign in settings
+                //config.SignIn.RequireConfirmedEmail = true;
+
+                // User settings
                 config.User.RequireUniqueEmail = true;
+
+                // Lockout settings
+                config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                config.Lockout.MaxFailedAccessAttempts = 5;
                 config.Password.RequiredLength = 8;
                 config.Password.RequireDigit = true;
                 config.Password.RequireLowercase = true;
                 config.Password.RequireNonAlphanumeric = true;
                 config.Password.RequireUppercase = true;
+
+                // Cookie settings
                 config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+                config.Cookies.ApplicationCookie.LogoutPath = "/App/Index";
                 config.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
                 {
                     OnRedirectToLogin = async ctx =>
@@ -76,7 +88,11 @@ namespace Ranaitfleur
                     }
                 };
             })
-            .AddEntityFrameworkStores<RanaitfleurContext>();
+            .AddEntityFrameworkStores<RanaitfleurContext>()
+            .AddDefaultTokenProviders();
+
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -102,6 +118,7 @@ namespace Ranaitfleur
             //app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseIdentity();
+            app.UseSession();
             app.UseMvc(config =>
             {
                 config.MapRoute(

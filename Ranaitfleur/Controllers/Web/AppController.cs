@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Ranaitfleur.Controllers.Web
 {
+    [RequireHttps]
     public class AppController : Controller
     {
         private readonly IMailService _mailService;
@@ -32,24 +33,10 @@ namespace Ranaitfleur.Controllers.Web
             return View();
         }
 
-        public IActionResult Shop()
+        public IActionResult Shop(string id)
         {
-            return View(_repository.GetAllDresses());
-        }
-
-        public IActionResult ShopWomensCollection()
-        {
-            return View(_repository.GetAllDresses().Where(d => d.ItemType == 1));
-        }
-
-        public IActionResult ShopRfSlipDress()
-        {
-            return View();
-        }
-
-        public IActionResult ShopMensCollection()
-        {
-            return View();
+            var itemType = int.Parse(id);
+            return View(_repository.GetAllDresses().Where(d => d.ItemType == itemType).ToList());
         }
 
         public IActionResult Product(int id)
@@ -98,6 +85,11 @@ namespace Ranaitfleur.Controllers.Web
         }
 
         public IActionResult TermsConditions()
+        {
+            return View();
+        }
+
+        public IActionResult PrivacyPolicy()
         {
             return View();
         }

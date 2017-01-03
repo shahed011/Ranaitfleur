@@ -1,0 +1,60 @@
+﻿@model Ranaitfleur.ViewModels.CartIndexViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h3>Your Shopping Cart</h3>
+        </div>
+        @if (Model.Cart.Lines.Any())
+        {
+            <div class="row cart-row" style="padding-top: 0">
+                <div class="col-md-2 col-md-offset-3 text-center">Item</div>
+                <div class="col-md-2 text-center">Quantity</div>
+                <div class="col-md-2 text-center">Price</div>
+                <div class="col-md-2 text-center">Subtotal</div>
+            </div>
+        }
+        @foreach (var line in Model.Cart.Lines)
+        {
+            <div class="row cart-row">
+                <div class="col-md-2 col-md-offset-1 text-center">
+                    <form asp-action="RemoveFromCart" method="post">
+                        <input type="hidden" name="ProductID" value="@line.Item.Id" />
+                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                        <button type="submit" class="btn btn-xs btn-link ">
+                            <i class="glyphicon glyphicon-remove-sign" aria-hidden="true" style="color: red"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-2 text-center">
+                    <img src="@Url.Content(line.Item.ImagePath.Split(',').FirstOrDefault())"
+                         alt="@line.Item.Name"
+                         class="img-responsive img-thumbnail">
+                    @line.Item.Name
+                </div>
+                <div class="col-md-2 text-center">@line.Quantity</div>
+                <div class="col-md-2 text-center">@line.Item.Price.ToString("c")</div>
+                <div class="col-md-2 text-center">@((line.Quantity * line.Item.Price).ToString("c"))</div>
+            </div>
+        }
+        @if (!Model.Cart.Lines.Any())
+        {
+            <div class="row cart-row">
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <span>No item in your cart</span>
+                </div>
+            </div>
+        }
+        <div class="row cart-row">
+            <div class="col-md-2 col-md-offset-7 text-center">Total:</div>
+            <div class="col-md-2 text-center"> @Model.Cart.ComputeTotalValue().ToString("c") </div>
+        </div>
+    </div>
+    
+    <form asp-action="Checkout" asp-controller="Order" method="post">
+        <div class="form-group text-center">
+            <a class="btn btn-default" href="@Model.ReturnUrl">Continue shopping</a>
+            <input class="btn btn-success" value="Checkout" type="submit" @(Model.Cart.Lines.Any() ? "" : "disabled=disabled") />
+        </div>
+    </form>
+</div>

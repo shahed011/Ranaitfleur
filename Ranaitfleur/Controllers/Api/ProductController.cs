@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Ranaitfleur.Controllers.Api
 {
     [Authorize]
+    [RequireHttps]
     [Route("api/products")]
     public class ProductController : Controller
     {
