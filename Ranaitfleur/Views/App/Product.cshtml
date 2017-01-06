@@ -1,13 +1,14 @@
 ﻿@model Ranaitfleur.Model.Item
 @{
     var images = Model.ImagePath.Split(',');
+    ViewBag.Title = Model.Name;
 }
 
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div class="container">
-                <div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+            <div class="row">
+                <div id='carousel-custom' class='carousel slide col-md-2' data-ride='carousel'>
                     <div class='carousel-outer'>
                         <div class='carousel-inner '>
                             @for (var item = 0; item < images.Length; item++)
@@ -16,9 +17,9 @@
                                     <img src="@Url.Content(images[item])" alt="@Model.Name" id="zoom_05" data-zoom-image="" />
                                 </div>
                             }
-                            <script>
+                            @*<script>
                                 $("#zoom_05").elevateZoom({ zoomType: "inner", cursor: "crosshair" });
-                            </script>
+                            </script>*@
                         </div>
 
                         <!-- sag sol -->
@@ -30,61 +31,66 @@
                         </a>
                     </div>
 
-                    <!-- thumb -->
-                    <ol class='carousel-indicators mCustomScrollbar meartlab'>
-                        @for (var item = 0; item < images.Length; item++)
-                        {
-                            <li data-target='#carousel-custom' data-slide-to="@item" class=@(item == 0 ? "active" : "")><img src="@Url.Content(images[item])" alt="@images[item]" class="img-thumbnail"/></li>
-                        }
-                    </ol>
+                    <div class="col-md-10">
+                        <!-- thumb -->
+                        <ol class='carousel-indicators mCustomScrollbar meartlab'>
+                            @for (var item = 0; item < images.Length; item++)
+                            {
+                                <li data-target='#carousel-custom'
+                                    data-slide-to="@item"
+                                    class=@(item == 0 ? "active" : "")>
+                                    <img src="@Url.Content(images[item])" alt="@images[item]" class="img-thumbnail"/>
+                                </li>
+                            }
+                        </ol>
+                    </div>
                 </div>
-                <script type="text/javascript">
-
-                    $(document).ready(function() {
-                        $(".mCustomScrollbar").mCustomScrollbar({axis:"x"});
-                    });
-                </script>
             </div>
+            <script type="text/javascript">
+
+                $(document)
+                    .ready(function() {
+                        $(".mCustomScrollbar").mCustomScrollbar({ axis: "x" });
+                    });
+            </script>
         </div>
         <div class="col-md-6">
-            <div class="container">
-                <div >
-                    <h3 class="product-title">@Model.Name</h3>
-                    <h4 class="price"><span>@string.Format("{0:C}", Model.Price)</span></h4>
-                    <p class="product-description">@Model.Description1</p>
-                    <p class="product-description">@Model.Description2</p>
-                    <b>General sizes:
-                        <select>
-                            <option selected="selected">Choose an option</option>
-                            <option>6</option>
-                            <option>8</option>
-                            <option>10</option>
-                            <option>12</option>
-                        </select>
-                    </b>
-                    <form id="@Model.Id" asp-action="AddToCart"
-                            asp-controller="Cart" method="post">
-                        <input type="hidden" name="productId" value="@Model.Id"/>
-                        <input type="hidden" name="returnUrl"
-                                value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
-                        <span>
-                            <button type="submit" class="btn btn-success btn-sm pull-right">
-                                Add To Cart
-                            </button>
-                        </span>
-                    </form>
-                </div>
-                @*<div>
-                    <p>
-                    <div class="quantity buttons_added">
-                        <input class="minus" type="button" value="-"/>
-                        <input id="quantity" class="input-text qty text" type="text" size="4" min="" max="" step="1" value="1"/>
-                        <input class="plus" type="button" value="+"/>
-                        <button class="add-to-cart btn btn-default" type="button">add to cart</button>
-                    </div>
-                    </p>
-                </div>*@
+            <div >
+                <h3 class="product-title">@Model.Name</h3>
+                <h4 class="price"><span>@string.Format("{0:C}", Model.Price)</span></h4>
+                <p class="product-description">@Model.Description1</p>
+                <p class="product-description">@Model.Description2</p>
+                <b>General sizes:
+                    <select>
+                        <option selected="selected">Choose an option</option>
+                        <option>6</option>
+                        <option>8</option>
+                        <option>10</option>
+                        <option>12</option>
+                    </select>
+                </b>
+                <form id="@Model.Id" asp-action="AddToCart"
+                        asp-controller="Cart" method="post">
+                    <input type="hidden" name="productId" value="@Model.Id"/>
+                    <input type="hidden" name="returnUrl"
+                            value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+                    <span>
+                        <button type="submit" class="btn btn-success btn-sm pull-right">
+                            Add To Cart
+                        </button>
+                    </span>
+                </form>
             </div>
+            @*<div>
+                <p>
+                <div class="quantity buttons_added">
+                    <input class="minus" type="button" value="-"/>
+                    <input id="quantity" class="input-text qty text" type="text" size="4" min="" max="" step="1" value="1"/>
+                    <input class="plus" type="button" value="+"/>
+                    <button class="add-to-cart btn btn-default" type="button">add to cart</button>
+                </div>
+                </p>
+            </div>*@
         </div>
     </div>
 </div>

@@ -20,7 +20,32 @@
 
     @{ foreach (var item in Model)
         {
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-12">
+                <div class="thumbnail">
+                    <a asp-controller="App" asp-action="Product" asp-route-id="@item.Id">
+                        <img src="@Url.Content(item.ImagePath.Split(',').FirstOrDefault())" alt="@item.Name" id="shopImg">
+                        <h4 class="shopH4">@item.Name</h4>
+                        @*<div class="ratings">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                        </div>*@
+                        <p class="shopP">@item.Description1</p>
+                        <hr class="line">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <p class="price">@string.Format("{0:C}", item.Price)</p>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <button class="btn btn-info right">Add To Cart</button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            @*<div class="col-md-4">
                 <div class="womcoll">
                     <a asp-controller="App" asp-action="Product" asp-route-id="@item.Id">
                         <figure class="img-responsive">
@@ -36,7 +61,7 @@
                         </figure>
                     </a>
                 </div>
-            </div>
+            </div>*@
         }
     }
 </div>
