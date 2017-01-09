@@ -41,6 +41,7 @@ namespace Ranaitfleur
             services.AddScoped<IMailService, MailService>();
             services.AddDbContext<RanaitfleurContext>();
             services.AddScoped<IRanaitfleurRepository, RanaitfleurRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<RanaitfleurContextSeedData>();
             services.AddScoped(SessionCart.GetCart);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

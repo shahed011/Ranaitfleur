@@ -24,7 +24,7 @@
                 <div class="thumbnail">
                     <a asp-controller="App" asp-action="Product" asp-route-id="@item.Id">
                         <img src="@Url.Content(item.ImagePath.Split(',').FirstOrDefault())" alt="@item.Name" id="shopImg">
-                        <h4 class="shopH4">@item.Name</h4>
+                        <span class="shopH4 truncate ">@item.Name</span>
                         @*<div class="ratings">
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star"></span>
@@ -32,14 +32,14 @@
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star-empty"></span>
                         </div>*@
-                        <p class="shopP">@item.Description1</p>
+                        <p class="shopP truncate ">@item.Description1</p>
                         <hr class="line">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <p class="price">@string.Format("{0:C}", item.Price)</p>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <button class="btn btn-info right">Add To Cart</button>
+                                <button class="btn btn-info right">View Product</button>
                             </div>
                         </div>
                     </a>

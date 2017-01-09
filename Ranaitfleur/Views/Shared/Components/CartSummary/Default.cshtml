@@ -1,8 +1,6 @@
 ﻿@model Ranaitfleur.Model.Cart
 
-<div>
-    <a class="btn btn-sm btn-link" asp-controller="Cart" asp-action="CartIndex"
-       asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
-        <i class="fa fa-shopping-cart"> Cart (@Model.Lines.Sum(x => x.Quantity) item(s), @Model.ComputeTotalValue().ToString("c"))</i>
-    </a>
-</div>
+<a class="btn btn-sm btn-link" asp-controller="Cart" asp-action="CartIndex"
+   asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
+    <i class="fa fa-shopping-cart"></i><span> Cart (@Model.Lines.Sum(x => x.Quantity) item(s), @Model.ComputeTotalValue().ToString("c"))</span>
+</a>
