@@ -210,8 +210,6 @@ namespace Ranaitfleur.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<decimal>("Total");
-
                     b.HasKey("OrderId");
 
                     b.ToTable("Orders");

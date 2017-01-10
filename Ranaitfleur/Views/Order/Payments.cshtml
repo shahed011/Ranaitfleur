@@ -1,4 +1,5 @@
-﻿@section scripts {
+﻿@model int
+@section scripts {
     <script src="https://pi-test.sagepay.com/api/v1/js/sagepay.js"></script>
 
     <script>
@@ -22,14 +23,15 @@
 
 }
 
-<form id="paymentForm" asp-controller="App" asp-action="Payments">
+<form id="paymentForm" asp-controller="Order" asp-action="Payments">
     @Html.AntiForgeryToken()
 
     <div id="payment-details">
-
+        <p>Total to pay : @Model</p>
     </div>
     <input id="cardIdentifier" type="hidden" name="cardIdentifier" />
     <input id="sessionId" type="hidden" name="sessionId" value="@ViewBag.MerchantSessionKey" />
+    <input id="amount" type="hidden" name="amount" value="@Model"/>
     <button id="getCardIdBtn" type="button">Get card id</button>
     <button type="submit">Submit</button>
 </form>

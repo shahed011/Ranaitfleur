@@ -9,7 +9,7 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
 {
     public class SagePayClient
     {
-        private IHttpRequestSender sender;
+        private readonly IHttpRequestSender _sender;
 
         // sandbox
         private string vendorName = "sandbox";
@@ -35,49 +35,48 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
             var base64ByteArray = Convert.ToBase64String(byteArray);
             var auth = new AuthenticationHeaderValue("Basic", base64ByteArray);
 
-            sender = new HttpRequestSender(auth, "application/json");
+            _sender = new HttpRequestSender(auth, "application/json");
         }
 
         public async Task<MerchantSession> CreateMerchantSessionKey()
         {
             var url = CreateMerchantSessionKeyUrl;
-            var data = new CreateMerchantSessionKeyRequest();
-            data.VendorName = vendorName;
+            var data = new CreateMerchantSessionKeyRequest {VendorName = vendorName};
 
-            var response = await sender.SendPostRequest<MerchantSession, CreateMerchantSessionKeyRequest>(url, data);
+            var response = await _sender.SendPostRequest<MerchantSession, CreateMerchantSessionKeyRequest>(url, data);
             return response;
         }
 
-        public async Task<Transaction> CreateTransaction(string cardId, string sessionKey)
+        public async Task<Transaction> CreateTransaction(string cardId, string sessionKey, int amount)
         {
             var url = CreateTransactionUrl;
-            var data = new CreateTransactionPaymentRequest();
-
-            data.TransactionType = "Payment";
-            data.Amount = 30;
-            data.Currency = "GBP";
-            data.Description = "Dupa description";
-            data.PaymentMethod = new PaymentMethodRequest
+            var data = new CreateTransactionPaymentRequest
             {
-                Card = new CardRequest
+                TransactionType = "Payment",
+                Amount = amount,
+                Currency = "GBP",
+                Description = "Dupa description",
+                PaymentMethod = new PaymentMethodRequest
                 {
-                    CardIdentifier = cardId,
-                    MerchantSessionKey = sessionKey
+                    Card = new CardRequest
+                    {
+                        CardIdentifier = cardId,
+                        MerchantSessionKey = sessionKey
+                    },
                 },
-            };
-            data.VendorTxCode = "123456";
-            data.CustomerFirstName = "Dupa";
-            data.CustomerLastName = "Dupa";
-            data.BillingAddress = new BillingAddress
-            {
-                Address1 = "Dupa",
-                City = "London Dupa",
-                Country = "GB",
-                PostalCode = "D06A"
+                VendorTxCode = "123456",
+                CustomerFirstName = "Dupa",
+                CustomerLastName = "Dupa",
+                BillingAddress = new BillingAddress
+                {
+                    Address1 = "Dupa",
+                    City = "London Dupa",
+                    Country = "GB",
+                    PostalCode = "D06A"
+                }
             };
 
-
-            var response = await sender.SendPostRequest<Transaction, CreateTransactionPaymentRequest>(url, data);
+            var response = await _sender.SendPostRequest<Transaction, CreateTransactionPaymentRequest>(url, data);
             return response;
         }
     }

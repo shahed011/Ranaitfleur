@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Ranaitfleur.Migrations
 {
-    public partial class OrdersAdded : Migration
+    public partial class OrdersAndSubscribers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,12 +27,24 @@ namespace Ranaitfleur.Migrations
                     PaymentTransactionId = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(maxLength: 24, nullable: true),
                     Postcode = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Total = table.Column<decimal>(nullable: false)
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subscriberses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subscriberses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,6 +89,9 @@ namespace Ranaitfleur.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CartLine");
+
+            migrationBuilder.DropTable(
+                name: "Subscriberses");
 
             migrationBuilder.DropTable(
                 name: "Orders");

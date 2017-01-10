@@ -8,8 +8,8 @@ using Ranaitfleur.Model;
 namespace Ranaitfleur.Migrations
 {
     [DbContext(typeof(RanaitfleurContext))]
-    [Migration("20170102001433_SubscribersAdded")]
-    partial class SubscribersAdded
+    [Migration("20170109230942_OrdersAndSubscribers")]
+    partial class OrdersAndSubscribers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -210,8 +210,6 @@ namespace Ranaitfleur.Migrations
                     b.Property<string>("Postcode");
 
                     b.Property<int>("Status");
-
-                    b.Property<decimal>("Total");
 
                     b.HasKey("OrderId");
 

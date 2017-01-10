@@ -47,10 +47,8 @@ namespace Ranaitfleur.Model
 
         public bool GiftWrap { get; set; }
 
+        [BindNever]
         public OrderStatus Status { get; set; }
-
-        [ScaffoldColumn(false)]
-        public decimal Total { get; set; }
 
         [ScaffoldColumn(false)]
         public string PaymentTransactionId { get; set; }
@@ -61,7 +59,6 @@ namespace Ranaitfleur.Model
         Processing,
         Shipped,
         Complete,
-        Pending,
         Declined
     }
 }

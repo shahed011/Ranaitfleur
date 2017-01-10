@@ -60,20 +60,22 @@
                 <h4 class="price"><span>@string.Format("{0:C}", Model.Price)</span></h4>
                 <p class="product-description">@Model.Description1</p>
                 <p class="product-description">@Model.Description2</p>
-                <b>General sizes:
-                    <select>
-                        <option selected="selected">Choose an option</option>
-                        <option>6</option>
-                        <option>8</option>
-                        <option>10</option>
-                        <option>12</option>
-                    </select>
-                </b>
+                
                 <form id="@Model.Id" asp-action="AddToCart"
-                        asp-controller="Cart" method="post">
+                      asp-controller="Cart" method="post">
+                    <b>
+                        General sizes:
+                        <select id="sizeSelector" asp-for="Description2">
+                            <option selected="selected">Choose an option</option>
+                            <option>6</option>
+                            <option>8</option>
+                            <option>10</option>
+                            <option>12</option>
+                        </select>
+                    </b>
                     <input type="hidden" name="productId" value="@Model.Id"/>
                     <input type="hidden" name="returnUrl"
-                            value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+                           value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
                     <span>
                         <button type="submit" class="btn btn-success btn-sm pull-right">
                             Add To Cart

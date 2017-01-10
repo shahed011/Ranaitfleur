@@ -6,8 +6,6 @@ using Microsoft.Extensions.Logging;
 using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
-using Ranaitfleur.Infrastructure.SagePayApi;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Ranaitfleur.Controllers.Web
@@ -91,22 +89,6 @@ namespace Ranaitfleur.Controllers.Web
 
         public IActionResult PrivacyPolicy()
         {
-            return View();
-        }
-
-        public async Task<IActionResult> Payments()
-        {
-            var sagePay = new SagePayClient();
-            ViewBag.MerchantSessionKey = (await sagePay.CreateMerchantSessionKey())?.MerchantSessionKey;
-
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Payments(string cardIdentifier, string sessionId)
-        {
-            var sagePay = new SagePayClient();
-            var resp = await sagePay.CreateTransaction(cardIdentifier, sessionId);
             return View();
         }
     }
