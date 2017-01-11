@@ -218,7 +218,7 @@ body {
 
 .shopH4 {
     font-weight: 600;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .shopP {
@@ -233,9 +233,20 @@ body {
     text-overflow: ellipsis;
 }
 
-.price {
-    font-size: 30px;
+.productTitle {
+    font-size: 20px;
+    font-weight: bold;
     margin: 0 auto;
+}
+
+.price {
+    font-size: 20px;
+    margin-top: 10px;
+    color: #333;
+}
+
+.product-description {
+    margin-top: 40px;
     color: #333;
 }
 
