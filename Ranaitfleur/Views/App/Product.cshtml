@@ -6,55 +6,45 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <div id='carousel-custom' class='carousel slide col-md-2' data-ride='carousel'>
-                    <div class='carousel-outer'>
-                        <div class='carousel-inner '>
-                            @for (var item = 0; item < images.Length; item++)
-                            {
-                                <div class="item @(item == 0 ? "active" : "")">
-                                    <img src="@Url.Content(images[item])" alt="@Model.Name" id="zoom_05" data-zoom-image="" />
-                                </div>
-                            }
-                            @*<script>
-                                $("#zoom_05").elevateZoom({ zoomType: "inner", cursor: "crosshair" });
-                            </script>*@
-                        </div>
-
-                        <!-- sag sol -->
-                        <a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
-                            <span class='glyphicon glyphicon-chevron-left'></span>
-                        </a>
-                        <a class='right carousel-control' href='#carousel-custom' data-slide='next'>
-                            <span class='glyphicon glyphicon-chevron-right'></span>
-                        </a>
+        <div class="col-md-5 col-md-offset-1">
+            <div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+                <div class='carousel-outer'>
+                    <div class='carousel-inner '>
+                        @for (var item = 0; item < images.Length; item++)
+                        {
+                            <div class="item @(item == 0 ? "active" : "")">
+                                <img src="@Url.Content(images[item])" alt="@Model.Name" id="zoom_05" data-zoom-image="" />
+                            </div>
+                        }
+                        @*<script>
+                            $("#zoom_05").elevateZoom({ zoomType: "inner", cursor: "crosshair" });
+                        </script>*@
                     </div>
 
-                    <div class="col-md-10">
-                        <!-- thumb -->
-                        <ol class='carousel-indicators mCustomScrollbar meartlab'>
-                            @for (var item = 0; item < images.Length; item++)
-                            {
-                                <li data-target='#carousel-custom'
-                                    data-slide-to="@item"
-                                    class=@(item == 0 ? "active" : "")>
-                                    <img src="@Url.Content(images[item])" alt="@images[item]" class="img-thumbnail"/>
-                                </li>
-                            }
-                        </ol>
-                    </div>
+                    <a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
+                        <span class='glyphicon glyphicon-chevron-left'></span>
+                    </a>
+                    <a class='right carousel-control' href='#carousel-custom' data-slide='next'>
+                        <span class='glyphicon glyphicon-chevron-right'></span>
+                    </a>
+                </div>
+
+                <!-- thumb -->
+                <div class="col-md-12">
+                    <ol class='carousel-indicators'>
+                        @for (var item = 0; item < images.Length; item++)
+                        {
+                            <li data-target='#carousel-custom'
+                                data-slide-to="@item"
+                                class=@(item == 0 ? "active" : "")>
+                                <img src="@Url.Content(images[item])" alt="@images[item]" class="img-thumbnail" />
+                            </li>
+                        }
+                    </ol>
                 </div>
             </div>
-            <script type="text/javascript">
-
-                $(document)
-                    .ready(function() {
-                        $(".mCustomScrollbar").mCustomScrollbar({ axis: "x" });
-                    });
-            </script>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div >
                 <h3 class="product-title">@Model.Name</h3>
                 <h4 class="price"><span>@string.Format("{0:C}", Model.Price)</span></h4>
