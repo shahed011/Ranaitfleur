@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ranaitfleur.Model;
 using System.Linq;
+using AutoMapper;
 using Ranaitfleur.ViewModels;
 
 namespace Ranaitfleur.Controllers.Web
@@ -25,9 +26,11 @@ namespace Ranaitfleur.Controllers.Web
             });
         }
 
-        public RedirectToActionResult AddToCart(int productId, string returnUrl)
+        [HttpPost]
+        public RedirectToActionResult AddToCart(ItemViewModel itemVm, string returnUrl)
         {
-            var item = _repository.GetAllDresses().FirstOrDefault(p => p.Id == productId);
+            //var item = _repository.GetAllDresses().FirstOrDefault(p => p.Id == itemVm.Id);
+            var item = Mapper.Map<Item>(itemVm);
 
             if (item != null)
             {
@@ -35,6 +38,17 @@ namespace Ranaitfleur.Controllers.Web
             }
             return RedirectToAction("CartIndex", new { returnUrl });
         }
+
+        //public RedirectToActionResult AddToCart(int productId, string returnUrl)
+        //{
+        //    var item = _repository.GetAllDresses().FirstOrDefault(p => p.Id == productId);
+
+        //    if (item != null)
+        //    {
+        //        _cart.AddItem(item, 1);
+        //    }
+        //    return RedirectToAction("CartIndex", new { returnUrl });
+        //}
 
         public RedirectToActionResult RemoveFromCart(int productId, string returnUrl)
         {

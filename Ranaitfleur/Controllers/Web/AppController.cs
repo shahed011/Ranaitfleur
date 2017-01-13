@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -41,7 +42,9 @@ namespace Ranaitfleur.Controllers.Web
         {
             try
             {
-                return View(_repository.GetAllDresses().FirstOrDefault(d => d.Id == id));
+                var itemViewModel =
+                    Mapper.Map<ItemViewModel>(_repository.GetAllDresses().FirstOrDefault(d => d.Id == id));
+                return View(itemViewModel);
             }
             catch (Exception ex)
             {

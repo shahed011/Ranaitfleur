@@ -1,4 +1,4 @@
-﻿@model Ranaitfleur.Model.Item
+﻿@model Ranaitfleur.ViewModels.ItemViewModel
 @{
     var images = Model.ImagePath.Split(',');
     ViewBag.Title = Model.Name;
@@ -50,27 +50,20 @@
             </div>
         </div>
         <div class="col-md-5">
-            <div >
+            <div>
                 <p class="productTitle">@Model.Name</p>
                 <p class="product-description">@Model.Description1</p>
                 <p class="product-description">@Model.Description2</p>
                 <p class="price"><span>@string.Format("{0:C}", Model.Price)</span></p>
                 
-                <form id="@Model.Id" asp-action="AddToCart"
-                      asp-controller="Cart" method="post">
+                <form asp-action="AddToCart" asp-controller="Cart" method="post">
                     <b>
                         General sizes:
-                        <select id="sizeSelector" asp-for="Description2">
-                            <option selected="selected">Choose an option</option>
-                            <option>6</option>
-                            <option>8</option>
-                            <option>10</option>
-                            <option>12</option>
-                        </select>
+                        <select asp-for="Size" asp-items="@Model.Sizes"></select>
                     </b>
-                    <input type="hidden" name="productId" value="@Model.Id"/>
-                    <input type="hidden" name="returnUrl"
-                           value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+                    @*<input type="hidden" name="productId" value="@Model.Id"/>*@
+                    @*<input type="hidden" name="returnUrl"
+                           value="@ViewContext.HttpContext.Request.PathAndQuery()"/>*@
                     <span>
                         <button type="submit" class="btn btn-success btn-sm pull-right">
                             Add To Cart
