@@ -7,5 +7,6 @@ namespace Ranaitfleur.Model
     {
         IEnumerable<Order> Orders { get; }
         Task<bool> SaveOrder(Order order);
+        Task<Order> GetOrder(int orderId);
     }
 }

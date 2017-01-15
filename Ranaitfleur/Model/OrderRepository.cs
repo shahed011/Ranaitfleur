@@ -29,5 +29,10 @@ namespace Ranaitfleur.Model
 
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public Task<Order> GetOrder(int orderId)
+        {
+            return _context.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+        }
     }
 }

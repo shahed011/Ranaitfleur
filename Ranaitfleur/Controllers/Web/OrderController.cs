@@ -3,17 +3,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Ranaitfleur.Infrastructure.SagePayApi;
 using Ranaitfleur.Model;
+using Ranaitfleur.Services;
 
 namespace Ranaitfleur.Controllers.Web
 {
     public class OrderController : Controller
     {
         private readonly IOrderRepository _repository;
+        private readonly IMailService _emailService;
         private readonly Cart _cart;
 
-        public OrderController(IOrderRepository repoService, Cart cartService)
+        public OrderController(IOrderRepository repoService, IMailService emailService, Cart cartService)
         {
             _repository = repoService;
+            _emailService = emailService;
             _cart = cartService;
         }
 
@@ -46,26 +49,35 @@ namespace Ranaitfleur.Controllers.Web
                 await _repository.SaveOrder(order);
 
                 var amount = _cart.Lines.Select(l => l.Item.Price).Sum();
-                return RedirectToAction(nameof(Payments), new {amount});
+
+                _emailService.SendMail("email@email.com", "email@email.com", "Cart", "Card checked out");
+
+                return RedirectToAction(nameof(Payments), new {amount, order.OrderId});
             }
 
             return View(order);
         }
 
-        public async Task<IActionResult> Payments(int amount)
+        public async Task<IActionResult> Payments(int amount, int orderId)
         {
             var sagePay = new SagePayClient();
             ViewBag.MerchantSessionKey = (await sagePay.CreateMerchantSessionKey())?.MerchantSessionKey;
+            ViewBag.OrderId = orderId;
 
             return View(amount);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Payments(string cardIdentifier, string sessionId, int amount)
+        public async Task<IActionResult> Payments(string cardIdentifier, string sessionId, int amount, int orderId)
         {
+            var order = await _repository.GetOrder(orderId);
+
             var sagePay = new SagePayClient();
-            var resp = await sagePay.CreateTransaction(cardIdentifier, sessionId, amount);
-            return RedirectToAction(nameof(Completed), new {status = resp.Status});
+            var resp = await sagePay.CreateTransaction(cardIdentifier, sessionId, amount, "GBP", "This is wew order", order);
+
+            _emailService.SendMail("email@email.com", "email@email.com", "Order", "Order paid");
+
+            return RedirectToAction(nameof(Completed), new {status = resp.Value?.Status ?? resp.StatusCode.ToString()});
         }
 
         public ViewResult Completed(string status)
