@@ -7,17 +7,18 @@ namespace Ranaitfleur.Model
     {
         private readonly List<CartLine> _lineCollection = new List<CartLine>();
 
-        public virtual void AddItem(Item item, int quantity)
+        public virtual void AddItem(Item item, int quantity, int size)
         {
             var line = _lineCollection
-                .FirstOrDefault(p => p.Item.Id == item.Id);
+                .FirstOrDefault(p => p.Item.Id == item.Id && p.Size == size);
 
             if (line == null)
             {
                 _lineCollection.Add(new CartLine
                 {
                     Item = item,
-                    Quantity = quantity
+                    Quantity = quantity,
+                    Size = size
                 });
             }
             else
@@ -26,8 +27,8 @@ namespace Ranaitfleur.Model
             }
         }
 
-        public virtual void RemoveLine(Item item) =>
-            _lineCollection.RemoveAll(l => l.Item.Id == item.Id);
+        public virtual void RemoveLine(Item item, int size) =>
+            _lineCollection.RemoveAll(l => l.Item.Id == item.Id && l.Size == size);
 
         public virtual decimal ComputeTotalValue() =>
             _lineCollection.Sum(e => e.Item.Price * e.Quantity);
@@ -42,5 +43,6 @@ namespace Ranaitfleur.Model
         public int CartLineId { get; set; }
         public Item Item { get; set; }
         public int Quantity { get; set; }
+        public int Size { get; set; }
     }
 }

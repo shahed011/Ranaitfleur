@@ -20,6 +20,7 @@
                 <div class="col-md-2 col-md-offset-1 text-center">
                     <form asp-action="RemoveFromCart" method="post">
                         <input type="hidden" name="ProductID" value="@line.Item.Id" />
+                        <input type="hidden" name="Size" value="@line.Size" />
                         <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
                         <button type="submit" class="btn btn-xs btn-link ">
                             <i class="glyphicon glyphicon-remove-sign" aria-hidden="true" style="color: red"></i>
@@ -30,7 +31,7 @@
                     <img src="@Url.Content(line.Item.ImagePath.Split(',').FirstOrDefault())"
                          alt="@line.Item.Name"
                          class="img-responsive img-thumbnail">
-                    @line.Item.Name
+                    @line.Item.Name <br/> (Size: @line.Size)
                 </div>
                 <div class="col-md-2 text-center">@line.Quantity</div>
                 <div class="col-md-2 text-center">@line.Item.Price.ToString("c")</div>

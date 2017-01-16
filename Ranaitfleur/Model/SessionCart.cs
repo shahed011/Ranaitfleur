@@ -20,15 +20,15 @@ namespace Ranaitfleur.Model
             return cart;
         }
 
-        public override void AddItem(Item product, int quantity)
+        public override void AddItem(Item product, int quantity, int size)
         {
-            base.AddItem(product, quantity);
+            base.AddItem(product, quantity, size);
             Session.SetJson("Cart", this);
         }
 
-        public override void RemoveLine(Item product)
+        public override void RemoveLine(Item product, int size)
         {
-            base.RemoveLine(product);
+            base.RemoveLine(product, size);
             Session.SetJson("Cart", this);
         }
 

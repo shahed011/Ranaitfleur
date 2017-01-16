@@ -27,36 +27,25 @@ namespace Ranaitfleur.Controllers.Web
         }
 
         [HttpPost]
-        public RedirectToActionResult AddToCart(ItemViewModel itemVm, string returnUrl)
+        public RedirectToActionResult AddToCart(ItemViewModel product, int productId, string returnUrl)
         {
-            //var item = _repository.GetAllDresses().FirstOrDefault(p => p.Id == itemVm.Id);
-            var item = Mapper.Map<Item>(itemVm);
+            var item = _repository.GetAllDresses().FirstOrDefault(p => p.Id == productId);
+            //var item = Mapper.Map<Item>(testItem);
 
             if (item != null)
             {
-                _cart.AddItem(item, 1);
+                _cart.AddItem(item, 1, product.Size);
             }
             return RedirectToAction("CartIndex", new { returnUrl });
         }
 
-        //public RedirectToActionResult AddToCart(int productId, string returnUrl)
-        //{
-        //    var item = _repository.GetAllDresses().FirstOrDefault(p => p.Id == productId);
-
-        //    if (item != null)
-        //    {
-        //        _cart.AddItem(item, 1);
-        //    }
-        //    return RedirectToAction("CartIndex", new { returnUrl });
-        //}
-
-        public RedirectToActionResult RemoveFromCart(int productId, string returnUrl)
+        public RedirectToActionResult RemoveFromCart(int productId, int size, string returnUrl)
         {
             var item = _repository.GetAllDresses().FirstOrDefault(p => p.Id == productId);
 
             if (item != null)
             {
-                _cart.RemoveLine(item);
+                _cart.RemoveLine(item, size);
             }
             return RedirectToAction("CartIndex", new { returnUrl });
         }

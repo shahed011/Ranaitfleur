@@ -8,9 +8,10 @@ using Ranaitfleur.Model;
 namespace Ranaitfleur.Migrations
 {
     [DbContext(typeof(RanaitfleurContext))]
-    partial class RanaitfleurContextModelSnapshot : ModelSnapshot
+    [Migration("20170115235033_SizeToCartAdded")]
+    partial class SizeToCartAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")

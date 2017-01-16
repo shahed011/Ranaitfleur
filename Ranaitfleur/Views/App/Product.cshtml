@@ -1,5 +1,6 @@
 ﻿@model Ranaitfleur.ViewModels.ItemViewModel
 @{
+    var itemId = Model.Id;
     var images = Model.ImagePath.Split(',');
     ViewBag.Title = Model.Name;
 }
@@ -61,9 +62,9 @@
                         General sizes:
                         <select asp-for="Size" asp-items="@Model.Sizes"></select>
                     </b>
-                    @*<input type="hidden" name="productId" value="@Model.Id"/>*@
-                    @*<input type="hidden" name="returnUrl"
-                           value="@ViewContext.HttpContext.Request.PathAndQuery()"/>*@
+                    <input type="hidden" name="productId" value="@Model.Id"/>
+                    <input type="hidden" name="returnUrl"
+                           value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
                     <span>
                         <button type="submit" class="btn btn-success btn-sm pull-right">
                             Add To Cart
