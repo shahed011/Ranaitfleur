@@ -6,6 +6,7 @@
         var tokenReceivedCallback = function (tokenisationResult) {
             if (tokenisationResult.success) {
                 $("#cardIdentifier").val(tokenisationResult.cardIdentifier);
+                $('#paymentForm').submit();
             }
         };
 
@@ -15,7 +16,7 @@
             onTokenise: tokenReceivedCallback
         });
 
-        $("#getCardIdBtn").click(function () {
+        $("#submitBtn").click(function () {
             sagePay.tokenise()
         });
 
@@ -31,7 +32,7 @@
     </div>
     <input id="cardIdentifier" type="hidden" name="cardIdentifier" />
     <input id="sessionId" type="hidden" name="sessionId" value="@ViewBag.MerchantSessionKey" />
+    <input id="orderId" type="hidden" name="orderId" value="@ViewBag.OrderId" />
     <input id="amount" type="hidden" name="amount" value="@Model"/>
-    <button id="getCardIdBtn" type="button">Get card id</button>
-    <button type="submit">Submit</button>
+    <button id="submitBtn" type="button">Submit</button>
 </form>
