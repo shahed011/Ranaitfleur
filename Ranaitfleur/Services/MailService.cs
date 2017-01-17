@@ -3,8 +3,6 @@ using System.Net;
 using Microsoft.Extensions.Logging;
 using MimeKit;
 using MailKit.Net.Smtp;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
 
 namespace Ranaitfleur.Services
 {
@@ -40,11 +38,7 @@ namespace Ranaitfleur.Services
                 };
                 
                 // for accepting every ssl certificate, DO NOT USE ON PROD, used for testing with gmail
-                client.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate,
-                        X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                {
-                    return true;
-                };
+                client.ServerCertificateValidationCallback = (s, certificate, chain, sslPolicyErrors) => true;
 
                 // check your smtp server setting and amend accordingly:
                 await client.ConnectAsync("smtp.gmail.com", 465, true).ConfigureAwait(false);
