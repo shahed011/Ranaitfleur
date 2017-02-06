@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ranaitfleur.Model;
 using System.Linq;
-using AutoMapper;
 using Ranaitfleur.ViewModels;
 
 namespace Ranaitfleur.Controllers.Web

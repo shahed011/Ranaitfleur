@@ -1,4 +1,13 @@
-﻿@model Ranaitfleur.Model.Order
+﻿@using Ranaitfleur.Helper
+@model Ranaitfleur.Model.Order
+
+@{
+    var countryList = new List<SelectListItem>();
+    foreach (var countryName in CountryAndCodeHelper.GetAllCountries())
+    {
+        countryList.Add(new SelectListItem {Value = countryName, Text = countryName});
+    }
+}
 
 @section scripts {
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -50,8 +59,10 @@
     </div>
     <div class="form-group">
         <label asp-for="Country"></label>
-        <input asp-for="Country" class="form-control" />
-        <span asp-validation-for="Country" class="text-muted"></span>
+        <br/>
+        <select asp-for="Country" asp-items="@countryList"></select>
+        @*<input asp-for="Country" class="form-control" />*@
+        @*<span asp-validation-for="Country" class="text-muted"></span>*@
     </div>
     <div class="form-group">
         <label asp-for="Phone"></label>

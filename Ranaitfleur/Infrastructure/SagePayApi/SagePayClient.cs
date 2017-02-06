@@ -5,6 +5,7 @@ using System;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Ranaitfleur.Helper;
 
 namespace Ranaitfleur.Infrastructure.SagePayApi
 {
@@ -85,7 +86,7 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
                     Address1 = order.Line1,
                     Address2 = order.Line2 + " " + order.Line3,
                     City = order.City,
-                    Country = order.Country, //Two letter country code defined in ISO 3166-1
+                    Country = CountryAndCodeHelper.GetCountryCodeFromName(order.Country), //Two letter country code defined in ISO 3166-1
                     PostalCode = order.Postcode
                     // State - Two letter state code defined in ISO 3166-2. Required when shippingCountry is US.
                 }

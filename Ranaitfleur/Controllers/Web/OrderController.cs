@@ -50,7 +50,7 @@ namespace Ranaitfleur.Controllers.Web
 
                 var amount = _cart.Lines.Select(l => l.Item.Price).Sum();
 
-                _emailService.SendMail("email@email.com", "email@email.com", "Cart", "Card checked out");
+                //_emailService.SendMail("email@email.com", "email@email.com", "Cart", "Card checked out");
 
                 return RedirectToAction(nameof(Payments), new {amount, order.OrderId});
             }
@@ -75,7 +75,7 @@ namespace Ranaitfleur.Controllers.Web
             var sagePay = new SagePayClient();
             var resp = await sagePay.CreateTransaction(cardIdentifier, sessionId, amount, "GBP", "This is wew order", order);
 
-            _emailService.SendMail("email@email.com", "email@email.com", "Order", "Order paid");
+            //_emailService.SendMail("email@email.com", "email@email.com", "Order", "Order paid");
 
             return RedirectToAction(nameof(Completed), new {status = resp.Value?.Status ?? resp.StatusCode.ToString()});
         }
@@ -83,7 +83,7 @@ namespace Ranaitfleur.Controllers.Web
         public ViewResult Completed(string status)
         {
             _cart.Clear();
-            return View(status);
+            return View(nameof(Completed), status);
         }
     }
 }
