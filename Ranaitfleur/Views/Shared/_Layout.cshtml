@@ -1,14 +1,14 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width = device-width, initial-scale = 1"/>
     <title>Ranaitfleur - @ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/lib/bootswatch/yeti/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css"/>
 </head>
 
 <body>
@@ -24,19 +24,29 @@
                 <span class="icon-bar"></span>
             </button>
             <a asp-controller="App" asp-action="Index" class="navbar-brand">
-                <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo" />
+                <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo"/>
             </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a asp-controller="App" asp-action="Index" class="btn btn-sm btn-link">Ranaitfleur</a></li>
-                <li><a asp-controller="App" asp-action="Shop" asp-route-id="1" class="btn btn-sm btn-link">Couture</a></li>
-                <li><a asp-controller="App" asp-action="Shop" asp-route-id="2" class="btn btn-sm btn-link">Demi couture</a></li>
-                <li><a asp-controller="App" asp-action="Shop" asp-route-id="3" class="btn btn-sm btn-link">Ready to wear</a></li>
+                <li>
+                    <a asp-controller="App" asp-action="Index" class="btn btn-sm btn-link">Ranaitfleur</a>
+                </li>
+                <li>
+                    <a asp-controller="App" asp-action="Shop" asp-route-id="1" class="btn btn-sm btn-link">Couture</a>
+                </li>
+                <li>
+                    <a asp-controller="App" asp-action="Shop" asp-route-id="2" class="btn btn-sm btn-link">Demi couture</a>
+                </li>
+                <li>
+                    <a asp-controller="App" asp-action="Shop" asp-route-id="3" class="btn btn-sm btn-link">Ready to wear</a>
+                </li>
                 @*<li><a asp-controller="App" asp-action="Payments"><b>Payments</b></a></li>*@
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li><a asp-controller="Auth" asp-action="Logout" class="btn btn-sm btn-link">Logout</a></li>
+                    <li>
+                        <a asp-controller="Auth" asp-action="Logout" class="btn btn-sm btn-link">Logout</a>
+                    </li>
                 }
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -125,7 +135,9 @@
 
             <div class="col-md-4" style="margin-left: -80px; margin-top: 20px;">
                 <div class="text-center">
-                    <h5><b>Subscribe for Ranaitfleur updates</b></h5>
+                    <h5>
+                        <b>Subscribe for Ranaitfleur updates</b>
+                    </h5>
                 </div>
                 <p style="padding-bottom: 20px"></p>
                 <div>
@@ -193,7 +205,13 @@
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript", src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 @RenderSection("scripts", false)
-<script type="text/javascript" src="~/js/site.js"></script>
+
+<environment Names="Development">
+    <script type="text/javascript" src="~/js/site.js"></script>
+</environment>
+<environment Names="Production,Staging">
+    <script type="text/javascript" src="~/lib/_app/site.js"></script>
+</environment>
 
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css"/>
 <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
@@ -212,7 +230,7 @@
                 "content": {
                     "href": "App/PrivacyPolicy"
                 }
-            })
+            });
         });
 </script>
 </body>
