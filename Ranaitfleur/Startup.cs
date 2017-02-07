@@ -18,26 +18,32 @@ namespace Ranaitfleur
 {
     public class Startup
     {
-        private readonly IConfigurationRoot _config;
-        private IHostingEnvironment _env;
+        private readonly IConfigurationRoot _configuration;
 
         public Startup(IHostingEnvironment env)
         {
-            _env = env;
-
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddJsonFile("config.json")
                 .AddEnvironmentVariables();
 
-            _config = builder.Build();
+            if (env.IsDevelopment())
+            {
+                // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
+                builder.AddApplicationInsightsSettings(developerMode: true);
+            }
+            _configuration = builder.Build();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(_config);
+            // Add framework services.
+            services.AddApplicationInsightsTelemetry(_configuration);
+
+            services.AddSingleton(_configuration);
             services.AddScoped<IMailService, MailService>();
             services.AddDbContext<RanaitfleurContext>();
             services.AddScoped<IRanaitfleurRepository, RanaitfleurRepository>();
@@ -97,26 +103,30 @@ namespace Ranaitfleur
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
-            RanaitfleurContextSeedData seeder)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RanaitfleurContextSeedData seeder)
         {
             Mapper.Initialize(config =>
             {
                 config.CreateMap<ItemViewModel, Item>().ReverseMap();
             });
 
-            loggerFactory.AddConsole();
+            loggerFactory.AddConsole(_configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
+            app.UseApplicationInsightsRequestTelemetry();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                loggerFactory.AddDebug(LogLevel.Information);
+                app.UseBrowserLink();
             }
             else
             {
-                loggerFactory.AddDebug(LogLevel.Error);
+                app.UseExceptionHandler("/Home/Error");
             }
-            //app.UseDefaultFiles();
+
+            app.UseApplicationInsightsExceptionTelemetry();
+
             app.UseStaticFiles();
             app.UseIdentity();
             app.UseSession();

@@ -1,9 +1,10 @@
-{
+﻿{
   "MailSettings": {
     "ToAddress": "shahed011@hotmail.com"
   },
   "ConnectionStrings": {
     //"RanaitfleurContextConnection": "Data Source=DESKTOP-PLGVP20;Database=RanaitfleurDb;Trusted_Connection=true;Integrated Security=true;"
     "RanaitfleurContextConnection": "Server=(localdb)\\MSSQLLocalDB;Database=RanaitfleurDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
-  } 
+    //"RanaitfleurContextConnection": "Data Source=SQL5031.SmarterASP.NET;Initial Catalog=DB_A180F1_shahed011;User Id=DB_A180F1_shahed011_admin;Password=#Compaq#11#;"
+  }
 }

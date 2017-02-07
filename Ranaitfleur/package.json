@@ -1,9 +1,0 @@
-{
-	"version": "1.0.0",
-	"name": "ranaitfleur",
-	"private": true,
-  "devDependencies": {
-    "gulp": "3.9.1",
-    "gulp-uglify" : "2.0.1"
-  }
-}
