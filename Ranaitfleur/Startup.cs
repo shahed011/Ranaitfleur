@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -52,10 +52,11 @@ namespace Ranaitfleur
             services.AddScoped(SessionCart.GetCart);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddLogging();
-            services.AddMvc(config =>
-            {
-                config.Filters.Add(new RequireHttpsAttribute());
-            });
+            services.AddMvc();
+            //services.AddMvc(config =>
+            //{
+            //    config.Filters.Add(new RequireHttpsAttribute());
+            //});
             //.AddJsonOptions(config =>
             //        config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
             services.AddIdentity<RanaitfleurUser, IdentityRole>(config =>

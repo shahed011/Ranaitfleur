@@ -9,7 +9,7 @@ using Ranaitfleur.ViewModels;
 
 namespace Ranaitfleur.Controllers.Web
 {
-    [RequireHttps]
+    //[RequireHttps]
     public class AuthController : Controller
     {
         private readonly SignInManager<RanaitfleurUser> _signInManager;

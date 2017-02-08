@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Ranaitfleur.Controllers.Web
 {
-    [RequireHttps]
+    //[RequireHttps]
     public class AppController : Controller
     {
         private readonly IMailService _mailService;

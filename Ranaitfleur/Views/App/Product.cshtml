@@ -1,7 +1,9 @@
-﻿@model Ranaitfleur.ViewModels.ItemViewModel
+﻿@using System.Globalization
+@using System.Threading.Tasks
+@model Ranaitfleur.ViewModels.ItemViewModel
 @{
-    var itemId = Model.Id;
     var images = Model.ImagePath.Split(',');
+    var unitedKingdom = new CultureInfo("en-GB");
     ViewBag.Title = Model.Name;
 }
 
@@ -55,7 +57,7 @@
                 <p class="productTitle">@Model.Name</p>
                 <p class="product-description">@Model.Description1</p>
                 <p class="product-description">@Model.Description2</p>
-                <p class="price"><span>@string.Format("{0:C}", Model.Price)</span></p>
+                <p class="price"><span>@Model.Price.ToString("C", unitedKingdom)</span></p>
                 
                 <form asp-action="AddToCart" asp-controller="Cart" method="post">
                     <b>
