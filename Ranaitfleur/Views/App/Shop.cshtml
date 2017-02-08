@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Ranaitfleur.Model.Item>
+﻿@using System.Threading.Tasks
+@using Ranaitfleur.Helper
+@model IEnumerable<Ranaitfleur.Model.Item>
 @{
     if (Model.Any(i => i.ItemType == 1))
     {
@@ -36,7 +38,7 @@
                         <hr class="line">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
-                                <p class="price">@string.Format("{0:C}", item.Price)</p>
+                                <p class="price">@item.Price.ToString("C", CulturesHelper.UnitedKingdom)</p>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <button class="btn btn-info right">View Product</button>
