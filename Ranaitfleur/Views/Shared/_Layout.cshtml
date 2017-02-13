@@ -24,9 +24,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div id="brand">
+            <a class="navbar-brand" asp-controller="App" asp-action="Index">RF</a>
+            @*<div>
                 <a asp-controller="App" asp-action="Index" class="btn btn-sm btn-link">Ranaitfleur</a>
-            </div>
+            </div>*@
             @*<a asp-controller="App" asp-action="Index" class="navbar-brand">
                 <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo"/>
             </a>*@
@@ -81,7 +82,7 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="text-center">
-                    <img src="~/img/SmallLogo.png" alt="LOGO" id="smallLogo"/>
+                    <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" id="smallLogo"/>
                 </div>
                 <div class="text-center">All our creations are tailor made in London.</div>
                 <div class="text-center">All our textiles are sourced within Britain.</div>
@@ -214,7 +215,7 @@
     <script type="text/javascript" src="~/js/site.js"></script>
 </environment>
 <environment Names="Production,Staging">
-    <script type="text/javascript" src="~/lib/_app/site.js"></script>
+    <script type="text/javascript" src="~/js/site.min.js"></script>
 </environment>
 
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css"/>

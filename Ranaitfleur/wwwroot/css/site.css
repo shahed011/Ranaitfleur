@@ -22,7 +22,7 @@ input[type=text], input[type=password], textarea {
 }
 
 body {
-    padding-top: 160px;
+    padding-top: 80px;
     background-color: whitesmoke
 }
 
@@ -69,7 +69,7 @@ ul li {
 }*/
 
 .nav {
-    padding-top: 10px;
+    padding-top: 12px;
 }
 
 .mainBody {
@@ -110,7 +110,7 @@ ul li {
     margin: 0 0 0 250px;
 }
 
-.sidebar-nav .dropdown-menu {
+/*.sidebar-nav .dropdown-menu {
     position: relative;
     width: 100%;
     padding: 10px;
@@ -118,7 +118,7 @@ ul li {
     border: none;
     background-color: #eeeeee;
     box-shadow: none;
-}
+}*/
 
 .logo {
     width: 160px;
@@ -155,14 +155,23 @@ ul li {
     border-color: transparent;
 }
 
+.navbar-header .navbar-brand {
+    color: #e6ae48;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.navbar-header .navbar-brand:hover {
+    color: #e6ae48;
+    font-weight: bold;
+    font-size: 22px;
+    text-shadow: 0 0 3px #FF0000;
+}
+
 .navbar-fixed-top {
     padding: 0;
     margin: 0;
     /*background-color: #25211e*/
-}
-
-.navbar-header #brand {
-    padding-top: 10px;
 }
 
 .navbar {
