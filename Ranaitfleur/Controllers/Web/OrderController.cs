@@ -73,7 +73,7 @@ namespace Ranaitfleur.Controllers.Web
             var order = await _repository.GetOrder(orderId);
 
             var sagePay = new SagePayClient();
-            var resp = await sagePay.CreateTransaction(cardIdentifier, sessionId, amount, "GBP", "This is wew order", order);
+            var resp = await sagePay.CreateTransaction(cardIdentifier, sessionId, amount, "GBP", "This is new order", order);
 
             //_emailService.SendMail("email@email.com", "email@email.com", "Order", "Order paid");
 

@@ -2,6 +2,8 @@
 @model Ranaitfleur.Model.Order
 
 @{
+    ViewBag.Title = "Checkout";
+
     var countryList = new List<SelectListItem>();
     foreach (var countryName in CountryAndCodeHelper.GetAllCountries())
     {

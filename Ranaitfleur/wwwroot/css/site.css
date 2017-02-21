@@ -23,7 +23,8 @@ input[type=text], input[type=password], textarea {
 
 body {
     padding-top: 80px;
-    background-color: whitesmoke
+    background-color: whitesmoke;
+    font-family: 'Raleway', sans-serif;
 }
 
 ul li {
@@ -581,3 +582,17 @@ figcaption .womcoll-description {
   border-bottom: 1px solid #e1e1e1;
 }
 /*----------------------------------------------*/
+
+.videoContainer 
+{
+    display:block;
+    position: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.videoContainer video 
+{
+    min-width: 100%;
+    max-width: 100%;
+}
