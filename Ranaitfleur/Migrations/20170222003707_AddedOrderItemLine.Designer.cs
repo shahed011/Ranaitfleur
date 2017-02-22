@@ -8,9 +8,10 @@ using Ranaitfleur.Model;
 namespace Ranaitfleur.Migrations
 {
     [DbContext(typeof(RanaitfleurContext))]
-    partial class RanaitfleurContextModelSnapshot : ModelSnapshot
+    [Migration("20170222003707_AddedOrderItemLine")]
+    partial class AddedOrderItemLine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -120,6 +121,24 @@ namespace Ranaitfleur.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Ranaitfleur.Model.CartLine", b =>
+                {
+                    b.Property<int>("CartLineId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ItemId");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<int>("Size");
+
+                    b.HasKey("CartLineId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("CartLines");
                 });
 
             modelBuilder.Entity("Ranaitfleur.Model.Item", b =>
@@ -313,6 +332,13 @@ namespace Ranaitfleur.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Ranaitfleur.Model.CartLine", b =>
+                {
+                    b.HasOne("Ranaitfleur.Model.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId");
                 });
 
             modelBuilder.Entity("Ranaitfleur.Model.OrderItemsLine", b =>

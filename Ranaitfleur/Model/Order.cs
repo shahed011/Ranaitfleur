@@ -10,7 +10,7 @@ namespace Ranaitfleur.Model
         [BindNever]
         public int OrderId { get; set; }
         [BindNever]
-        public ICollection<CartLine> Lines { get; set; }
+        public ICollection<OrderItemsLine> Lines { get; set; }
 
         [Required(ErrorMessage = "First Name is required")]
         [DisplayName("First Name")]
@@ -52,6 +52,14 @@ namespace Ranaitfleur.Model
 
         [ScaffoldColumn(false)]
         public string PaymentTransactionId { get; set; }
+    }
+
+    public class OrderItemsLine
+    {
+        public int OrderItemsLineId { get; set; }
+        public int ItemId { get; set; }
+        public int Quantity { get; set; }
+        public int Size { get; set; }
     }
 
     public enum OrderStatus

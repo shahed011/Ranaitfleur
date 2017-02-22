@@ -39,7 +39,7 @@
                     <!-- thumb -->
                     <div class="col-md-12">
                         <ol class='carousel-indicators'>
-                            @for (var item = 0; item < images?.Length; item++)
+                            @for (var item = 0; item < images.Length; item++)
                             {
                                 <li data-target='#carousel-custom'
                                     data-slide-to="@item"
@@ -62,7 +62,7 @@
                 <form asp-action="AddToCart" asp-controller="Cart" method="post">
                     <b>
                         General sizes:
-                        <select asp-for="@displayProduct.Size" asp-items="@displayProduct.Sizes"></select>
+                        <select name="size" asp-for="@displayProduct.Size" asp-items="@displayProduct.Sizes"></select>
                     </b>
                     <input type="hidden" name="productId" value="@displayProduct.Id"/>
                     <input type="hidden" name="returnUrl"

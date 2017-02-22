@@ -1,6 +1,7 @@
-﻿@model int
+﻿@model IEnumerable<Ranaitfleur.Model.CartLine>
 @{
     ViewBag.Title = "Payment";
+    var total = Model.Select(l => l.Item.Price * l.Quantity).Sum();
 }
 @section scripts {
     <script src="https://pi-test.sagepay.com/api/v1/js/sagepay.js"></script>
@@ -20,7 +21,7 @@
         });
 
         $("#submitBtn").click(function () {
-            sagePay.tokenise()
+            sagePay.tokenise();
         });
 
     </script>
@@ -30,12 +31,32 @@
 <form id="paymentForm" asp-controller="Order" asp-action="Payments">
     @Html.AntiForgeryToken()
 
-    <div id="payment-details">
-        <p>Total to pay : @Model</p>
+    <div class="row">
+        <div class="col-md-7 col-sm-12">
+            <div>
+                <img src="~/img/SagePayLogo.jpg" class="img-responsive center-block" alt="Sagepay Logo">
+            </div>
+            <div id="payment-details"></div>
+            <div>
+                <br />
+                <button id="submitBtn" type="button" class="btn btn-success center-block">Submit</button>
+            </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+            <div class="row cart-row text-center">Your Order</div>
+            @foreach (var line in Model)
+            {
+                <div class="row cart-row">
+                    <div class="col-md-6 text-center truncate">@line.Item.Name</div>
+                    <div class="col-md-4 text-center">@line.Quantity</div>
+                    <div class="col-md-2 text-center">@((line.Item.Price*line.Quantity).ToString("c"))</div>
+                </div>
+            }
+            <div class="row cart-row text-center">Total to pay : @total.ToString("c")</div>
+        </div>
     </div>
     <input id="cardIdentifier" type="hidden" name="cardIdentifier" />
     <input id="sessionId" type="hidden" name="sessionId" value="@ViewBag.MerchantSessionKey" />
     <input id="orderId" type="hidden" name="orderId" value="@ViewBag.OrderId" />
-    <input id="amount" type="hidden" name="amount" value="@Model"/>
-    <button id="submitBtn" type="button">Submit</button>
+    <input id="amount" type="hidden" name="amount" value="@total"/>
 </form>
