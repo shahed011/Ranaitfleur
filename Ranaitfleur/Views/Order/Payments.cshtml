@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Ranaitfleur.Model.CartLine>
+﻿@using System.Threading.Tasks
+@using Ranaitfleur.Helper
+@model IEnumerable<Ranaitfleur.Model.CartLine>
 @{
     ViewBag.Title = "Payment";
     var total = Model.Select(l => l.Item.Price * l.Quantity).Sum();
@@ -49,10 +51,10 @@
                 <div class="row cart-row">
                     <div class="col-md-6 text-center truncate">@line.Item.Name</div>
                     <div class="col-md-4 text-center">@line.Quantity</div>
-                    <div class="col-md-2 text-center">@((line.Item.Price*line.Quantity).ToString("c"))</div>
+                    <div class="col-md-2 text-center">@((line.Item.Price*line.Quantity).ToString("C", CulturesHelper.UnitedKingdom))</div>
                 </div>
             }
-            <div class="row cart-row text-center">Total to pay : @total.ToString("c")</div>
+            <div class="row cart-row text-center">Total to pay : @total.ToString("C", CulturesHelper.UnitedKingdom)</div>
         </div>
     </div>
     <input id="cardIdentifier" type="hidden" name="cardIdentifier" />

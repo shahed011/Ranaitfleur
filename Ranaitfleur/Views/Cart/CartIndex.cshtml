@@ -1,4 +1,5 @@
-﻿@model Ranaitfleur.ViewModels.CartIndexViewModel
+﻿@using Ranaitfleur.Helper
+@model Ranaitfleur.ViewModels.CartIndexViewModel
 @{
     ViewBag.Title = "Shopping cart";
 }
@@ -37,8 +38,8 @@
                     @line.Item.Name <br/> (Size: @line.Size)
                 </div>
                 <div class="col-md-2 text-center">@line.Quantity</div>
-                <div class="col-md-2 text-center">@line.Item.Price.ToString("c")</div>
-                <div class="col-md-2 text-center">@((line.Quantity * line.Item.Price).ToString("c"))</div>
+                <div class="col-md-2 text-center">@line.Item.Price.ToString("C", CulturesHelper.UnitedKingdom)</div>
+                <div class="col-md-2 text-center">@((line.Quantity * line.Item.Price).ToString("C", CulturesHelper.UnitedKingdom))</div>
             </div>
         }
         @if (!Model.Cart.Lines.Any())
@@ -51,7 +52,7 @@
         }
         <div class="row cart-row">
             <div class="col-md-2 col-md-offset-7 text-center">Total:</div>
-            <div class="col-md-2 text-center"> @Model.Cart.ComputeTotalValue().ToString("c") </div>
+            <div class="col-md-2 text-center"> @Model.Cart.ComputeTotalValue().ToString("C", CulturesHelper.UnitedKingdom) </div>
         </div>
     </div>
     
