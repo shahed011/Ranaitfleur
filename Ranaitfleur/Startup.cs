@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-//using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -74,7 +73,7 @@ namespace Ranaitfleur
                 config.Password.RequiredLength = 8;
                 config.Password.RequireDigit = true;
                 config.Password.RequireLowercase = true;
-                config.Password.RequireNonAlphanumeric = true;
+                config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = true;
 
                 // Cookie settings
@@ -106,16 +105,16 @@ namespace Ranaitfleur
             services.AddWebMarkupMin(
                     options =>
                     {
-                        options.AllowMinificationInDevelopmentEnvironment = true;
+                        //options.AllowMinificationInDevelopmentEnvironment = true;
                         options.AllowCompressionInDevelopmentEnvironment = true;
                     })
-                .AddHtmlMinification(
-                    options =>
-                    {
-                        options.MinificationSettings.RemoveRedundantAttributes = true;
-                        options.MinificationSettings.RemoveHttpProtocolFromAttributes = true;
-                        options.MinificationSettings.RemoveHttpsProtocolFromAttributes = true;
-                    })
+                //.AddHtmlMinification(
+                //    options =>
+                //    {
+                //        options.MinificationSettings.RemoveRedundantAttributes = true;
+                //        options.MinificationSettings.RemoveHttpProtocolFromAttributes = true;
+                //        options.MinificationSettings.RemoveHttpsProtocolFromAttributes = true;
+                //    })
                 .AddHttpCompression();
         }
 
