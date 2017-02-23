@@ -135,7 +135,7 @@ ul li {
     font-size: 16px;
 }
 
-.btn.btn-sm.btn-link:hover {
+.btn.btn-sm.btn-link:hover, .btn.btn-sm.btn-link:focus {
     padding-top: 0;
     padding-bottom: 0;
     background-color: transparent;

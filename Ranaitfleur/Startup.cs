@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
+using WebMarkupMin.AspNetCore1;
 
 namespace Ranaitfleur
 {
@@ -101,6 +102,21 @@ namespace Ranaitfleur
 
             services.AddMemoryCache();
             services.AddSession();
+
+            services.AddWebMarkupMin(
+                    options =>
+                    {
+                        options.AllowMinificationInDevelopmentEnvironment = true;
+                        options.AllowCompressionInDevelopmentEnvironment = true;
+                    })
+                .AddHtmlMinification(
+                    options =>
+                    {
+                        options.MinificationSettings.RemoveRedundantAttributes = true;
+                        options.MinificationSettings.RemoveHttpProtocolFromAttributes = true;
+                        options.MinificationSettings.RemoveHttpsProtocolFromAttributes = true;
+                    })
+                .AddHttpCompression();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -131,6 +147,7 @@ namespace Ranaitfleur
             app.UseStaticFiles();
             app.UseIdentity();
             app.UseSession();
+            app.UseWebMarkupMin();
             app.UseMvc(config =>
             {
                 config.MapRoute(

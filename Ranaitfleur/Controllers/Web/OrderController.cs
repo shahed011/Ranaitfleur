@@ -58,8 +58,6 @@ namespace Ranaitfleur.Controllers.Web
                 }
                 await _repository.SaveOrder(order);
 
-                //_emailService.SendMail("email@email.com", "email@email.com", "Cart", "Card checked out");
-
                 return RedirectToAction(nameof(Payments), new { orderId = order.OrderId });
             }
 
