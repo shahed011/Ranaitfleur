@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-//using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
+using WebMarkupMin.AspNetCore1;
 
 namespace Ranaitfleur
 {
@@ -73,7 +73,7 @@ namespace Ranaitfleur
                 config.Password.RequiredLength = 8;
                 config.Password.RequireDigit = true;
                 config.Password.RequireLowercase = true;
-                config.Password.RequireNonAlphanumeric = true;
+                config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = true;
 
                 // Cookie settings
@@ -101,6 +101,21 @@ namespace Ranaitfleur
 
             services.AddMemoryCache();
             services.AddSession();
+
+            services.AddWebMarkupMin(
+                    options =>
+                    {
+                        //options.AllowMinificationInDevelopmentEnvironment = true;
+                        options.AllowCompressionInDevelopmentEnvironment = true;
+                    })
+                //.AddHtmlMinification(
+                //    options =>
+                //    {
+                //        options.MinificationSettings.RemoveRedundantAttributes = true;
+                //        options.MinificationSettings.RemoveHttpProtocolFromAttributes = true;
+                //        options.MinificationSettings.RemoveHttpsProtocolFromAttributes = true;
+                //    })
+                .AddHttpCompression();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -131,6 +146,7 @@ namespace Ranaitfleur
             app.UseStaticFiles();
             app.UseIdentity();
             app.UseSession();
+            app.UseWebMarkupMin();
             app.UseMvc(config =>
             {
                 config.MapRoute(

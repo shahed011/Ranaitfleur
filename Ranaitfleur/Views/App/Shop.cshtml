@@ -27,6 +27,7 @@
                     <a asp-controller="App" asp-action="Product" asp-route-id="@item.Id">
                         <img src="@Url.Content(item.ImagePath.Split(',').FirstOrDefault())" alt="@item.Name" id="shopImg">
                         <p class="shopH4 truncate">@item.Name</p>
+                        <p class="shopP truncate">@item.Price.ToString("C", CulturesHelper.UnitedKingdom)</p>
                         @*<div class="ratings">
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star"></span>
@@ -34,16 +35,13 @@
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star-empty"></span>
                         </div>*@
-                        <p class="shopP truncate">@item.Description1</p>
-                        <hr class="line">
-                        <div class="row">
+                        @*<p class="shopP truncate">@item.Description1</p>*@
+                        @*<hr class="line">*@
+                        @*<div class="row">
                             <div class="col-md-6 col-sm-6">
-                                <p class="price">@item.Price.ToString("C", CulturesHelper.UnitedKingdom)</p>
+                                <p class="shopP truncate">@item.Price.ToString("C", CulturesHelper.UnitedKingdom)</p>
                             </div>
-                            <div class="col-md-6 col-sm-6">
-                                <button class="btn btn-info right">View Product</button>
-                            </div>
-                        </div>
+                        </div>*@
                     </a>
                 </div>
             </div>

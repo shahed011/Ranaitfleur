@@ -35,7 +35,8 @@
       "type": "platform"
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-    "System.Runtime.Serialization.Xml": "4.3.0"
+    "System.Runtime.Serialization.Xml": "4.3.0",
+    "WebMarkupMin.AspNetCore1": "2.2.5"
   },
 
   "tools": {
@@ -74,6 +75,9 @@
       "web.config",
       "Views",
       "config.json"
+    ],
+    "exclude": [
+      "**/*.ps1"
     ]
   },
 

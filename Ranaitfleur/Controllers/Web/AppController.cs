@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -42,9 +43,14 @@ namespace Ranaitfleur.Controllers.Web
         {
             try
             {
-                var itemViewModel =
-                    Mapper.Map<ItemViewModel>(_repository.GetAllDresses().FirstOrDefault(d => d.Id == id));
-                return View(itemViewModel);
+                var allDresses = _repository.GetAllDresses().ToList();
+                var item = allDresses.FirstOrDefault(d => d.Id == id);
+                var restOfTheSameDresses = allDresses.Where(d => d.ItemType == item.ItemType).ToList();
+
+                restOfTheSameDresses.Remove(item);
+                restOfTheSameDresses.Insert(0, item);
+                var itemsAsViewModel = Mapper.Map<List<ItemViewModel>>(restOfTheSameDresses);
+                return View(itemsAsViewModel);
             }
             catch (Exception ex)
             {
@@ -70,7 +76,7 @@ namespace Ranaitfleur.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                _mailService.SendMail(_config["MailSettings:ToAddress"], viewModel.Email, "From Ranaitfleur",
+                _mailService.SendMail(_config["MailSettings:ContactAddress"], viewModel.Email, "From Ranaitfleur",
                     viewModel.Message);
 
                 ModelState.Clear();

@@ -5,233 +5,250 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width = device-width, initial-scale = 1"/>
     <title>Ranaitfleur - @ViewBag.Title</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/lib/bootswatch/yeti/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <environment Names="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment Names="Production,Staging">
+        <link rel="stylesheet" href="~/css/site.min.css" />
+    </environment>
 </head>
 
 <body>
-
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a asp-controller="App" asp-action="Index" class="navbar-brand">
-                <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo"/>
-            </a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a asp-controller="App" asp-action="Index" class="btn btn-sm btn-link">Ranaitfleur</a>
-                </li>
-                <li>
-                    <a asp-controller="App" asp-action="Shop" asp-route-id="1" class="btn btn-sm btn-link">Couture</a>
-                </li>
-                <li>
-                    <a asp-controller="App" asp-action="Shop" asp-route-id="2" class="btn btn-sm btn-link">Demi couture</a>
-                </li>
-                <li>
-                    <a asp-controller="App" asp-action="Shop" asp-route-id="3" class="btn btn-sm btn-link">Ready to wear</a>
-                </li>
-                @*<li><a asp-controller="App" asp-action="Payments"><b>Payments</b></a></li>*@
-                @if (User.Identity.IsAuthenticated)
-                {
+    <div class="loader"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" asp-controller="App" asp-action="Index">RF</a>
+                @*<div>
+                        <a asp-controller="App" asp-action="Index" class="btn btn-sm btn-link">Ranaitfleur</a>
+                    </div>*@
+                @*<a asp-controller="App" asp-action="Index" class="navbar-brand">
+                        <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo"/>
+                    </a>*@
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    @*<li>
+                            <a asp-controller="App" asp-action="Index" class="btn btn-sm btn-link">Ranaitfleur</a>
+                        </li>*@
                     <li>
-                        <a asp-controller="Auth" asp-action="Logout" class="btn btn-sm btn-link">Logout</a>
+                        <a asp-controller="App" asp-action="Shop" asp-route-id="1" class="btn btn-sm btn-link">Couture</a>
                     </li>
-                }
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a asp-controller="App" asp-action="MyAccount" class="btn btn-sm btn-link">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            @User.Identity.Name
-                        }
-                        else
-                        {
-                            <i class="fa fa-sign-in"></i><span> Log in / Register</span>
-                        }
-                    </a>
-                </li>
-                <li>@await Component.InvokeAsync("CartSummary")</li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<div id="main" class="container-fluid mainBody">
-    @RenderBody()
-</div>
-
-<div class="container-fluid">
-    <div class="navbar">
-        <div class="row">
-            <div class="col-md-7">
-                <div class="text-center">
-                    <img src="~/img/SmallLogo.png" alt="LOGO" id="smallLogo"/>
-                </div>
-                <div class="text-center">All our creations are tailor made in London.</div>
-                <div class="text-center">All our textiles are sourced within Britain.</div>
-                <div class="row footerItem">
-                    <div class="col-md-4">
-                        <b>Find more about us</b>
-                        <div>
-                            <a asp-controller="App" asp-action="Contact">Contact us</a>
-                        </div>
-                        <div>
-                            <a href="#">Email Unsubscribe</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <b>About us</b>
-                        <div>
-                            <a asp-controller="App" asp-action="OurEthics">Our Ethics</a>
-                        </div>
-                        <div>
-                            <a asp-controller="App" asp-action="TermsConditions">Terms & Conditions</a>
-                        </div>
-                        <div>
-                            <a asp-controller="App" asp-action="PrivacyPolicy">Privacy and Cookie Policy</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <b>Find us on</b>
-                        <div style="margin-left: 25px">
-                            <div>
-                                <a href="https://www.facebook.com/ruanefleur/" target="_blank">
-                                    <span class="fa fa-facebook"></span>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="https://twitter.com/rfleurtwit" target="_blank">
-                                    <span class="fa fa-twitter"></span>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="https://vine.co/u/1337063062477447168" target="_blank">
-                                    <span class="fa fa-vine"></span>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="https://foursquare.com/user/175788810" target="_blank">
-                                    <span class="fa fa-foursquare"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-1 hidden-md-down" style="border-left: 1px solid grey; height: 250px; margin-top: 10px;"></div>
-
-            <div class="col-md-4" style="margin-left: -80px; margin-top: 20px;">
-                <div class="text-center">
-                    <h5>
-                        <b>Subscribe for Ranaitfleur updates</b>
-                    </h5>
-                </div>
-                <p style="padding-bottom: 20px"></p>
-                <div>
-                    <span>Enter your email address to subscribe and receive our newsletter</span>
-                </div>
-                <p></p>
-                @await Component.InvokeAsync("Subscribe")
-            </div>
-        </div>
-        <b class="text-left">&copy; 2017 Ranaitfleur Ltd. - All rights reserved</b>
-        <p></p>
-    </div>
-</div>
-@*<div id="sidebar">
-        <a asp-controller="App" asp-action="Index">
-            <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo"/>
-        </a>
-        <div class="collapse navbar-collapse">
-            <ul class="nav sidebar-nav">
-                <li><a asp-controller="App" asp-action="Index">Home</a></li>
-                <li class="dropdown">
-                    <a asp-controller="App" asp-action="Shop" class="dropdown-toggle" data-toggle="dropdown">Shop <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a asp-controller="App" asp-action="Shop">Shop Home</a></li>
-                        <li><a asp-controller="App" asp-action="ShopWomensCollection">Women's Collection</a></li>
-                        <li><a asp-controller="App" asp-action="ShopRfSlipDress">RF Slip Dress</a></li>
-                        <li><a asp-controller="App" asp-action="ShopMensCollection">Men's Collection</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Social</a></li>
-                <li><a asp-controller="App" asp-action="About">About us</a></li>
-                <li><a asp-controller="App" asp-action="Contact">Contact us</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="wrapper">
-        <nav class="nav navbar">
-            <div class="container-fluid">
+                    <li>
+                        <a asp-controller="App" asp-action="Shop" asp-route-id="2" class="btn btn-sm btn-link">Demi couture</a>
+                    </li>
+                    <li>
+                        <a asp-controller="App" asp-action="Shop" asp-route-id="3" class="btn btn-sm btn-link">Ready to wear</a>
+                    </li>
+                    @*<li><a asp-controller="App" asp-action="Payments"><b>Payments</b></a></li>*@
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a asp-controller="Auth" asp-action="Logout" class="btn btn-sm btn-link">Logout</a>
+                        </li>
+                    }
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#" class="btn btn-sm btn-link">
-                            <i class="fa fa-sign-in"> Log in</i>
+                        <a asp-controller="App" asp-action="MyAccount" class="btn btn-sm btn-link">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @User.Identity.Name
+                            }
+                            else
+                            {
+                                <i class="fa fa-sign-in"></i><span> Log in / Register</span>
+                            }
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="btn btn-sm btn-link">
-                            <i class="fa fa-shopping-cart">  Cart</i>
-                        </a>
-                    </li>
+                    <li>@await Component.InvokeAsync("CartSummary")</li>
                 </ul>
             </div>
-        </nav>
-        <div id="main" class="container-fluid">
-            @RenderBody()
         </div>
+    </nav>
 
-        <div class="container-fluid">
-            <div class="nav navbar navbar-fixed-bottom">
-                <h4 class="text-center">&copy; Ranaitfleur Ltd.</h4>
+    <div id="main" class="container-fluid mainBody">
+        @RenderBody()
+    </div>
+
+    <div class="container-fluid">
+        <div class="navbar">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo" />
+                    </div>
+                    @*<div class="text-center">All our creations are tailor made in London.</div>
+                    <div class="text-center">All our textiles are sourced within Britain.</div>*@
+                    <div class="row text-center">
+                        <div class="col-md-4 col-sm-12">
+                            <b>Find more about us</b>
+                            <div>
+                                <a asp-controller="App" asp-action="Contact">Contact us</a>
+                            </div>
+                            <div>
+                                <a href="#">Email Unsubscribe</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <b>About us</b>
+                            <div>
+                                <a asp-controller="App" asp-action="OurEthics">Our Ethics</a>
+                            </div>
+                            <div>
+                                <a asp-controller="App" asp-action="TermsConditions">Terms & Conditions</a>
+                            </div>
+                            <div>
+                                <a asp-controller="App" asp-action="PrivacyPolicy">Privacy and Cookie Policy</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <b>Find us on</b>
+                            <div>
+                                <div>
+                                    <a href="https://www.facebook.com/ruanefleur/" target="_blank">
+                                        <span class="fa fa-facebook"></span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="https://twitter.com/rfleurtwit" target="_blank">
+                                        <span class="fa fa-twitter"></span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="https://vine.co/u/1337063062477447168" target="_blank">
+                                        <span class="fa fa-vine"></span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="https://foursquare.com/user/175788810" target="_blank">
+                                        <span class="fa fa-foursquare"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1 hidden-md-down verticalLine" style="margin-top: 10px;"></div>
+                <hr class="line" />
+
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h5>
+                            <b>Subscribe for Ranaitfleur updates</b>
+                        </h5>
+                    </div>
+                    <p style="padding-bottom: 20px"></p>
+                    <div>
+                        <span>Enter your email address to subscribe and receive our newsletter</span>
+                    </div>
+                    <p></p>
+                    @await Component.InvokeAsync("Subscribe")
+                </div>
+            </div>
+            <b class="text-left">&copy; 2017 Ranaitfleur Ltd. - All rights reserved</b>
+            <p></p>
+        </div>
+    </div>
+    @*<div id="sidebar">
+            <a asp-controller="App" asp-action="Index">
+                <img src="~/img/GOLD_LOGO.jpg" alt="LOGO" class="logo"/>
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="nav sidebar-nav">
+                    <li><a asp-controller="App" asp-action="Index">Home</a></li>
+                    <li class="dropdown">
+                        <a asp-controller="App" asp-action="Shop" class="dropdown-toggle" data-toggle="dropdown">Shop <b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a asp-controller="App" asp-action="Shop">Shop Home</a></li>
+                            <li><a asp-controller="App" asp-action="ShopWomensCollection">Women's Collection</a></li>
+                            <li><a asp-controller="App" asp-action="ShopRfSlipDress">RF Slip Dress</a></li>
+                            <li><a asp-controller="App" asp-action="ShopMensCollection">Men's Collection</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Social</a></li>
+                    <li><a asp-controller="App" asp-action="About">About us</a></li>
+                    <li><a asp-controller="App" asp-action="Contact">Contact us</a></li>
+                </ul>
             </div>
         </div>
-    </div>*@
 
-<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript", src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-@RenderSection("scripts", false)
+        <div id="wrapper">
+            <nav class="nav navbar">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" class="btn btn-sm btn-link">
+                                <i class="fa fa-sign-in"> Log in</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-sm btn-link">
+                                <i class="fa fa-shopping-cart">  Cart</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="main" class="container-fluid">
+                @RenderBody()
+            </div>
 
-<environment Names="Development">
-    <script type="text/javascript" src="~/js/site.js"></script>
-</environment>
-<environment Names="Production,Staging">
-    <script type="text/javascript" src="~/lib/_app/site.js"></script>
-</environment>
+            <div class="container-fluid">
+                <div class="nav navbar navbar-fixed-bottom">
+                    <h4 class="text-center">&copy; Ranaitfleur Ltd.</h4>
+                </div>
+            </div>
+        </div>*@
 
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
-<script>
-    window.addEventListener("load",
-        function() {
-            window.cookieconsent.initialise({
-                "palette": {
-                    "popup": {
-                        "background": "#000"
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    @RenderSection("scripts", false)
+
+    <environment Names="Development">
+        <script type="text/javascript" src="~/js/site.js"></script>
+    </environment>
+    <environment Names="Production,Staging">
+        <script type="text/javascript" src="~/js/site.min.js"></script>
+    </environment>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+    <script>
+        window.addEventListener("load",
+            function() {
+                window.cookieconsent.initialise({
+                    "palette": {
+                        "popup": {
+                            "background": "#000"
+                        },
+                        "button": {
+                            "background": "#f1d600"
+                        }
                     },
-                    "button": {
-                        "background": "#f1d600"
+                    "content": {
+                        "href": "App/PrivacyPolicy"
                     }
-                },
-                "content": {
-                    "href": "App/PrivacyPolicy"
-                }
+                });
             });
-        });
-</script>
+    </script>
+    <script type="text/javascript">
+        $(window)
+            .load(function() {
+                $(".loader").fadeOut("slow");
+            })
+    </script>
 </body>
 </html>

@@ -1,14 +1,15 @@
 ﻿@using System.Threading.Tasks
 @using Ranaitfleur.Helper
-@model Ranaitfleur.ViewModels.ItemViewModel
+@model IEnumerable<Ranaitfleur.ViewModels.ItemViewModel>
 @{
-    var images = Model.ImagePath.Split(',');
-    ViewBag.Title = Model.Name;
+    var displayProduct = Model.First();
+    var images = displayProduct.ImagePath.Split(',');
+    ViewBag.Title = displayProduct.Name;
 }
 
 <div class="container">
     <div class="row">
-        <div class="col-md-5 col-md-offset-1">
+        <div class="col-md-5 col-md-offset-1" style="height: 550px">
             <div id='carousel-custom' class='carousel slide' data-ride='carousel'>
                 <div class="row">
                     <div class="col-md-12">
@@ -17,7 +18,7 @@
                                 @for (var item = 0; item < images.Length; item++)
                                 {
                                     <div class="item @(item == 0 ? "active" : "")">
-                                        <img src="@Url.Content(images[item])" alt="@Model.Name" id="zoom_05" data-zoom-image=""
+                                        <img src="@Url.Content(images[item])" alt="@displayProduct.Name" id="zoom_05" data-zoom-image=""
                                              class="img-responsive center-block" />
                                     </div>
                                 }
@@ -51,19 +52,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div>
-                <p class="productTitle">@Model.Name</p>
-                <p class="product-description">@Model.Description1</p>
-                <p class="product-description">@Model.Description2</p>
-                <p class="price"><span>@Model.Price.ToString("C", CulturesHelper.UnitedKingdom)</span></p>
+                <p class="productTitle">@displayProduct.Name</p>
+                <p class="product-description">@displayProduct.Description1</p>
+                <p class="product-description">@displayProduct.Description2</p>
+                <p class="price"><span>@displayProduct.Price.ToString("C", CulturesHelper.UnitedKingdom)</span></p>
                 
                 <form asp-action="AddToCart" asp-controller="Cart" method="post">
                     <b>
                         General sizes:
-                        <select asp-for="Size" asp-items="@Model.Sizes"></select>
+                        <select name="size" asp-for="@displayProduct.Size" asp-items="@displayProduct.Sizes"></select>
                     </b>
-                    <input type="hidden" name="productId" value="@Model.Id"/>
+                    <input type="hidden" name="productId" value="@displayProduct.Id"/>
                     <input type="hidden" name="returnUrl"
                            value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
                     <span>
@@ -84,5 +85,27 @@
                 </p>
             </div>*@
         </div>
+    </div>
+    
+    <div>
+        <br/>
+        <h2>Similar products</h2>
+        <hr class="divider-title">
+    </div>
+
+    <div class="row">
+        @{ foreach (var item in Model.Skip(1).Take(3))
+            {
+                <div class="col-md-4 col-sm-12">
+                    <div class="thumbnail">
+                        <a asp-controller="App" asp-action="Product" asp-route-id="@item.Id">
+                            <img src="@Url.Content(item.ImagePath.Split(',').FirstOrDefault())" alt="@item.Name" id="shopImg">
+                            <p class="shopH4 truncate">@item.Name</p>
+                            <p class="shopP truncate">@item.Price.ToString("C", CulturesHelper.UnitedKingdom)</p>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>

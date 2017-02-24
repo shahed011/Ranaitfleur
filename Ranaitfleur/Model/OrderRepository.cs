@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,14 +16,18 @@ namespace Ranaitfleur.Model
             _logger = logger;
         }
 
-        public IEnumerable<Order> Orders => _context.Orders.Include(o => o.Lines).ThenInclude(l => l.Item);
+        public IEnumerable<Order> Orders => _context.Orders.Include(o => o.Lines);//.ThenInclude(l => l.Item);
 
         public async Task<bool> SaveOrder(Order order)
         {
-            _context.AttachRange(order.Lines.Select(l => l.Item));
             if (order.OrderId == 0)
             {
+                //_context.AttachRange(order.Lines.Select(l => l.Item));
                 _context.Orders.Add(order);
+            }
+            else
+            {
+                _context.Orders.Update(order);
             }
 
             return await _context.SaveChangesAsync() > 0;

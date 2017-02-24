@@ -2,9 +2,18 @@
     ViewBag.Title = "Home";
 }
 
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="videoContainer">
+            @*<video id="sampleMovie" src="~/img/IntroVideo.mov" autoplay></video>*@
+            <video preload="auto" src="~/img/IntroVideo.mov" autoplay loop></video>
+        </div>
+    </div>
+</div>
+
 <!-- Carousel
 ================================================== -->
-<div id="myCarousel" class="carousel slide">
+@*<div id="myCarousel" class="carousel slide">
     <!-- Indicators -->
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -37,5 +46,5 @@
     <a class="right carousel-control" href="#myCarousel" data-slide="next">
         <span class="icon-next"></span>
     </a>
-</div>
+</div>*@
 <!-- /.carousel -->

@@ -82,7 +82,10 @@ namespace Ranaitfleur.Controllers.Web
                     var result = await _userManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("MyAccount", "App");
+                        var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, true, false);
+
+                        if (signInResult.Succeeded)
+                            return RedirectToAction("MyAccount", "App");
                     }
                     else
                     {

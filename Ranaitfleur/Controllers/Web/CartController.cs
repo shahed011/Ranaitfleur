@@ -26,14 +26,14 @@ namespace Ranaitfleur.Controllers.Web
         }
 
         [HttpPost]
-        public RedirectToActionResult AddToCart(ItemViewModel product, int productId, string returnUrl)
+        public RedirectToActionResult AddToCart(int size, int productId, string returnUrl)
         {
             var item = _repository.GetAllDresses().FirstOrDefault(p => p.Id == productId);
             //var item = Mapper.Map<Item>(testItem);
 
             if (item != null)
             {
-                _cart.AddItem(item, 1, product.Size);
+                _cart.AddItem(item, 1, size);
             }
             return RedirectToAction("CartIndex", new { returnUrl });
         }

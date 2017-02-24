@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Ranaitfleur.Infrastructure.SagePayApi;
@@ -45,26 +46,31 @@ namespace Ranaitfleur.Controllers.Web
             }
             if (ModelState.IsValid)
             {
-                order.Lines = _cart.Lines.ToList();
+                order.Lines = new List<OrderItemsLine>();
+                foreach (var line in _cart.Lines.ToList())
+                {
+                    order.Lines.Add(new OrderItemsLine
+                    {
+                        Size = line.Size,
+                        ItemId = line.Item.Id,
+                        Quantity = line.Quantity
+                    });
+                }
                 await _repository.SaveOrder(order);
 
-                var amount = _cart.Lines.Select(l => l.Item.Price).Sum();
-
-                //_emailService.SendMail("email@email.com", "email@email.com", "Cart", "Card checked out");
-
-                return RedirectToAction(nameof(Payments), new {amount, order.OrderId});
+                return RedirectToAction(nameof(Payments), new { orderId = order.OrderId });
             }
 
             return View(order);
         }
 
-        public async Task<IActionResult> Payments(int amount, int orderId)
+        public async Task<IActionResult> Payments(int orderId)
         {
             var sagePay = new SagePayClient();
             ViewBag.MerchantSessionKey = (await sagePay.CreateMerchantSessionKey())?.MerchantSessionKey;
             ViewBag.OrderId = orderId;
 
-            return View(amount);
+            return View(_cart.Lines);
         }
 
         [HttpPost]
@@ -73,7 +79,11 @@ namespace Ranaitfleur.Controllers.Web
             var order = await _repository.GetOrder(orderId);
 
             var sagePay = new SagePayClient();
-            var resp = await sagePay.CreateTransaction(cardIdentifier, sessionId, amount, "GBP", "This is wew order", order);
+            var resp = await sagePay.CreateTransaction(cardIdentifier, sessionId, amount, "GBP", "This is new order", order);
+
+            order.PaymentTransactionId = resp.Value.TransactionId;
+            order.Status = resp.IsSuccess ? OrderStatus.Processing : OrderStatus.Declined;
+            await _repository.SaveOrder(order);
 
             //_emailService.SendMail("email@email.com", "email@email.com", "Order", "Order paid");
 
