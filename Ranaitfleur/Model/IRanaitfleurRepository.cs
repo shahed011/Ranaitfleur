@@ -10,6 +10,7 @@ namespace Ranaitfleur.Model
 
         void AddDress(Item newItem);
         void AddSubscriber(Subscribers newSubscriber);
+        bool RemoveSubscriber(string email);
 
         Task<bool> SaveChangesAsync();
     }

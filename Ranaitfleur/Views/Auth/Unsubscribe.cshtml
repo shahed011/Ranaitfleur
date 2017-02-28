@@ -1,0 +1,26 @@
+﻿@model string
+@{
+    ViewBag.Title = "Unsibscribe";
+}
+
+<div class="row">
+    <div class="col-md-offset-4 col-md-4">
+        <br/>
+        <br/>
+        @if (string.IsNullOrEmpty(Model))
+        {
+            <form asp-action="Unsubscribe" asp-controller="Auth" method="post">
+                <div class="form-group">
+                    <input class="form-control" name="email" placeholder="E-mail Address"/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Unsubscribe" class="btn btn-default btn-sm"/>
+                </div>
+            </form>
+        }
+        else
+        {
+            <h4 class="text-center"><b>@Model</b></h4>
+        }
+    </div>
+</div>

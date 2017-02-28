@@ -22,14 +22,15 @@ namespace Ranaitfleur.Services
             Debug.WriteLine($"Sending Mail: To:{to} From:{from} Subject:{subject}");
         }
 
-        public void SendMail(string to, string from, string subject, string body)
+        public void SendMail(string to, string from, string subject, BodyBuilder bodyBuilder)
         {
             var emailMessage = new MimeMessage();
 
             emailMessage.From.Add(new MailboxAddress("Ranaitfleur", _config["MailSettings:Ranaitfleur"]));
             emailMessage.To.Add(new MailboxAddress("Ranaitfleur", to));
             emailMessage.Subject = subject;
-            emailMessage.Body = new TextPart("plain") { Text = body };
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+            //emailMessage.Body = new TextPart(TextFormat.Html) { Text = body };
 
             using (var client = new SmtpClient())
             {

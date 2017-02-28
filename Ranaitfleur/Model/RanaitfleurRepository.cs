@@ -36,6 +36,15 @@ namespace Ranaitfleur.Model
             _context.Add(newSubscriber);
         }
 
+        public bool RemoveSubscriber(string email)
+        {
+            var subscriberToRemove = _context.Subscriberses.FirstOrDefault(s => s.Email.Equals(email));
+            if (subscriberToRemove == null) return false;
+
+            _context.Remove(subscriberToRemove);
+            return true;
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;

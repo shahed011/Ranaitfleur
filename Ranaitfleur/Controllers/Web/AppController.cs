@@ -9,6 +9,8 @@ using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Ranaitfleur.Helper;
 
 namespace Ranaitfleur.Controllers.Web
 {
@@ -19,13 +21,15 @@ namespace Ranaitfleur.Controllers.Web
         private readonly IConfigurationRoot _config;
         private readonly IRanaitfleurRepository _repository;
         private readonly ILogger<AppController> _logger;
+        private readonly IHostingEnvironment _environment;
 
         public AppController(IMailService mailService, IConfigurationRoot config, IRanaitfleurRepository repository,
-            ILogger<AppController> logger)
+            IHostingEnvironment environment, ILogger<AppController> logger)
         {
             _mailService = mailService;
             _config = config;
             _repository = repository;
+            _environment = environment;
             _logger = logger;
         }
         public IActionResult Index()
@@ -76,8 +80,8 @@ namespace Ranaitfleur.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                _mailService.SendMail(_config["MailSettings:ContactAddress"], viewModel.Email, "From Ranaitfleur",
-                    viewModel.Message);
+                _mailService.SendMail(_config["MailSettings:ContactAddress"], "", "From Ranaitfleur",
+                    EmailHelper.GetContactEmailBody(viewModel.Name, viewModel.Email, viewModel.Message, _environment.WebRootPath));
 
                 ModelState.Clear();
                 ViewBag.UserMessage = "Message sent";

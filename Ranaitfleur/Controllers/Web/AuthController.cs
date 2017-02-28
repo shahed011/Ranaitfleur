@@ -2,9 +2,12 @@
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Ranaitfleur.Helper;
 using Ranaitfleur.Model;
+using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
 
 namespace Ranaitfleur.Controllers.Web
@@ -15,13 +18,17 @@ namespace Ranaitfleur.Controllers.Web
         private readonly SignInManager<RanaitfleurUser> _signInManager;
         private readonly UserManager<RanaitfleurUser> _userManager;
         private readonly IRanaitfleurRepository _repository;
+        private readonly IMailService _emailService;
+        private readonly IHostingEnvironment _environment;
 
         public AuthController(SignInManager<RanaitfleurUser> signInManager, UserManager<RanaitfleurUser> userManager,
-            IRanaitfleurRepository repository)
+            IRanaitfleurRepository repository, IMailService emailService, IHostingEnvironment environment)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _repository = repository;
+            _emailService = emailService;
+            _environment = environment;
         }
 
         public IActionResult Login()
@@ -134,7 +141,32 @@ namespace Ranaitfleur.Controllers.Web
 
             _repository.AddSubscriber(newSubscriber);
             await _repository.SaveChangesAsync();
+
+            _emailService.SendMail(newSubscriber.Email, "", "Hello from Ranaitfleur", EmailHelper.GetSubscribeEmailBody(_environment.WebRootPath));
+
             return View((object)"Thank you for subscribing to Ranaitfleur");
+        }
+
+        [AllowAnonymous]
+        public IActionResult Unsubscribe()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Unsubscribe(string email)
+        {
+            var result = _repository.RemoveSubscriber(email);
+
+            var resultString = "Email could not be found to unsubscribe";
+            if (result)
+            {
+                resultString = "You have been unsubscribed from Ranaitfleur";
+                await _repository.SaveChangesAsync();
+            }
+
+            return View((object)resultString);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿{
   "MailSettings": {
     "Ranaitfleur": "postmaster@ranaitfleur.com",
-    "Host": "mail5009.smarterasp.net",
+    "Host": "mail.ranaitfleur.com",//"mail5009.smarterasp.net",
     "Password": "#Gunners#69#",
     "ContactAddress": "info@ranaitfleur.com"
   },

@@ -1,7 +1,9 @@
-﻿namespace Ranaitfleur.Services
+﻿using MimeKit;
+
+namespace Ranaitfleur.Services
 {
     public interface IMailService
     {
-        void SendMail(string to, string form, string subject, string body);
+        void SendMail(string to, string form, string subject, BodyBuilder bodyBuilder);
     }
 }
