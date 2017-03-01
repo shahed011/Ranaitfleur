@@ -142,7 +142,7 @@ namespace Ranaitfleur.Controllers.Web
             _repository.AddSubscriber(newSubscriber);
             await _repository.SaveChangesAsync();
 
-            _emailService.SendMail(newSubscriber.Email, "", "Hello from Ranaitfleur", EmailHelper.GetSubscribeEmailBody(_environment.WebRootPath));
+            await _emailService.SendMail(newSubscriber.Email, "", "Hello from Ranaitfleur", EmailHelper.GetSubscribeEmailBody(_environment.WebRootPath));
 
             return View((object)"Thank you for subscribing to Ranaitfleur");
         }

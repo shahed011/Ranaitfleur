@@ -1,9 +1,10 @@
-﻿using MimeKit;
+﻿using System.Threading.Tasks;
+using MimeKit;
 
 namespace Ranaitfleur.Services
 {
     public interface IMailService
     {
-        void SendMail(string to, string form, string subject, BodyBuilder bodyBuilder);
+        Task SendMail(string to, string form, string subject, BodyBuilder bodyBuilder);
     }
 }

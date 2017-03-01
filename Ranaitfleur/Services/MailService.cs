@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MimeKit;
 using MailKit.Net.Smtp;
@@ -22,7 +23,7 @@ namespace Ranaitfleur.Services
             Debug.WriteLine($"Sending Mail: To:{to} From:{from} Subject:{subject}");
         }
 
-        public void SendMail(string to, string from, string subject, BodyBuilder bodyBuilder)
+        public async Task SendMail(string to, string from, string subject, BodyBuilder bodyBuilder)
         {
             var emailMessage = new MimeMessage();
 
@@ -34,25 +35,18 @@ namespace Ranaitfleur.Services
 
             using (var client = new SmtpClient())
             {
-                client.Connect(_config["MailSettings:Host"], 25, false);
-                client.Authenticate(_config["MailSettings:Ranaitfleur"], _config["MailSettings:Password"]);
-                client.Send(emailMessage);
-                client.Disconnect(true);
+                //client.Connect(_config["MailSettings:Host"], 25, false);
+                //client.Authenticate(_config["MailSettings:Ranaitfleur"], _config["MailSettings:Password"]);
+                //client.Send(emailMessage);
+                //client.Disconnect(true);
 
-                //var credentials = new NetworkCredential
-                //{
-                //    UserName = "postmaster@ranaitfleur.com", // replace with valid value
-                //    Password = "#Gunners#69#", // replace with valid value
-                //};
+                await client.ConnectAsync(_config["MailSettings:Host"], 25, false).ConfigureAwait(false);
+                await client.AuthenticateAsync(_config["MailSettings:Ranaitfleur"], _config["MailSettings:Password"]);
+                await client.SendAsync(emailMessage).ConfigureAwait(false);
+                await client.DisconnectAsync(true).ConfigureAwait(false);
 
                 //// for accepting every ssl certificate, DO NOT USE ON PROD, used for testing with gmail
                 //client.ServerCertificateValidationCallback = (s, certificate, chain, sslPolicyErrors) => true;
-
-                //// check your smtp server setting and amend accordingly:
-                //await client.ConnectAsync("mail5009.smarterasp.net", 25, false).ConfigureAwait(false);
-                //await client.AuthenticateAsync(credentials);
-                //await client.SendAsync(emailMessage).ConfigureAwait(false);
-                //await client.DisconnectAsync(true).ConfigureAwait(false);
             }
         }
     }

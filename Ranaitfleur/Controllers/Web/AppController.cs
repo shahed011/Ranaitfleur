@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -76,11 +77,11 @@ namespace Ranaitfleur.Controllers.Web
         }
 
         [HttpPost]
-        public IActionResult Contact(ContactViewModel viewModel)
+        public async Task<IActionResult> Contact(ContactViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                _mailService.SendMail(_config["MailSettings:ContactAddress"], "", "From Ranaitfleur",
+                await _mailService.SendMail(_config["MailSettings:ContactAddress"], "", "From Ranaitfleur",
                     EmailHelper.GetContactEmailBody(viewModel.Name, viewModel.Email, viewModel.Message, _environment.WebRootPath));
 
                 ModelState.Clear();
