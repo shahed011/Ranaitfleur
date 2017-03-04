@@ -76,6 +76,20 @@ namespace Ranaitfleur.Model
                 item = new Item
                 {
                     ItemType = 2,
+                    Name = "Bustier Pearl Detailed Long Dress",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/DemiCouture/BustierPearlDetailedLongDress/1.jpg,~/img/DemiCouture/BustierPearlDetailedLongDress/2.jpg,~/img/DemiCouture/BustierPearlDetailedLongDress/3.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
                     Name = "Discotheque Dress",
                     NoOfItemInStock = 5,
                     Price = 1000,
@@ -90,12 +104,40 @@ namespace Ranaitfleur.Model
                 item = new Item
                 {
                     ItemType = 2,
+                    Name = "Pink Fish Tale Gown",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/DemiCouture/PinkFishTaleGown/1.jpg,~/img/DemiCouture/PinkFishTaleGown/2.jpg,~/img/DemiCouture/PinkFishTaleGown/3.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
                     Name = "Princess Pearl Jumpsuit",
                     NoOfItemInStock = 5,
                     Price = 1000,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/DemiCouture/PrincessPearlJumpsuit/1.jpg,~/img/DemiCouture/PrincessPearlJumpsuit/2.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Princess Pink Long Skirt",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/DemiCouture/PrincessPinkLongSkirt/1.jpg,~/img/DemiCouture/PrincessPinkLongSkirt/2.jpg",
                     Description1 = "",
                     Description2 = ""
                 };
@@ -132,6 +174,20 @@ namespace Ranaitfleur.Model
                 item = new Item
                 {
                     ItemType = 3,
+                    Name = "Black V Neck Mini Dress",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/ReadyToWear/BlackVNeckMiniDress/1.jpg,~/img/ReadyToWear/BlackVNeckMiniDress/2.jpg,~/img/ReadyToWear/BlackVNeckMiniDress/3.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 3,
                     Name = "Blue Silk Slip Dress",
                     NoOfItemInStock = 5,
                     Price = 1000,
@@ -152,6 +208,20 @@ namespace Ranaitfleur.Model
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/GoldChainBacklessGown/1.jpg,~/img/ReadyToWear/GoldChainBacklessGown/2.jpg",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 3,
+                    Name = "Golden Vegas Neck Mini Dress",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/ReadyToWear/GoldenVegasNeckMiniDress/1.jpg,~/img/ReadyToWear/GoldenVegasNeckMiniDress/2.jpg,~/img/ReadyToWear/GoldenVegasNeckMiniDress/3.jpg",
                     Description1 = "",
                     Description2 = ""
                 };

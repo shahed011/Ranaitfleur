@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Ranaitfleur.Model;
 
 namespace Ranaitfleur.Component
 {
@@ -6,7 +7,7 @@ namespace Ranaitfleur.Component
     {
         public IViewComponentResult Invoke()
         {
-            return View();
+            return View(new Subscribers());
         }
     }
 }
