@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Ranaitfleur.Migrations
 {
-    public partial class AddingIdentity : Migration
+    public partial class CombinedMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,6 +38,53 @@ namespace Ranaitfleur.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description1 = table.Column<string>(nullable: true),
+                    Description2 = table.Column<string>(nullable: true),
+                    Dimentions = table.Column<string>(nullable: true),
+                    ImagePath = table.Column<string>(nullable: true),
+                    ItemType = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    NoOfItemInStock = table.Column<int>(nullable: false),
+                    Price = table.Column<int>(nullable: false),
+                    Weight = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    City = table.Column<string>(nullable: false),
+                    Country = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(maxLength: 160, nullable: false),
+                    GiftWrap = table.Column<bool>(nullable: false),
+                    LastName = table.Column<string>(maxLength: 160, nullable: false),
+                    Line1 = table.Column<string>(nullable: false),
+                    Line2 = table.Column<string>(nullable: true),
+                    Line3 = table.Column<string>(nullable: true),
+                    PaymentTransactionId = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(maxLength: 24, nullable: true),
+                    Postcode = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    UserName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -63,6 +110,19 @@ namespace Ranaitfleur.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Subscriberses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subscriberses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -81,6 +141,28 @@ namespace Ranaitfleur.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItemsLine",
+                columns: table => new
+                {
+                    OrderItemsLineId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ItemId = table.Column<int>(nullable: false),
+                    OrderId = table.Column<int>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
+                    Size = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItemsLine", x => x.OrderItemsLineId);
+                    table.ForeignKey(
+                        name: "FK_OrderItemsLine_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -151,7 +233,8 @@ namespace Ranaitfleur.Migrations
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
-                column: "NormalizedName");
+                column: "NormalizedName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -172,6 +255,11 @@ namespace Ranaitfleur.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItemsLine_OrderId",
+                table: "OrderItemsLine",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -203,10 +291,22 @@ namespace Ranaitfleur.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Items");
+
+            migrationBuilder.DropTable(
+                name: "OrderItemsLine");
+
+            migrationBuilder.DropTable(
+                name: "Subscriberses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
         }
     }
 }

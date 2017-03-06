@@ -33,6 +33,7 @@ namespace Ranaitfleur.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
@@ -189,6 +190,8 @@ namespace Ranaitfleur.Migrations
                     b.Property<string>("Postcode");
 
                     b.Property<int>("Status");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("OrderId");
 

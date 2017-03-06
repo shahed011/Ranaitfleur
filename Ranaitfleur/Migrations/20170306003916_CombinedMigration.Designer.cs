@@ -8,8 +8,8 @@ using Ranaitfleur.Model;
 namespace Ranaitfleur.Migrations
 {
     [DbContext(typeof(RanaitfleurContext))]
-    [Migration("20170109230942_OrdersAndSubscribers")]
-    partial class OrdersAndSubscribers
+    [Migration("20170306003916_CombinedMigration")]
+    partial class CombinedMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,7 @@ namespace Ranaitfleur.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
@@ -123,26 +124,6 @@ namespace Ranaitfleur.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Ranaitfleur.Model.CartLine", b =>
-                {
-                    b.Property<int>("CartLineId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("ItemId");
-
-                    b.Property<int?>("OrderId");
-
-                    b.Property<int>("Quantity");
-
-                    b.HasKey("CartLineId");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("CartLine");
-                });
-
             modelBuilder.Entity("Ranaitfleur.Model.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -211,9 +192,31 @@ namespace Ranaitfleur.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<string>("UserName");
+
                     b.HasKey("OrderId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Ranaitfleur.Model.OrderItemsLine", b =>
+                {
+                    b.Property<int>("OrderItemsLineId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ItemId");
+
+                    b.Property<int?>("OrderId");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<int>("Size");
+
+                    b.HasKey("OrderItemsLineId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItemsLine");
                 });
 
             modelBuilder.Entity("Ranaitfleur.Model.RanaitfleurUser", b =>
@@ -316,12 +319,8 @@ namespace Ranaitfleur.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Ranaitfleur.Model.CartLine", b =>
+            modelBuilder.Entity("Ranaitfleur.Model.OrderItemsLine", b =>
                 {
-                    b.HasOne("Ranaitfleur.Model.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId");
-
                     b.HasOne("Ranaitfleur.Model.Order")
                         .WithMany("Lines")
                         .HasForeignKey("OrderId");
