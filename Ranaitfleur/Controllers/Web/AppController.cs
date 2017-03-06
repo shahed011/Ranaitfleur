@@ -41,7 +41,7 @@ namespace Ranaitfleur.Controllers.Web
         public IActionResult Shop(string id)
         {
             var itemType = int.Parse(id);
-            return View(_repository.GetAllDresses().Where(d => d.ItemType == itemType).ToList());
+            return View(Tuple.Create(itemType, _repository.GetAllDresses().Where(d => d.ItemType == itemType).ToList()));
         }
 
         public IActionResult Product(int id)

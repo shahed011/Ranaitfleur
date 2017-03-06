@@ -1,12 +1,12 @@
 ﻿@using System.Threading.Tasks
 @using Ranaitfleur.Helper
-@model IEnumerable<Ranaitfleur.Model.Item>
+@model Tuple<int, List<Ranaitfleur.Model.Item>>
 @{
-    if (Model.Any(i => i.ItemType == 1))
+    if (Model.Item1 == 1)
     {
         ViewBag.Title = "Couture";
     }
-    else if (Model.Any(i => i.ItemType == 2))
+    else if (Model.Item1 == 2)
     {
         ViewBag.Title = "Demi Couture";
     }
@@ -20,7 +20,7 @@
     <h2>@ViewBag.Title</h2>
     <hr class="divider-title">
 
-    @{ foreach (var item in Model)
+    @{ foreach (var item in Model.Item2)
         {
             <div class="col-md-4 col-sm-12">
                 <div class="thumbnail">
