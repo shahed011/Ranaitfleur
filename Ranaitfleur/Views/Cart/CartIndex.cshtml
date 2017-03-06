@@ -56,9 +56,10 @@
         </div>
     </div>
     
-    <form asp-action="Checkout" asp-controller="Order" method="post">
+    <form asp-action="CheckoutOptions" asp-controller="Order" method="post">
         <div class="form-group text-center">
             <a class="btn btn-default" href="@Model.ReturnUrl">Continue shopping</a>
+            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
             <input class="btn btn-success" value="Checkout" type="submit" @(Model.Cart.Lines.Any() ? "" : "disabled=disabled") />
         </div>
     </form>

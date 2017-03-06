@@ -18,6 +18,10 @@ namespace Ranaitfleur.Controllers.Web
 
         public ViewResult CartIndex(string returnUrl)
         {
+            var returnUrlLower = returnUrl.ToLower();
+            if (!returnUrlLower.Contains("shop") && !returnUrlLower.Contains("product"))
+                returnUrl = "\\";
+
             return View(new CartIndexViewModel
             {
                 Cart = _cart,

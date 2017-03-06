@@ -77,6 +77,14 @@ ul li {
     padding-bottom: 90pt;
 }
 
+.checkoutOption {
+    font-size: 20px;
+}
+
+.checkoutOption a {
+    text-decoration: none;
+}
+
 #topComponents {
     text-align: center;
 }

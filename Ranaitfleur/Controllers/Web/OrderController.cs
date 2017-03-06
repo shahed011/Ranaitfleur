@@ -34,8 +34,20 @@ namespace Ranaitfleur.Controllers.Web
         //    }
         //    return RedirectToAction(nameof(List));
         //}
+        public IActionResult CheckoutOptions(string returnUrl)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction(nameof(Checkout));
+            }
 
-        public ViewResult Checkout() => View(new Order());
+            return View();
+        }
+
+        public IActionResult Checkout()
+        {
+            return View(new Order());
+        }
 
         [HttpPost]
         public async Task<IActionResult> Checkout(Order order)
@@ -56,6 +68,12 @@ namespace Ranaitfleur.Controllers.Web
                         Quantity = line.Quantity
                     });
                 }
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    order.UserName = User.Identity.Name;
+                }
+
                 await _repository.SaveOrder(order);
 
                 return RedirectToAction(nameof(Payments), new { orderId = order.OrderId });

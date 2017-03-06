@@ -31,11 +31,13 @@ namespace Ranaitfleur.Controllers.Web
             _environment = environment;
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("MyAccount", "App");
+                return string.IsNullOrEmpty(returnUrl)
+                        ? RedirectToAction("MyAccount", "App")
+                        : (IActionResult)Redirect(returnUrl);
             }
 
             return View();
@@ -46,16 +48,20 @@ namespace Ranaitfleur.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                var signInResult = await _signInManager.PasswordSignInAsync(vm.Username, vm.Password, true, false);
-
-                if (signInResult.Succeeded)
+                var user = await _userManager.FindByEmailAsync(vm.Email);
+                if (user != null)
                 {
-                    return string.IsNullOrEmpty(returnUrl)
-                        ? RedirectToAction("MyAccount", "App")
-                        : (IActionResult)Redirect(returnUrl);
+                    var signInResult = await _signInManager.PasswordSignInAsync(user.UserName, vm.Password, true, false);
+
+                    if (signInResult.Succeeded)
+                    {
+                        return string.IsNullOrEmpty(returnUrl)
+                            ? RedirectToAction("MyAccount", "App")
+                            : (IActionResult) Redirect(returnUrl);
+                    }
                 }
 
-                ModelState.AddModelError("", "Username or password incorrect");
+                ModelState.AddModelError("", "Email or password incorrect");
             }
 
             return View();
@@ -79,7 +85,7 @@ namespace Ranaitfleur.Controllers.Web
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +98,11 @@ namespace Ranaitfleur.Controllers.Web
                         var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, true, false);
 
                         if (signInResult.Succeeded)
-                            return RedirectToAction("MyAccount", "App");
+                        {
+                            return string.IsNullOrEmpty(returnUrl)
+                                ? RedirectToAction("MyAccount", "App")
+                                : (ActionResult) Redirect(returnUrl);
+                        }
                     }
                     else
                     {

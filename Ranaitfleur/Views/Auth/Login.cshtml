@@ -14,9 +14,9 @@
         <form method="post" novalidate>
             <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control"/>
-                <span asp-validation-for="Username" class="text-muted"></span>
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control"/>
+                <span asp-validation-for="Email" class="text-muted"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
@@ -36,6 +36,6 @@
     <div class="col-md-4">
         <h3 class="text-left">Don't have an account?</h3>
         <br/>
-        <a asp-controller="Auth" asp-action="Register" class="btn btn-default text-left">Create account</a>
+        <a asp-controller="Auth" asp-action="Register" asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()" class="btn btn-default text-left">Create account</a>
     </div>
 </div>

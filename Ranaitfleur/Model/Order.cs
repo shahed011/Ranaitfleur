@@ -11,6 +11,8 @@ namespace Ranaitfleur.Model
         public int OrderId { get; set; }
         [BindNever]
         public ICollection<OrderItemsLine> Lines { get; set; }
+        [BindNever]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "First Name is required")]
         [DisplayName("First Name")]

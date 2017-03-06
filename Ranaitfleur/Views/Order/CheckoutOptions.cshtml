@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Check out as ...";
+}
+
+<div class="text-center checkoutOption mainBody">
+    <div>Please <a asp-controller="Auth" asp-action="Login" asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
+            <strong>log in</strong>
+        </a> or <a asp-controller="Order" asp-action="Checkout">
+            <strong>checkout as guest</strong>
+        </a>
+    </div>
+</div>
