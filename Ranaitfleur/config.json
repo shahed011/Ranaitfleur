@@ -6,8 +6,8 @@
     "ContactAddress": "info@ranaitfleur.com"
   },
   "ConnectionStrings": {
-    //"RanaitfleurContextConnection": "Data Source=DESKTOP-PLGVP20;Database=RanaitfleurDb;Trusted_Connection=true;Integrated Security=true;"
-    "RanaitfleurContextConnection": "Server=(localdb)\\MSSQLLocalDB;Database=RanaitfleurDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+    "RanaitfleurContextConnection": "Data Source=DESKTOP-PLGVP20;Database=RanaitfleurDb;Trusted_Connection=true;Integrated Security=true;"
+    //"RanaitfleurContextConnection": "Server=(localdb)\\MSSQLLocalDB;Database=RanaitfleurDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
     //"RanaitfleurContextConnection": "Data Source=SQL5031.SmarterASP.NET;Initial Catalog=DB_A1855E_Ranaitfleur;User Id=DB_A1855E_Ranaitfleur_admin;Password=#Gunners#69#;"
   }
 }

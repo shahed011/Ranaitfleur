@@ -1,62 +1,45 @@
 ﻿@using System.Threading.Tasks
 @using Ranaitfleur.Helper
-@model IEnumerable<Ranaitfleur.Model.CartLine>
+
+@model Ranaitfleur.ViewModels.OrderSummaryViewModel
 @{
     ViewBag.Title = "Payment";
-    var total = Model.Select(l => l.Item.Price * l.Quantity).Sum();
 }
-@section scripts {
-    <script src="https://pi-test.sagepay.com/api/v1/js/sagepay.js"></script>
 
-    <script>
-        var tokenReceivedCallback = function (tokenisationResult) {
-            if (tokenisationResult.success) {
-                $("#cardIdentifier").val(tokenisationResult.cardIdentifier);
-                $('#paymentForm').submit();
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="row cart-row text-center">Your Order</div>
+            @foreach (var line in Model.Orders)
+            {
+                <div class="row cart-row">
+                    <div class="col-md-6 text-center truncate">@line.Item.Name</div>
+                    <div class="col-md-4 text-center">@line.Quantity</div>
+                    <div class="col-md-2 text-center">@((line.Item.Price * line.Quantity).ToString("C", CulturesHelper.UnitedKingdom))</div>
+                </div>
             }
-        };
+            <div class="row cart-row text-center">Delivery</div>
+            <div class="row cart-row">Delivery address here</div>
+            <div class="row cart-row text-center">Total to pay : @Model.TotalPrice</div>
+        </div>
+    </div>
+</div>
 
-        var sagePay = sagepayCheckout({
-            merchantSessionKey: '@ViewBag.MerchantSessionKey',
-            containerSelector: '#payment-details',
-            onTokenise: tokenReceivedCallback
-        });
 
-        $("#submitBtn").click(function () {
-            sagePay.tokenise();
-        });
-    </script>
-}
-
-<form id="paymentForm" asp-controller="Order" asp-action="Payments">
-    @Html.AntiForgeryToken()
-
+<form id="paymentForm" method="post" action="@Model.PaymentUrl">
     <div class="row">
         <div class="col-md-7 col-sm-12">
             <div>
                 <img src="~/img/SagePayLogo.jpg" class="img-responsive center-block" alt="Sagepay Logo">
             </div>
-            <div id="payment-details"></div>
             <div>
                 <br />
-                <button id="submitBtn" type="button" class="btn btn-success center-block">Submit</button>
+                <button id="submitBtn" type="submit" class="btn btn-success center-block">Pay</button>
             </div>
         </div>
-        <div class="col-md-5 col-sm-12">
-            <div class="row cart-row text-center">Your Order</div>
-            @foreach (var line in Model)
-            {
-                <div class="row cart-row">
-                    <div class="col-md-6 text-center truncate">@line.Item.Name</div>
-                    <div class="col-md-4 text-center">@line.Quantity</div>
-                    <div class="col-md-2 text-center">@((line.Item.Price*line.Quantity).ToString("C", CulturesHelper.UnitedKingdom))</div>
-                </div>
-            }
-            <div class="row cart-row text-center">Total to pay : @total.ToString("C", CulturesHelper.UnitedKingdom)</div>
-        </div>
     </div>
-    <input id="cardIdentifier" type="hidden" name="cardIdentifier" />
-    <input id="sessionId" type="hidden" name="sessionId" value="@ViewBag.MerchantSessionKey" />
-    <input id="orderId" type="hidden" name="orderId" value="@ViewBag.OrderId" />
-    <input id="amount" type="hidden" name="amount" value="@total"/>
+    <input id="VPSProtocol" type="hidden" name="VPSProtocol" value="3.00" />
+    <input id="TxType" type="hidden" name="TxType" value="PAYMENT" />
+    <input id="VendorName" type="hidden" name="VendorName" value="@Model.VendorName" />
+    <input id="Crypt" type="hidden" name="Crypt" value="@Model.Crypt"/>
 </form>
