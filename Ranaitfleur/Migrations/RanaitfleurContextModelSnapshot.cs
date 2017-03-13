@@ -58,6 +58,56 @@ namespace Ranaitfleur.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -156,38 +206,71 @@ namespace Ranaitfleur.Migrations
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("City")
+                    b.Property<string>("BillCity")
                         .IsRequired();
 
-                    b.Property<string>("Country")
+                    b.Property<string>("BillCountry")
                         .IsRequired();
 
-                    b.Property<string>("Email")
+                    b.Property<string>("BillEmail")
                         .IsRequired();
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("BillFirstName")
                         .IsRequired()
                         .HasMaxLength(160);
+
+                    b.Property<string>("BillLastName")
+                        .IsRequired()
+                        .HasMaxLength(160);
+
+                    b.Property<string>("BillLine1")
+                        .IsRequired();
+
+                    b.Property<string>("BillLine2");
+
+                    b.Property<string>("BillLine3");
+
+                    b.Property<string>("BillPhone")
+                        .HasMaxLength(24);
+
+                    b.Property<string>("BillPostcode");
+
+                    b.Property<bool>("BillSameAsShip");
+
+                    b.Property<DateTime>("DateTime");
 
                     b.Property<bool>("GiftWrap");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("PaymentTransactionId");
+
+                    b.Property<string>("ShipCity")
+                        .IsRequired();
+
+                    b.Property<string>("ShipCountry")
+                        .IsRequired();
+
+                    b.Property<string>("ShipEmail")
+                        .IsRequired();
+
+                    b.Property<string>("ShipFirstName")
                         .IsRequired()
                         .HasMaxLength(160);
 
-                    b.Property<string>("Line1")
+                    b.Property<string>("ShipLastName")
+                        .IsRequired()
+                        .HasMaxLength(160);
+
+                    b.Property<string>("ShipLine1")
                         .IsRequired();
 
-                    b.Property<string>("Line2");
+                    b.Property<string>("ShipLine2");
 
-                    b.Property<string>("Line3");
+                    b.Property<string>("ShipLine3");
 
-                    b.Property<string>("PaymentTransactionId");
-
-                    b.Property<string>("Phone")
+                    b.Property<string>("ShipPhone")
                         .HasMaxLength(24);
 
-                    b.Property<string>("Postcode");
+                    b.Property<string>("ShipPostcode");
 
                     b.Property<int>("Status");
 
@@ -218,56 +301,6 @@ namespace Ranaitfleur.Migrations
                     b.ToTable("OrderItemsLine");
                 });
 
-            modelBuilder.Entity("Ranaitfleur.Model.RanaitfleurUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers");
-                });
-
             modelBuilder.Entity("Ranaitfleur.Model.Subscribers", b =>
                 {
                     b.Property<int>("Id")
@@ -291,7 +324,7 @@ namespace Ranaitfleur.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Ranaitfleur.Model.RanaitfleurUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -299,7 +332,7 @@ namespace Ranaitfleur.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Ranaitfleur.Model.RanaitfleurUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -312,7 +345,7 @@ namespace Ranaitfleur.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Ranaitfleur.Model.RanaitfleurUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -1,25 +1,29 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Ranaitfleur.Model
 {
     public class RanaitfleurContextSeedData
     {
         private readonly RanaitfleurContext _context;
-        private readonly UserManager<RanaitfleurUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RanaitfleurContextSeedData(RanaitfleurContext context, UserManager<RanaitfleurUser> userManager)
+        public RanaitfleurContextSeedData(RanaitfleurContext context, UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public async Task EnsureSeedData()
         {
             if (await _userManager.FindByEmailAsync("shahed@ranaitfleur.com") == null)
             {
-                var user = new RanaitfleurUser
+                var user = new IdentityUser
                 {
                     UserName = "Shahed",
                     Email = "shahed@ranaitfleur.com",
@@ -27,6 +31,14 @@ namespace Ranaitfleur.Model
                 };
 
                 await _userManager.CreateAsync(user, "#Compaq#11#");
+
+                if (!_roleManager.RoleExistsAsync("Administrator").Result)
+                {
+                    var role = new IdentityRole { Name = "Administrator" };
+                    await _roleManager.CreateAsync(role);
+                }
+
+                _userManager.AddToRoleAsync(user, "Administrator").Wait();
             }
 
             if (!_context.Items.Any())
@@ -34,26 +46,12 @@ namespace Ranaitfleur.Model
                 var item = new Item
                 {
                     ItemType = 2,
-                    Name = "Discotheque Dreams",
-                    NoOfItemInStock = 5,
-                    Price = 2500,
-                    Weight = 0.2f,
-                    Dimentions = "30 x 20 x 20",
-                    ImagePath = "~/img/DemiCouture/DiscothequeDreams/1.jpg",
-                    Description1 = "This Statement-making mini dress is topped by 24 carat gold chain straps, dripping in white sequins, soft cotton lining means you can party all night!  A body-skimming piece is crafted here in London with a fun mini skirt cut, allowing for a comfortable, flexible fit.",
-                    Description2 = ""
-                };
-                _context.Items.Add(item);
-
-                item = new Item
-                {
-                    ItemType = 2,
-                    Name = "Discotheque Dress",
+                    Name = "Black Crushed Velvet Slip With Pearl Bead Straps",
                     NoOfItemInStock = 5,
                     Price = 1000,
                     Weight = 0.0f,
                     Dimentions = "",
-                    ImagePath = "~/img/DemiCouture/DiscothequeDress/1.jpg,~/img/DemiCouture/DiscothequeDress/2.jpg",
+                    ImagePath = "~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/1.jpg,~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/2.jpg",
                     Description1 = "",
                     Description2 = ""
                 };
@@ -62,28 +60,71 @@ namespace Ranaitfleur.Model
                 item = new Item
                 {
                     ItemType = 2,
-                    Name = "Princess Pearl Jumpsuit",
+                    Name = "Black V Neck Mini Dress",
                     NoOfItemInStock = 5,
                     Price = 1000,
                     Weight = 0.0f,
                     Dimentions = "",
-                    ImagePath = "~/img/DemiCouture/PrincessPearlJumpsuit/1.jpg,~/img/DemiCouture/PrincessPearlJumpsuit/2.jpg",
-                    Description1 = "",
-                    Description2 = ""
+                    ImagePath = "~/img/ReadyToWear/BlackVNeckMiniDress/1.jpg,~/img/ReadyToWear/BlackVNeckMiniDress/2.jpg,~/img/ReadyToWear/BlackVNeckMiniDress/3.jpg",
+                    Description1 = @"It’s time for you to rock your fashion look with a contemporary mini-dress that is bursting with personality. 
+                                    Made from a luxury PVC vinyl fabric, the dress has been thoughtfully designed to ensure that style 
+                                    and fit mean that you look your radiant best from every angle.",
+                    Description2 = @"From the V-shaped bust-line and vertical front tucks to the demi-pinch waist and concealed side zip, 
+                                    everything purposely comes together to create a seamless look of daring elegance."
                 };
                 _context.Items.Add(item);
 
                 item = new Item
                 {
                     ItemType = 2,
-                    Name = "Sapphire Lace Pencil Dress",
+                    Name = "Gold Chain Backless Gown",
                     NoOfItemInStock = 5,
                     Price = 1000,
                     Weight = 0.0f,
                     Dimentions = "",
-                    ImagePath = "~/img/DemiCouture/SapphireLacePencilDress/1.jpg,~/img/DemiCouture/SapphireLacePencilDress/2.jpg",
-                    Description1 = "",
-                    Description2 = ""
+                    ImagePath = "~/img/ReadyToWear/GoldChainBacklessGown/1.jpg,~/img/ReadyToWear/GoldChainBacklessGown/2.jpg",
+                    Description1 = @"Recreate an era where glamour and elegance were in vogue, with a dress that exudes daring sophistication.",
+                    Description2 = @"Made from the highest quality silk in a vibrant blue, this head-turning gown has been designed for 
+                                    visual impact. The front swoops to the side in order to add interest without dominating, with the 24- 
+                                    carat gold plated chain straps undoubtedly being the star feature. Leading to a back reveal that 
+                                    portrays your femininity, this is a dress that makes you feel like you deserve only the very best."
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Blue Silk Slip Dress",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/ReadyToWear/BlueSilkSlipDress/1.jpg,~/img/ReadyToWear/BlueSilkSlipDress/2.jpg",
+                    Description1 = @"Refined elegance is not always about intricate detail, with the beauty in this dress exuding from its seamless simplicity. 
+                                    Made from the highest quality silk and styled in an exquisite sapphire blue,
+                                    this is a dress that knows how to flatter,
+                                    with its shaped pinch waist,
+                                    raised back neckline and V - plunge frontage.",
+                    Description2 = @"Comfort ensues courtesy of its ability to simply slip over the head,
+                                    proving that classic clean lines can create contemporary fashion supremacy."
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Thick Strap Backless Gown",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/ReadyToWear/ThickStrapBacklessGown/1.jpg,~/img/ReadyToWear/ThickStrapBacklessGown/2.jpg",
+                    Description1 = @"Achieve that enviable flow as you walk, making heads turn and allowing your inner confidence to be 
+                                    set free. Made from the highest quality silk, this long gown is designed with sheer elegance in mind 
+                                    with absolutely no compromise on design.",
+                    Description2 = @"Swathes of silk are shaped into a demi-sweetheart neckline with a side tuck feature slimming the 
+                                    silhouette. The back is a genius touch of femininity, combining wearability with a back reveal for a 
+                                    look that impresses from each and every angle."
                 };
                 _context.Items.Add(item);
 
@@ -110,98 +151,18 @@ namespace Ranaitfleur.Model
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/DemiCouture/PinkFishTaleGown/1.jpg,~/img/DemiCouture/PinkFishTaleGown/2.jpg,~/img/DemiCouture/PinkFishTaleGown/3.jpg",
-                    Description1 = "",
-                    Description2 = ""
+                    Description1 = @"Capture the elegance of luxury opulent dressing with a dress that is almost too beautiful for words. 
+                                    Made from the highest grade of silk, there is simply no compromising on the amount of material 
+                                    used, with the design respecting shape and wearability in equal measure. The carefully shaped bust-line 
+                                    leads to ruches of silk around the waist, accentuating the figure to both the front and the back.",
+                    Description2 = @"Add to this the pleat effect fishtail and you have a gown that is worthy of accolades, ensuring that 
+                                    when wearing it, you are guaranteed to be complimented and admired for your superior sense of style."
                 };
                 _context.Items.Add(item);
 
                 item = new Item
                 {
-                    ItemType = 3,
-                    Name = "Black Crushed Velvet Slip With Pearl Bead Straps",
-                    NoOfItemInStock = 5,
-                    Price = 1000,
-                    Weight = 0.0f,
-                    Dimentions = "",
-                    ImagePath = "~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/1.jpg,~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/2.jpg",
-                    Description1 = "",
-                    Description2 = ""
-                };
-                _context.Items.Add(item);
-
-                item = new Item
-                {
-                    ItemType = 3,
-                    Name = "Black V Neck Mini Dress",
-                    NoOfItemInStock = 5,
-                    Price = 1000,
-                    Weight = 0.0f,
-                    Dimentions = "",
-                    ImagePath = "~/img/ReadyToWear/BlackVNeckMiniDress/1.jpg,~/img/ReadyToWear/BlackVNeckMiniDress/2.jpg,~/img/ReadyToWear/BlackVNeckMiniDress/3.jpg",
-                    Description1 = "",
-                    Description2 = ""
-                };
-                _context.Items.Add(item);
-
-                item = new Item
-                {
-                    ItemType = 3,
-                    Name = "Blue Silk Slip Dress",
-                    NoOfItemInStock = 5,
-                    Price = 1000,
-                    Weight = 0.0f,
-                    Dimentions = "",
-                    ImagePath = "~/img/ReadyToWear/BlueSilkSlipDress/1.jpg,~/img/ReadyToWear/BlueSilkSlipDress/2.jpg",
-                    Description1 = "",
-                    Description2 = ""
-                };
-                _context.Items.Add(item);
-
-                item = new Item
-                {
-                    ItemType = 3,
-                    Name = "Duchess Royal",
-                    NoOfItemInStock = 5,
-                    Price = 2500,
-                    Weight = 0.95f,
-                    Dimentions = "30 x 20 x 20",
-                    ImagePath = "~/img//ReadyToWear/DuchessRoyal/1.jpg",
-                    Description1 = "This  elegant gown redefines femininity, hand crafted  in decadent habotai silk with a flattering deep V meeting at a snitched waist band, elongating the leg the gown flows from the waist giving the silk a lustrous fluid shape.",
-                    Description2 = "Model Wears UK size 8, slightly tighter on the waist. Recommend taking one size bigger."
-                };
-                _context.Items.Add(item);
-
-                item = new Item
-                {
-                    ItemType = 3,
-                    Name = "Gold Chain Backless Gown",
-                    NoOfItemInStock = 5,
-                    Price = 1000,
-                    Weight = 0.0f,
-                    Dimentions = "",
-                    ImagePath = "~/img/ReadyToWear/GoldChainBacklessGown/1.jpg,~/img/ReadyToWear/GoldChainBacklessGown/2.jpg",
-                    Description1 = "",
-                    Description2 = ""
-                };
-                _context.Items.Add(item);
-
-                item = new Item
-                {
-                    ItemType = 3,
-                    Name = "Golden Vegas Neck Mini Dress",
-                    NoOfItemInStock = 5,
-                    Price = 1000,
-                    Weight = 0.0f,
-                    Dimentions = "",
-                    ImagePath = "~/img/ReadyToWear/GoldenVegasNeckMiniDress/1.jpg,~/img/ReadyToWear/GoldenVegasNeckMiniDress/2.jpg,~/img/ReadyToWear/GoldenVegasNeckMiniDress/3.jpg",
-                    Description1 = "",
-                    Description2 = ""
-                };
-                _context.Items.Add(item);
-
-                item = new Item
-                {
-                    ItemType = 3,
+                    ItemType = 2,
                     Name = "Princess Pink Long Skirt",
                     NoOfItemInStock = 5,
                     Price = 1000,
@@ -215,13 +176,97 @@ namespace Ranaitfleur.Model
 
                 item = new Item
                 {
-                    ItemType = 3,
-                    Name = "Thick Strap Backless Gown",
+                    ItemType = 2,
+                    Name = "Duchess Royal",
+                    NoOfItemInStock = 5,
+                    Price = 2500,
+                    Weight = 0.95f,
+                    Dimentions = "30 x 20 x 20",
+                    ImagePath = "~/img//ReadyToWear/DuchessRoyal/1.jpg",
+                    Description1 = @"With a fluidity of movement that makes it an utter joy to wear, this matt silk dress is the epitome of 
+                                    classy dressing. Cut to ensure maximum flow and movement upon every footstep, this is a dress that 
+                                    respects the feminine form and will flatter and slim.",
+                    Description2 = @"A deep plunge frontage is the height of delicacy, with the dress skimming the hips and leading to a 
+                                    shaped hemline that kisses the calves and ankles. 
+                                    The resultant look is elegance redefined, making you feel wholly feminine and spoilt by such a luxe fabric choice."
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Golden Vegas Neck Mini Dress",
                     NoOfItemInStock = 5,
                     Price = 1000,
                     Weight = 0.0f,
                     Dimentions = "",
-                    ImagePath = "~/img/ReadyToWear/ThickStrapBacklessGown/1.jpg,~/img/ReadyToWear/ThickStrapBacklessGown/2.jpg",
+                    ImagePath = "~/img/ReadyToWear/GoldenVegasNeckMiniDress/1.jpg,~/img/ReadyToWear/GoldenVegasNeckMiniDress/2.jpg,~/img/ReadyToWear/GoldenVegasNeckMiniDress/3.jpg",
+                    Description1 = @"Embrace the vibrancy of life with this stunning mini-dress that exudes character. 
+                                    Made from a luxury PVC vinyl fabric, the dress is shaped to accentuate the figure, with the material 
+                                    allowing freedom of movement and ensuring a flattering fit.",
+                    Description2 = @"Simple in shape but with an overall look that is designed to radiate your individual sense of style, 
+                                    wearing this dress adds confidence, ensuring that you are noticed and admired with every step you take."
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Discotheque Dreams",
+                    NoOfItemInStock = 5,
+                    Price = 2500,
+                    Weight = 0.2f,
+                    Dimentions = "30 x 20 x 20",
+                    ImagePath = "~/img/DemiCouture/DiscothequeDreams/1.jpg",
+                    Description1 = "This Statement-making mini dress is topped by 24 carat gold chain straps, dripping in white sequins, soft cotton lining means you can party all night!  A body-skimming piece is crafted here in London with a fun mini skirt cut, allowing for a comfortable, flexible fit.",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Discotheque Dress",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/DemiCouture/DiscothequeDress/1.jpg,~/img/DemiCouture/DiscothequeDress/2.jpg",
+                    Description1 = @"With an attention to detail that seems incredible to achieve, this couture mini-length dress is most 
+                                    definitely designed to dazzle. A myriad of large white sequins are stitched perfectly in 
+                                    place in order to create movement and capture the light. The emphasis is on movement and 
+                                    wearability, with the dress accentuating the figure whilst still allowing you to dance the night away.",
+                    Description2 = @"The look is finished with bold 24-carat plated chained straps, creating a dress that when worn will 
+                                    create memories of a night when you were most definitely in the limelight."
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Princess Pearl Jumpsuit",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/DemiCouture/PrincessPearlJumpsuit/1.jpg,~/img/DemiCouture/PrincessPearlJumpsuit/2.jpg",
+                    Description1 = @"Delicate yet striking, this shorter-length made to order dress is an exquisite array of fineness, 
+                                    combining detail that is designed to make you feel beautiful to the optimum level of perfection.",
+                    Description2 = @"The reveal lace upper is gently scattered with pearls and sapphires to create a look of refined 
+                                    innocence. Balanced by the high-waisted skirt that flows seamlessly from the top to create a 
+                                    masterpiece, this is the dress that you dreamt about made into reality."
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 2,
+                    Name = "Sapphire Lace Pencil Dress",
+                    NoOfItemInStock = 5,
+                    Price = 1000,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "~/img/DemiCouture/SapphireLacePencilDress/1.jpg,~/img/DemiCouture/SapphireLacePencilDress/2.jpg",
                     Description1 = "",
                     Description2 = ""
                 };

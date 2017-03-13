@@ -192,6 +192,52 @@ ul li {
     /*color: #999;*/
 }
 
+.parent { position: relative; }
+
+.parent span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    opacity: 0.5;
+    background: url(../img/Gold_Logo_Tr.png) no-repeat center center;
+}
+
+.img-responsive {
+    margin: 0 auto;
+}
+
+.landingImage {
+    height: 550px;
+    width: 100%;
+}
+
+@media screen and (max-width: 770px) {
+    .landingImage {
+        height: auto;
+        width: Auto;
+    }
+}
+
+.coutureImage {
+    height: 450px;
+}
+
+@media screen and (max-width: 770px) {
+    .coutureImage {
+        height: auto;
+    }
+}
+
+.landingCaptionImage {
+    width: 60px;
+    height: 70px;
+    opacity: 0.6;
+}
+
 /*.footerItem {
     margin-top: 20px;
     margin-left: 50px
@@ -227,12 +273,13 @@ ul li {
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 /* Carousel base class */
-.carousel {
+#myCarousel {
   margin-bottom: 60px;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
-  z-index: 1;
+    z-index: 1;
+    color: #e6ae48;
 }
 
 /* Declare heights because of positioning of img element */
@@ -247,18 +294,18 @@ ul li {
 }*/
 
 #myCarousel .item {
-  height: 450px;
-  background-color:#555;
+  height: 550px;
+  background-color: transparent;
 }
 
-#myCarousel img {
-    min-height: 450px;
+#myCarousel .carouselImg {
+    min-height: 550px;
     max-height: 100%;
 }
 
 #shopCarousel1 .item, #shopCarousel2 .item, #shopCarousel3 .item {
   height: 350px;
-  background-color:#555;
+  background-color: transparent;
 }
 
 #shopCarousel1 img, #shopCarousel2 img, #shopCarousel3 img {
@@ -510,4 +557,13 @@ div.thumbnail {
 	z-index: 9999;
 	background: 50% 50% no-repeat rgb(249,249,249);
     /*url("../img/load.gif")*/
+}
+
+/*------------------------------------------------*/
+.disabledDiv {
+    
+}
+
+.enableDiv {
+    
 }

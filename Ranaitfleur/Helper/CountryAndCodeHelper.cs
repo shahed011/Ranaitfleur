@@ -22,10 +22,12 @@ namespace Ranaitfleur.Helper
             //return "";
         }
 
-        public static List<string> GetAllCountries()
+        public static List<string> GetAllCountriesUkFirst()
         {
             var allCountryNames = CodeToCountryMap.Values.ToList();
+            allCountryNames.Remove("United Kingdom");
             allCountryNames.Sort();
+            allCountryNames.Insert(0, "United Kingdom");
             return allCountryNames;
         }
 

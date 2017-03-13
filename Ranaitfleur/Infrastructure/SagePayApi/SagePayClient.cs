@@ -79,15 +79,15 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
                     },
                 },
                 VendorTxCode = order.OrderId.ToString(),
-                CustomerFirstName = order.FirstName,
-                CustomerLastName = order.LastName,
+                CustomerFirstName = order.BillFirstName,
+                CustomerLastName = order.BillLastName,
                 BillingAddress = new BillingAddress
                 {
-                    Address1 = order.Line1,
-                    Address2 = order.Line2 + " " + order.Line3,
-                    City = order.City,
-                    Country = CountryAndCodeHelper.GetCountryCodeFromName(order.Country), //Two letter country code defined in ISO 3166-1
-                    PostalCode = order.Postcode
+                    Address1 = order.BillLine1,
+                    Address2 = order.BillLine2 + " " + order.BillLine3,
+                    City = order.BillCity,
+                    Country = CountryAndCodeHelper.GetCountryCodeFromName(order.BillCountry), //Two letter country code defined in ISO 3166-1
+                    PostalCode = order.BillPostcode
                     // State - Two letter state code defined in ISO 3166-2. Required when shippingCountry is US.
                 }
             };

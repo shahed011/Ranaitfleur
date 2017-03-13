@@ -53,6 +53,10 @@ namespace Ranaitfleur.Controllers.Web
                 var restOfTheSameDresses = allDresses.Where(d => d.ItemType == item.ItemType).ToList();
 
                 restOfTheSameDresses.Remove(item);
+
+                var random = new Random();
+                restOfTheSameDresses = restOfTheSameDresses.OrderBy(user => random.Next()).ToList();
+
                 restOfTheSameDresses.Insert(0, item);
                 var itemsAsViewModel = Mapper.Map<List<ItemViewModel>>(restOfTheSameDresses);
                 return View(itemsAsViewModel);
@@ -63,12 +67,6 @@ namespace Ranaitfleur.Controllers.Web
                 return View();
                 //return Redirect("/error"); // Need to make one
             }
-        }
-
-        [Authorize]
-        public IActionResult MyAccount()
-        {
-            return View();
         }
 
         public IActionResult Contact()

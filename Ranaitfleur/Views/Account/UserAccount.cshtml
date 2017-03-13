@@ -1,0 +1,77 @@
+﻿@using System.Threading.Tasks
+@using Ranaitfleur.Helper
+@model IEnumerable<Ranaitfleur.ViewModels.AccountViewModel>
+@{
+    ViewBag.Title = "My Account";
+}
+
+<div>
+    @if (Model.Any())
+    {
+        for (var i = 0; i < Model.Count(); i++)
+        {
+            @*<div class="accordion">
+                <section class="accordion-group">
+                    <header class="accordion-heading">
+                        <a class="accordion-toggle collapse" href="#kscott" data-parent="#about" data-toggle="collapse"><i class="fa-arrow-down"></i>K. Scott Allen</a>
+                    </header>
+                    <div class="in collapse" id="kscott" style="height: auto;">
+                        <div class="accordion-inner">
+                            @foreach (var line in Model.ElementAt(i).Lines)
+                            {
+                                <div class="row">
+                                    <div class="col-md-2 text-center">
+                                        <img src="@Url.Content(line.Item.ImagePath.Split(',').FirstOrDefault())"
+                                             alt="@line.Item.Name"
+                                             class="img-responsive img-thumbnail">
+                                        @line.Item.Name <br/> (Size: @line.Size)
+                                    </div>
+                                    <div class="col-md-2 text-center">@line.Quantity</div>
+                                    <div class="col-md-2 text-center">@line.Item.Price.ToString("C", CulturesHelper.UnitedKingdom)</div>
+                                    <div class="col-md-2 text-center">@((line.Quantity*line.Item.Price).ToString("C", CulturesHelper.UnitedKingdom))</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </section>
+            </div>*@
+        }
+        @*<table class="table table-bordered table-striped">
+            <tr><th>Name</th><th>Zip</th><th colspan="2">Details</th><th></th><th></th></tr>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.UserName</td>
+                    <td>@order.GiftWrap</td>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Size</th>
+
+                    <td>
+                        <form asp-action="UpdateOrderStatus" method="post">
+                            <input type="hidden" name="orderId" value="@order.OrderId" />
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Ship
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                foreach (var line in order.Lines)
+                {
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>@line.ItemId</td>
+                        <td>@line.Quantity</td>
+                        <td>@line.Size</td>
+                        <td></td>
+                    </tr>
+                }
+            }
+        </table>*@
+    }
+    else
+    {
+        <div class="text-center">No Unshipped Orders</div>
+    }
+</div>

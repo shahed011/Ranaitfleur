@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Ranaitfleur.Helper;
 using Ranaitfleur.Model;
@@ -15,17 +16,19 @@ namespace Ranaitfleur.Controllers.Web
     //[RequireHttps]
     public class AuthController : Controller
     {
-        private readonly SignInManager<RanaitfleurUser> _signInManager;
-        private readonly UserManager<RanaitfleurUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRanaitfleurRepository _repository;
         private readonly IMailService _emailService;
         private readonly IHostingEnvironment _environment;
 
-        public AuthController(SignInManager<RanaitfleurUser> signInManager, UserManager<RanaitfleurUser> userManager,
-            IRanaitfleurRepository repository, IMailService emailService, IHostingEnvironment environment)
+        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager, IRanaitfleurRepository repository, IMailService emailService, IHostingEnvironment environment)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _roleManager = roleManager;
             _repository = repository;
             _emailService = emailService;
             _environment = environment;
@@ -36,8 +39,10 @@ namespace Ranaitfleur.Controllers.Web
             if (User.Identity.IsAuthenticated)
             {
                 return string.IsNullOrEmpty(returnUrl)
-                        ? RedirectToAction("MyAccount", "App")
-                        : (IActionResult)Redirect(returnUrl);
+                    ? User.IsInRole("NormalUser")
+                        ? RedirectToAction("UserAccount", "Account")
+                        : RedirectToAction("AdminAccount", "Account")
+                    : (IActionResult) Redirect(returnUrl);
             }
 
             return View();
@@ -56,7 +61,9 @@ namespace Ranaitfleur.Controllers.Web
                     if (signInResult.Succeeded)
                     {
                         return string.IsNullOrEmpty(returnUrl)
-                            ? RedirectToAction("MyAccount", "App")
+                            ? User.IsInRole("NormalUser")
+                                ? RedirectToAction("UserAccount", "Account")
+                                : RedirectToAction("AdminAccount", "Account")
                             : (IActionResult) Redirect(returnUrl);
                     }
                 }
@@ -91,17 +98,30 @@ namespace Ranaitfleur.Controllers.Web
             {
                 if (await _userManager.FindByEmailAsync(model.Email) == null)
                 {
-                    var user = new RanaitfleurUser {UserName = model.Username, Email = model.Email};
+                    var user = new IdentityUser { UserName = model.Username, Email = model.Email};
                     var result = await _userManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
+                        if (!_roleManager.RoleExistsAsync("NormalUser").Result)
+                        {
+                            var role = new IdentityRole {Name = "NormalUser"};
+                            var roleResult = _roleManager.CreateAsync(role).Result;
+                            if (!roleResult.Succeeded)
+                            {
+                                ModelState.AddModelError("", "Error while creating role!");
+                                return View(model);
+                            }
+                        }
+
+                        _userManager.AddToRoleAsync(user, "NormalUser").Wait();
+
                         var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, true, false);
 
                         if (signInResult.Succeeded)
                         {
                             return string.IsNullOrEmpty(returnUrl)
-                                ? RedirectToAction("MyAccount", "App")
-                                : (ActionResult) Redirect(returnUrl);
+                                ? RedirectToAction("UserAccount", "Account")
+                                : (ActionResult)Redirect(returnUrl);
                         }
                     }
                     else

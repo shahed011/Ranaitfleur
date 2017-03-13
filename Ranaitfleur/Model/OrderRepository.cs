@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -35,7 +36,12 @@ namespace Ranaitfleur.Model
 
         public Task<Order> GetOrder(int orderId)
         {
-            return _context.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return _context.Orders.Include(o => o.Lines).FirstOrDefaultAsync(o => o.OrderId == orderId);
+        }
+
+        public Task<List<Order>> GetOrdersByUserName(string userName)
+        {
+            return _context.Orders.Where(o => o.UserName == userName).Include(o => o.Lines).ToListAsync();
         }
     }
 }

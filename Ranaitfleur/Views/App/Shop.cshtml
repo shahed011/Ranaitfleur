@@ -20,7 +20,50 @@
     <h2>@ViewBag.Title</h2>
     <hr class="divider-title">
 
-    @{ foreach (var item in Model.Item2)
+    @if (Model.Item1 == 1)
+    {
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="text-center">
+                    <img class="img-responsive coutureImage" src="~/img/Landing/Couture.jpg" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="text-center">
+                    Our signature style is to make figure flattering feminine pieces enhanced by using precious gems, diamonds,  crystals and precious metals. Creating a timelessly sculpted piece exuding elegance with a fashionable edge. 
+                </div>
+                <br />
+                <div class="text-center">
+                    To start the processin our London show room we would like to disscuss your personal style to fully understand what you wish to achieve, helping us to build a personal profile, advising you on the best shape for your figureand colouring, we will also need to take various measurements, configurations and detailed notes are taken to ensure the perfect fit.
+                </div>
+                <br />
+                <br />
+                <div class="text-center">
+                    <h5><strong>FULLY BESPOKE</strong></h5>
+                </div>
+                <div class="text-center">
+                    "Bespoke" in the strictest sense means made from scratch, using paper patterns cut specifically for you. No modified pattern blocks are involved at all. Our skilled team can sketch and create any design of ensemble you wish, so if you want diamond crusted lapels, you've got it.
+                </div>
+                <br />
+                <div class="text-center">
+                    You can expect to have a basted fitting. This is where the suit is made in calico by our UK workshops, then a wide variety of modifications are made from here onwards, fine-tuning your piece to perfection. This is why you will have many more fittings than with made-to-measure – up to five in some cases allowing you to be fully involved in the evolution of the piece.
+                </div>
+                <br />
+                <br />
+                <div class="text-center">
+                    <h5><strong>MADE TO MEASURE</strong></h5>
+                </div>
+                <div class="text-center">
+                    This generally means slightly modified from our existing designs, this can be anything to adding sleeves, changing the gem stones or even colour. At Ranait Fleur , made-to-measure we can modify anything you might like or work from an idea of a piece you like. This makes it as close to bespoke as possible, bar the basted fittings and the fusing. Needless to say, knowing how to create the right made-to-measure piece with all these modifications takes skill and knowledge; it isn’t something done by simply handing someone a measuring tape.
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.Item1 == 2)
+    {
+        foreach (var item in Model.Item2)
         {
             <div class="col-md-4 col-sm-12">
                 <div class="thumbnail">
@@ -45,7 +88,7 @@
                     </a>
                 </div>
             </div>
-            @*<div class="col-md-4">
+        @*<div class="col-md-4">
                 <div class="womcoll">
                     <a asp-controller="App" asp-action="Product" asp-route-id="@item.Id">
                         <figure class="img-responsive">
@@ -63,5 +106,11 @@
                 </div>
             </div>*@
         }
+    }
+    else
+    {
+        <div class="text-center">
+            We will add products to this catagory soon. Please check back.
+        </div>
     }
 </div>

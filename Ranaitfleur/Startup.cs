@@ -59,7 +59,7 @@ namespace Ranaitfleur
             //});
             //.AddJsonOptions(config =>
             //        config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
-            services.AddIdentity<RanaitfleurUser, IdentityRole>(config =>
+            services.AddIdentity<IdentityUser, IdentityRole>(config =>
             {
                 // Sign in settings
                 //config.SignIn.RequireConfirmedEmail = true;

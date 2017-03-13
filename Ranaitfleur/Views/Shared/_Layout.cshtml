@@ -49,10 +49,10 @@
                         <a asp-controller="App" asp-action="Shop" asp-route-id="1" class="btn btn-sm btn-link">Couture</a>
                     </li>
                     <li>
-                        <a asp-controller="App" asp-action="Shop" asp-route-id="2" class="btn btn-sm btn-link">Demi couture</a>
+                        <a asp-controller="App" asp-action="Shop" asp-route-id="2" class="btn btn-sm btn-link">Women</a>
                     </li>
                     <li>
-                        <a asp-controller="App" asp-action="Shop" asp-route-id="3" class="btn btn-sm btn-link">Ready to wear</a>
+                        <a asp-controller="App" asp-action="Shop" asp-route-id="3" class="btn btn-sm btn-link">Men</a>
                     </li>
                     @*<li><a asp-controller="App" asp-action="Payments"><b>Payments</b></a></li>*@
                     @if (User.Identity.IsAuthenticated)
@@ -64,7 +64,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a asp-controller="App" asp-action="MyAccount" class="btn btn-sm btn-link">
+                        <a asp-controller="Auth" asp-action="Login" class="btn btn-sm btn-link">
                             @if (User.Identity.IsAuthenticated)
                             {
                                 @User.Identity.Name

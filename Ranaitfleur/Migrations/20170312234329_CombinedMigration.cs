@@ -24,6 +24,31 @@ namespace Ranaitfleur.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
@@ -64,49 +89,36 @@ namespace Ranaitfleur.Migrations
                 {
                     OrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    City = table.Column<string>(nullable: false),
-                    Country = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 160, nullable: false),
+                    BillCity = table.Column<string>(nullable: false),
+                    BillCountry = table.Column<string>(nullable: false),
+                    BillEmail = table.Column<string>(nullable: false),
+                    BillFirstName = table.Column<string>(maxLength: 160, nullable: false),
+                    BillLastName = table.Column<string>(maxLength: 160, nullable: false),
+                    BillLine1 = table.Column<string>(nullable: false),
+                    BillLine2 = table.Column<string>(nullable: true),
+                    BillLine3 = table.Column<string>(nullable: true),
+                    BillPhone = table.Column<string>(maxLength: 24, nullable: true),
+                    BillPostcode = table.Column<string>(nullable: true),
+                    BillSameAsShip = table.Column<bool>(nullable: false),
+                    DateTime = table.Column<DateTime>(nullable: false),
                     GiftWrap = table.Column<bool>(nullable: false),
-                    LastName = table.Column<string>(maxLength: 160, nullable: false),
-                    Line1 = table.Column<string>(nullable: false),
-                    Line2 = table.Column<string>(nullable: true),
-                    Line3 = table.Column<string>(nullable: true),
                     PaymentTransactionId = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(maxLength: 24, nullable: true),
-                    Postcode = table.Column<string>(nullable: true),
+                    ShipCity = table.Column<string>(nullable: false),
+                    ShipCountry = table.Column<string>(nullable: false),
+                    ShipEmail = table.Column<string>(nullable: false),
+                    ShipFirstName = table.Column<string>(maxLength: 160, nullable: false),
+                    ShipLastName = table.Column<string>(maxLength: 160, nullable: false),
+                    ShipLine1 = table.Column<string>(nullable: false),
+                    ShipLine2 = table.Column<string>(nullable: true),
+                    ShipLine3 = table.Column<string>(nullable: true),
+                    ShipPhone = table.Column<string>(maxLength: 24, nullable: true),
+                    ShipPostcode = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     UserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,28 +153,6 @@ namespace Ranaitfleur.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderItemsLine",
-                columns: table => new
-                {
-                    OrderItemsLineId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ItemId = table.Column<int>(nullable: false),
-                    OrderId = table.Column<int>(nullable: true),
-                    Quantity = table.Column<int>(nullable: false),
-                    Size = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderItemsLine", x => x.OrderItemsLineId);
-                    table.ForeignKey(
-                        name: "FK_OrderItemsLine_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,6 +220,28 @@ namespace Ranaitfleur.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OrderItemsLine",
+                columns: table => new
+                {
+                    OrderItemsLineId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ItemId = table.Column<int>(nullable: false),
+                    OrderId = table.Column<int>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
+                    Size = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItemsLine", x => x.OrderItemsLineId);
+                    table.ForeignKey(
+                        name: "FK_OrderItemsLine_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
@@ -240,6 +252,17 @@ namespace Ranaitfleur.Migrations
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -260,17 +283,6 @@ namespace Ranaitfleur.Migrations
                 name: "IX_OrderItemsLine_OrderId",
                 table: "OrderItemsLine",
                 column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -5,7 +5,7 @@
     ViewBag.Title = "Checkout";
 
     var countryList = new List<SelectListItem>();
-    foreach (var countryName in CountryAndCodeHelper.GetAllCountries())
+    foreach (var countryName in CountryAndCodeHelper.GetAllCountriesUkFirst())
     {
         countryList.Add(new SelectListItem {Value = countryName, Text = countryName});
     }
@@ -21,69 +21,142 @@
 
 <form method="post">
     <div asp-validation-summary="ModelOnly"></div>
-    <h3>Ship to</h3>
-    <div class="form-group">
-        <label>First Name</label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-muted"></span>
-    </div>
-    <div class="form-group">
-        <label>Last Name</label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-muted"></span>
-    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <h3>Shiping details</h3>
+            <div class="form-group">
+                <label asp-for="ShipFirstName"></label>
+                <input asp-for="ShipFirstName" class="form-control"/>
+                <span asp-validation-for="ShipFirstName" class="text-muted"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShipLastName"></label>
+                <input asp-for="ShipLastName" class="form-control"/>
+                <span asp-validation-for="ShipLastName" class="text-muted"></span>
+            </div>
 
-    <h3>Address</h3>
-    <div class="form-group">
-        <label>Line 1</label>
-        <input asp-for="Line1" class="form-control" />
-        <span asp-validation-for="Line1" class="text-muted"></span>
-    </div>
-    <div class="form-group">
-        <label>Line 2</label>
-        <input asp-for="Line2" class="form-control" />
-        <span asp-validation-for="Line2" class="text-muted"></span>
-    </div>
-    <div class="form-group">
-        <label>Line 3</label>
-        <input asp-for="Line3" class="form-control" />
-        <span asp-validation-for="Line3" class="text-muted"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="City"></label>
-        <input asp-for="City" class="form-control" />
-        <span asp-validation-for="City" class="text-muted"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Postcode"></label>
-        <input asp-for="Postcode" class="form-control" />
-        <span asp-validation-for="Postcode" class="text-muted"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Country"></label>
-        <br/>
-        <select asp-for="Country" asp-items="@countryList"></select>
-        @*<input asp-for="Country" class="form-control" />*@
-        @*<span asp-validation-for="Country" class="text-muted"></span>*@
-    </div>
-    <div class="form-group">
-        <label asp-for="Phone"></label>
-        <input asp-for="Phone" class="form-control" />
-        <span asp-validation-for="Phone" class="text-muted"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-muted"></span>
+            <h3>Address</h3>
+            <div class="form-group">
+                <label>Line 1</label>
+                <input asp-for="ShipLine1" class="form-control"/>
+                <span asp-validation-for="ShipLine1" class="text-muted"></span>
+            </div>
+            <div class="form-group">
+                <label>Line 2</label>
+                <input asp-for="ShipLine2" class="form-control"/>
+                <span asp-validation-for="ShipLine2" class="text-muted"></span>
+            </div>
+            <div class="form-group">
+                <label>Line 3</label>
+                <input asp-for="ShipLine3" class="form-control"/>
+                <span asp-validation-for="ShipLine3" class="text-muted"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShipCity"></label>
+                <input asp-for="ShipCity" class="form-control"/>
+                <span asp-validation-for="ShipCity" class="text-muted"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShipPostcode"></label>
+                <input asp-for="ShipPostcode" class="form-control"/>
+                <span asp-validation-for="ShipPostcode" class="text-muted"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShipCountry"></label>
+                <br/>
+                <select asp-for="ShipCountry" asp-items="@countryList"></select>
+                @*<input asp-for="Country" class="form-control" />*@
+                @*<span asp-validation-for="Country" class="text-muted"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="ShipPhone"></label>
+                <input asp-for="ShipPhone" class="form-control"/>
+                <span asp-validation-for="ShipPhone" class="text-muted"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShipEmail"></label>
+                <input asp-for="ShipEmail" class="form-control"/>
+                <span asp-validation-for="ShipEmail" class="text-muted"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div>
+                <h3>
+                    Billing details &nbsp; &nbsp;
+                    <label style="clear: both">
+                        <input type="checkbox" asp-for="BillSameAsShip" id="billingToggle">
+                        Same as billing details
+                    </label>
+                </h3>
+            </div>
+
+            <div id="billingToggleDiv">
+                <div class="form-group">
+                    <label asp-for="BillFirstName"></label>
+                    <input asp-for="BillFirstName" class="form-control" />
+                    <span asp-validation-for="BillFirstName" class="text-muted"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BillLastName"></label>
+                    <input asp-for="BillLastName" class="form-control" />
+                    <span asp-validation-for="BillLastName" class="text-muted"></span>
+                </div>
+
+                <h3>Address</h3>
+                <div class="form-group">
+                    <label>Line 1</label>
+                    <input asp-for="BillLine1" class="form-control" />
+                    <span asp-validation-for="BillLine1" class="text-muted"></span>
+                </div>
+                <div class="form-group">
+                    <label>Line 2</label>
+                    <input asp-for="BillLine2" class="form-control" />
+                    <span asp-validation-for="BillLine2" class="text-muted"></span>
+                </div>
+                <div class="form-group">
+                    <label>Line 3</label>
+                    <input asp-for="BillLine3" class="form-control" />
+                    <span asp-validation-for="BillLine3" class="text-muted"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BillCity"></label>
+                    <input asp-for="BillCity" class="form-control" />
+                    <span asp-validation-for="BillCity" class="text-muted"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BillPostcode"></label>
+                    <input asp-for="BillPostcode" class="form-control"/>
+                    <span asp-validation-for="BillPostcode" class="text-muted"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BillCountry"></label>
+                    <br />
+                    <select asp-for="BillCountry" asp-items="@countryList"></select>
+                    @*<input asp-for="Country" class="form-control" />*@
+                    @*<span asp-validation-for="Country" class="text-muted"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="BillPhone"></label>
+                    <input asp-for="BillPhone" class="form-control" />
+                    <span asp-validation-for="BillPhone" class="text-muted"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BillEmail"></label>
+                    <input asp-for="BillEmail" class="form-control" />
+                    <span asp-validation-for="BillEmail" class="text-muted"></span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <h3>Options</h3>
     <div class="checkbox">
         <label>
-            <input asp-for="GiftWrap" /> Gift wrap these items
+            <input asp-for="GiftWrap"/> Gift wrap these items
         </label>
     </div>
     <div class="text-center">
-        <input class="btn btn-success" type="submit" value="Complete Order" />
+        <input class="btn btn-success" type="submit" value="Complete Order"/>
     </div>
 </form>

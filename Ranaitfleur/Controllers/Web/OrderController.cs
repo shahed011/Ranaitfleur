@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,19 +22,6 @@ namespace Ranaitfleur.Controllers.Web
             _cart = cartService;
         }
 
-        //public ViewResult List() => View(_repository.Orders.Where(o => o.Status == OrderStatus.Processing));
-
-        //[HttpPost]
-        //public IActionResult MarkShipped(int orderId)
-        //{
-        //    var order = _repository.Orders.FirstOrDefault(o => o.OrderId == orderId);
-        //    if (order != null)
-        //    {
-        //        order.Status = OrderStatus.Shipped;
-        //        _repository.SaveOrder(order);
-        //    }
-        //    return RedirectToAction(nameof(List));
-        //}
         public IActionResult CheckoutOptions(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -56,6 +44,16 @@ namespace Ranaitfleur.Controllers.Web
             {
                 ModelState.AddModelError("", "Sorry, your cart is empty!");
             }
+
+            if (order.BillSameAsShip)
+            {
+                var allBillErrors = ModelState.Where(m => m.Value.Errors.Any() && m.Key.Contains("Bill"));
+                foreach (var item in allBillErrors)
+                {
+                    ModelState.Remove(item.Key);
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 order.Lines = new List<OrderItemsLine>();
@@ -74,11 +72,27 @@ namespace Ranaitfleur.Controllers.Web
                     order.UserName = User.Identity.Name;
                 }
 
+                if (order.BillSameAsShip)
+                {
+                    order.BillFirstName = order.ShipFirstName;
+                    order.BillLastName = order.ShipLastName;
+                    order.BillLine1 = order.ShipLine1;
+                    order.BillLine2 = order.ShipLine2;
+                    order.BillLine3 = order.ShipLine3;
+                    order.BillCity = order.ShipCity;
+                    order.BillPostcode = order.ShipPostcode;
+                    order.BillCountry = order.ShipCountry;
+                    order.BillPhone = order.ShipPhone;
+                    order.BillEmail = order.ShipEmail;
+                }
+
+                order.DateTime = DateTime.Now;
                 await _repository.SaveOrder(order);
 
                 return RedirectToAction(nameof(Payments), new { orderId = order.OrderId });
             }
 
+            order.BillSameAsShip = false;
             return View(order);
         }
 

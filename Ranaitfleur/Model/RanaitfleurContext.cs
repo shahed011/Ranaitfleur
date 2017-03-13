@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Ranaitfleur.Model
 {
-    public class RanaitfleurContext : IdentityDbContext<RanaitfleurUser>
+    public class RanaitfleurContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         private readonly IConfigurationRoot _config;
         public DbSet<Item> Items { get; set; }
