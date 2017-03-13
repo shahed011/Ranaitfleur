@@ -20,21 +20,23 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
                 ApplyAVSCV2 = 0,
                 AllowGiftAid = 0,
                 
-                BillingFirstnames = order.FirstName,
-                BillingSurname = order.LastName,
-                BillingAddress1 = order.Line1,
-                BillingAddress2 = order.Line2 + " " + order.Line3,
-                BillingCity = order.City,
-                BillingCountry = CountryAndCodeHelper.GetCountryCodeFromName(order.Country), //Two letter country code defined in ISO 3166-1
-                BillingPostCode = order.Postcode,
-
-                DeliveryFirstnames = order.FirstName,
-                DeliverySurname = order.LastName,
-                DeliveryAddress1 = order.Line1,
-                DeliveryAddress2 = order.Line2 + " " + order.Line3,
-                DeliveryCity = order.City,
-                DeliveryCountry = CountryAndCodeHelper.GetCountryCodeFromName(order.Country), //Two letter country code defined in ISO 3166-1
-                DeliveryPostCode = order.Postcode,
+                BillingFirstnames = order.BillFirstName,
+                BillingSurname = order.BillLastName,
+                BillingAddress1 = order.BillLine1,
+                BillingAddress2 = order.BillLine2 + " " + order.BillLine3,
+                BillingCity = order.BillCity,
+                BillingCountry = CountryAndCodeHelper.GetCountryCodeFromName(order.BillCountry), //Two letter country code defined in ISO 3166-1
+                BillingPostCode = order.BillPostcode,
+                BillingPhone = order.BillPhone,
+                
+                DeliveryFirstnames = order.ShipFirstName,
+                DeliverySurname = order.ShipLastName,
+                DeliveryAddress1 = order.ShipLine1,
+                DeliveryAddress2 = order.ShipLine2 + " " + order.ShipLine3,
+                DeliveryCity = order.ShipCity,
+                DeliveryCountry = CountryAndCodeHelper.GetCountryCodeFromName(order.ShipCountry), //Two letter country code defined in ISO 3166-1
+                DeliveryPostCode = order.ShipPostcode,
+                DeliveryPhone = order.ShipPhone,
 
                 SuccessURL = successUrl,
                 FailureURL = failureUrl
