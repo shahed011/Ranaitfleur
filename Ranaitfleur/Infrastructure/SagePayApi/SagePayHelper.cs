@@ -13,7 +13,6 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
                 Amount = cart.ComputeTotalValue(),
                 Currency = "GBP", // TODO: Move to config
                 Description = "This is some order description",
-                Basket = "This is some order description",
                 VendorTxCode = order.OrderId.ToString(),
 
                 Apply3DSecure = 0,

@@ -8,7 +8,7 @@ namespace Ranaitfleur.ViewModels
     public class OrderSummaryViewModel
     {
         public IEnumerable<CartLine> Orders { get; set; }
-        public string VendorName { get; set; }
+        public string Vendor { get; set; }
         public string Crypt { get; set; }
 
         [DisplayFormat(DataFormatString = "C")]

@@ -115,7 +115,7 @@ namespace Ranaitfleur.Controllers.Web
             var summary = new OrderSummaryViewModel()
             {
                 Orders = _cart.Lines,
-                VendorName = _configuration["SagePay:VendorName"],
+                Vendor = _configuration["SagePay:VendorName"],
                 PaymentUrl = _configuration["SagePay:PaymentFormUrl"],
                 Crypt = _cryptography.EncryptModel(cryptModel)
             };
@@ -153,7 +153,8 @@ namespace Ranaitfleur.Controllers.Web
             var orderId = 0;
             if (int.TryParse(response?.VendorTxCode, out orderId))
             {
-                //TODO: save status and description of failure
+                //TODO: save status and description of failure and any other valid info
+                // maybe it is worth to store decrypted crypt as well.
                 var order = await _repository.GetOrder(orderId).ConfigureAwait(false);
                 if (order != null)
                 {
