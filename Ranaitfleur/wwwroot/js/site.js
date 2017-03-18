@@ -5,12 +5,12 @@
 //        });
 //})();
 (function() {
-    $('#billingToggle')
+    $("#billingToggle")
         .change(function () {
-            if ($(this).prop('checked')) {
-                $('#billingToggleDiv *').attr("disabled", "disabled");
+            if ($(this).prop("checked")) {
+                $("#billingToggleDiv *").attr("disabled", "disabled");
             } else {
-                $('#billingToggleDiv *').removeAttr("disabled");
+                $("#billingToggleDiv *").removeAttr("disabled");
             }
         });
 })();
