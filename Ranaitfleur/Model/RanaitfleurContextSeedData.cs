@@ -45,6 +45,34 @@ namespace Ranaitfleur.Model
             {
                 var item = new Item
                 {
+                    ItemType = 1,
+                    Name = "Fully Bespoke",
+                    NoOfItemInStock = 0,
+                    Price = 75,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
+                    ItemType = 1,
+                    Name = "Made To Measure",
+                    NoOfItemInStock = 0,
+                    Price = 75,
+                    Weight = 0.0f,
+                    Dimentions = "",
+                    ImagePath = "",
+                    Description1 = "",
+                    Description2 = ""
+                };
+                _context.Items.Add(item);
+
+                item = new Item
+                {
                     ItemType = 2,
                     Name = "Black Crushed Velvet Slip With Pearl Bead Straps",
                     NoOfItemInStock = 5,
@@ -52,8 +80,8 @@ namespace Ranaitfleur.Model
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/1.jpg,~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/2.jpg",
-                    Description1 = "",
-                    Description2 = ""
+                    Description1 = "Oozing a visual luxury that is sheer opulence, this crushed velvet mini dress with subtle linear design is the perfect dress for feeling fashion confident. Thoughtfully cut to enhance the figure, the front and back strapping is a symphony of pearls and beads that create a look with more than a subtle nod to the Victorian era.",
+                    Description2 = "Combining vintage and contemporary, the dress is a sheer joy to wear with a look that will be admired from any angle."
                 };
                 _context.Items.Add(item);
 
@@ -137,8 +165,8 @@ namespace Ranaitfleur.Model
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/DemiCouture/BustierPearlDetailedLongDress/1.jpg,~/img/DemiCouture/BustierPearlDetailedLongDress/2.jpg,~/img/DemiCouture/BustierPearlDetailedLongDress/3.jpg",
-                    Description1 = "",
-                    Description2 = ""
+                    Description1 = "Accentuate your femininity with a Bustier dress that brings back the opulence of vintage luxe dressing. This full - length dress has an admirable attention to detail, starting with a bustier top leading a flattering defined waistband.Shaped panels at the thigh highlight the fishtail element to the dress with a lower swish of fabric creating ease of movement.",
+                    Description2 = "The back is a myriad of exquisite detail, with pearl decoration leading to the perfect fishtail feature, ensuring turning head admiration. The look is further enhanced with slender pearl straps that are designed to add feminine delicacy to the overall feel."
                 };
                 _context.Items.Add(item);
 
@@ -169,8 +197,8 @@ namespace Ranaitfleur.Model
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/PrincessPinkLongSkirt/1.jpg,~/img/ReadyToWear/PrincessPinkLongSkirt/2.jpg",
-                    Description1 = "",
-                    Description2 = ""
+                    Description1 = "Embrace the beauty of femininity with a long-length skirt that is worthy of any Princess. With a fantastical, luxury flow that allows for superior freedom of movement, this is a skirt that will flatter the figure with its defined waistband pinching the waist.",
+                    Description2 = "Delicate pleats follow through to the fullness of the skirt, creating the look of your childhood dreams brought to a blissful level of modern exquisiteness."
                 };
                 _context.Items.Add(item);
 
@@ -267,8 +295,8 @@ namespace Ranaitfleur.Model
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/DemiCouture/SapphireLacePencilDress/1.jpg,~/img/DemiCouture/SapphireLacePencilDress/2.jpg",
-                    Description1 = "",
-                    Description2 = ""
+                    Description1 = "Indulge in a lace body whose sheer exquisiteness is a beauty to behold. The lace has a floral patterning that is thoughtfully replicated with precious stone floral embellishment, creating a look that is delicately breath - taking. The body is further enhanced with fresh water pearl trimming to both the neckline and leg cuffs, with a soft scoop back completing the look of refined femininity.",
+                    Description2 = "A luxury item that is designer to be admired, this is flawless fashion for the discerning."
                 };
                 _context.Items.Add(item);
             }

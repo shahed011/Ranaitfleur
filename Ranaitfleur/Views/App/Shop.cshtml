@@ -32,11 +32,11 @@
                 <br />
                 <br />
                 <div class="text-center">
-                    Our signature style is to make figure flattering feminine pieces enhanced by using precious gems, diamonds,  crystals and precious metals. Creating a timelessly sculpted piece exuding elegance with a fashionable edge. 
+                    Our signature style is to make figure flattering feminine pieces enhanced by using precious gems, diamonds, crystals and precious metals. Creating a timelessly sculpted piece exuding elegance with a fashionable edge. 
                 </div>
                 <br />
                 <div class="text-center">
-                    To start the processin our London show room we would like to disscuss your personal style to fully understand what you wish to achieve, helping us to build a personal profile, advising you on the best shape for your figureand colouring, we will also need to take various measurements, configurations and detailed notes are taken to ensure the perfect fit.
+                    To start the process in our London show room we would like to disscuss your personal style to fully understand what you wish to achieve, helping us to build a personal profile, advising you on the best shape for your figure and colouring, we will also need to take various measurements, configurations and detailed notes are taken to ensure the perfect fit.
                 </div>
                 <br />
                 <br />
@@ -51,12 +51,40 @@
                     You can expect to have a basted fitting. This is where the suit is made in calico by our UK workshops, then a wide variety of modifications are made from here onwards, fine-tuning your piece to perfection. This is why you will have many more fittings than with made-to-measure – up to five in some cases allowing you to be fully involved in the evolution of the piece.
                 </div>
                 <br />
+                <div class="text-center">
+                    <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                        <input type="hidden" name="size" value="0" />
+                        <input type="hidden" name="productId" value="@Model.Item2.FirstOrDefault()?.Id" />
+                        <input type="hidden" name="returnUrl"
+                               value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                        <span>
+                            <button type="submit" class="btn btn-success btn-sm">
+                                Deposit
+                            </button>
+                        </span>
+                    </form>
+                </div>
+                <br />
                 <br />
                 <div class="text-center">
                     <h5><strong>MADE TO MEASURE</strong></h5>
                 </div>
                 <div class="text-center">
                     This generally means slightly modified from our existing designs, this can be anything to adding sleeves, changing the gem stones or even colour. At Ranait Fleur , made-to-measure we can modify anything you might like or work from an idea of a piece you like. This makes it as close to bespoke as possible, bar the basted fittings and the fusing. Needless to say, knowing how to create the right made-to-measure piece with all these modifications takes skill and knowledge; it isn’t something done by simply handing someone a measuring tape.
+                </div>
+                <br />
+                <div class="text-center">
+                    <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                        <input type="hidden" name="size" value="0" />
+                        <input type="hidden" name="productId" value="@Model.Item2.LastOrDefault()?.Id" />
+                        <input type="hidden" name="returnUrl"
+                               value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                        <span>
+                            <button type="submit" class="btn btn-success btn-sm">
+                                Deposit
+                            </button>
+                        </span>
+                    </form>
                 </div>
             </div>
         </div>

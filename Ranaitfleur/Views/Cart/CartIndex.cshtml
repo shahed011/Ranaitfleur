@@ -31,12 +31,21 @@
                         </button>
                     </form>
                 </div>
-                <div class="col-md-2 text-center">
-                    <img src="@Url.Content(line.Item.ImagePath.Split(',').FirstOrDefault())"
-                         alt="@line.Item.Name"
-                         class="img-responsive img-thumbnail">
-                    @line.Item.Name <br/> (Size: @line.Size)
-                </div>
+                @if (line.Item.ItemType == 1)
+                {
+                    <div class="col-md-2 text-center">
+                        @line.Item.Name (Deposit)
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-2 text-center">
+                        <img src="@Url.Content(line.Item.ImagePath.Split(',').FirstOrDefault())"
+                             alt="@line.Item.Name"
+                             class="img-responsive img-thumbnail">
+                        @line.Item.Name <br/> (Size: @line.Size)
+                    </div>
+                }
                 <div class="col-md-2 text-center">@line.Quantity</div>
                 <div class="col-md-2 text-center">@line.Item.Price.ToString("C", CulturesHelper.UnitedKingdom)</div>
                 <div class="col-md-2 text-center">@((line.Quantity * line.Item.Price).ToString("C", CulturesHelper.UnitedKingdom))</div>
