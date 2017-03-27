@@ -8,7 +8,7 @@ using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
 using Microsoft.Extensions.Configuration;
-using Ranaitfleur.Helper;
+using Ranaitfleur.Infrastructure;
 
 namespace Ranaitfleur.Controllers.Web
 {
@@ -130,7 +130,7 @@ namespace Ranaitfleur.Controllers.Web
         {
             var response = _cryptography.DecryptModel(crypt);
 
-            var orderId = 0;
+            int orderId;
             if (int.TryParse(response?.VendorTxCode, out orderId))
             {
                 var order = await _repository.GetOrder(orderId).ConfigureAwait(false);
@@ -143,14 +143,14 @@ namespace Ranaitfleur.Controllers.Web
             }
 
             _cart.Clear();
-            return View("Completed", response.Status);
+            return View("Completed", response?.Status);
         }
 
         public async Task<ViewResult> PaymentFailure(string crypt)
         {
             var response = _cryptography.DecryptModel(crypt);
 
-            var orderId = 0;
+            int orderId;
             if (int.TryParse(response?.VendorTxCode, out orderId))
             {
                 //TODO: save status and description of failure and any other valid info
@@ -164,7 +164,7 @@ namespace Ranaitfleur.Controllers.Web
                 }
             }
 
-            return View("Completed", response.Status);
+            return View("Completed", response?.Status);
         }
     }
 }

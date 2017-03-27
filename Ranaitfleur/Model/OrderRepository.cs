@@ -43,5 +43,10 @@ namespace Ranaitfleur.Model
         {
             return _context.Orders.Where(o => o.UserName == userName).Include(o => o.Lines).ToListAsync();
         }
+
+        public Task<List<Order>> GetAllOrders()
+        {
+            return _context.Orders.Include(o => o.Lines).ToListAsync();
+        }
     }
 }

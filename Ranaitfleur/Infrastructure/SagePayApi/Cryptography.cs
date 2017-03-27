@@ -53,12 +53,14 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
         public SagePayResponseModel DecryptModel(string crypt)
         {
             crypt = crypt.TrimStart(_cryptPrefix);
-            byte[] cryptBytes = Encoding.UTF8.GetBytes(crypt);
+            var cryptBytes = Encoding.UTF8.GetBytes(crypt);
 
             using (var aes = GetAesAlgorithm())
             {
-                string key = _configuration["SagePay:EncryptionKey"];
-                string vector = _configuration["SagePay:EncryptionVector"];
+                aes.Padding = PaddingMode.Zeros;
+
+                var key = _configuration["SagePay:EncryptionKey"];
+                var vector = _configuration["SagePay:EncryptionVector"];
                 var decryptor = aes.CreateDecryptor(Encoding.ASCII.GetBytes(key), Encoding.ASCII.GetBytes(vector));
 
                 string decryptedValue;

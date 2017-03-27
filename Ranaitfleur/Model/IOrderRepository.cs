@@ -9,5 +9,6 @@ namespace Ranaitfleur.Model
         Task<bool> SaveOrder(Order order);
         Task<Order> GetOrder(int orderId);
         Task<List<Order>> GetOrdersByUserName(string userName);
+        Task<List<Order>> GetAllOrders();
     }
 }
