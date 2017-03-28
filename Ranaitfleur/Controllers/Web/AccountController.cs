@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -12,11 +14,14 @@ namespace Ranaitfleur.Controllers.Web
     {
         private readonly IOrderRepository _orderRepository;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly List<Item> _allDresses;
 
-        public AccountController(UserManager<IdentityUser> userManager, IOrderRepository orderRepository)
+        public AccountController(UserManager<IdentityUser> userManager, IOrderRepository orderRepository,
+            IRanaitfleurRepository repository)
         {
             _userManager = userManager;
             _orderRepository = orderRepository;
+            _allDresses = repository.GetAllDresses().ToList();
         }
 
         [Authorize(Roles = "Administrator")]
@@ -33,7 +38,7 @@ namespace Ranaitfleur.Controllers.Web
 
             foreach (var order in userOrders)
             {
-                userAccountVm.UserOrders.Add(new UserOrder(order));
+                userAccountVm.UserOrders.Add(new UserOrder(order, _allDresses));
             }
 
             return View(userAccountVm);
@@ -53,7 +58,7 @@ namespace Ranaitfleur.Controllers.Web
 
             foreach (var order in userOrders)
             {
-                userAccountVm.UserOrders.Add(new UserOrder(order));
+                userAccountVm.UserOrders.Add(new UserOrder(order, _allDresses));
             }
 
             return View(userAccountVm);

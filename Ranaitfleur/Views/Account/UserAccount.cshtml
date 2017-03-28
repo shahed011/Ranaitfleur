@@ -19,16 +19,54 @@
 
     @if (Model.UserOrders.Any())
     {
+        <div class="row">
+            <div class="col-md-2"><b>Order date</b></div>
+            <div class="col-md-3"><b>Shipping address</b></div>
+            <div class="col-md-3"><b>Billing address</b></div>
+            <div class="col-md-2"><b>Order status</b></div>
+            <div class="col-md-2"><b>Button</b></div>
+        </div>
+        <br/>
+
         foreach (var order in Model.UserOrders)
         {
-            <div>
-                <span>@order.DateTime</span>
-                <span>@order.ShippingName</span>
-                <span>@order.ShippingAddress</span>
-                <span>@order.BillingName</span>
-                <span>@order.BillingAddress</span>
-                <span>@order.Status</span>
+            <div class="row">
+                <div class="col-md-2">@order.DateTime</div>
+                <div class="col-md-3">@order.ShippingAddress</div>
+                <div class="col-md-3">@order.BillingAddress</div>
+                <div class="col-md-2">@order.Status</div>
+                <div class="col-md-2">@order.Status</div>
             </div>
+            <br/>
+
+            <button id="showOrderItem">Show order item(s)</button>
+
+            <div id="orderItemList">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <b>Dress</b>
+                    </div>
+                    <div class="col-md-3">
+                        <b>Size</b>
+                    </div>
+                    <div class="col-md-3">
+                        <b>Quantity</b>
+                    </div>
+                </div>
+
+                @foreach (var item in order.OrderItems)
+                {
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">@item.ItemName</div>
+                        <div class="col-md-3">@item.ItemSize</div>
+                        <div class="col-md-3">@item.ItemQuantity</div>
+                    </div>
+                }
+            </div>
+
+            <br/>
         }
     }
     else
