@@ -1,10 +1,9 @@
-﻿//(function () {
-//    $(window)
-//        .load(function () {
-//            $(".loader").fadeOut("slow");
-//        });
-//})();
-(function() {
+﻿(function () {
+    $(window)
+        .load(function() {
+            $(".loader").fadeOut("slow");
+        });
+
     $("#billingToggle")
         .change(function () {
             if ($(this).prop("checked")) {
@@ -14,13 +13,9 @@
             }
         });
 
-    $("#showOrderItem").on("click", function () {
-        $("#orderItemList").slideToggle("fast");
+    $(".showOrderItemButton").on("click", function () {
+        var $parentBox = $(this).parent(".orderRow");
+        $parentBox.find(".orderItemRow").slideToggle(200, "swing");
+        $(this).text($(this).text() === "Show order item(s)" ? "Hide order item(s)" : "Show order item(s)");
     });
-
-    //$(".top").on("click", function () {
-    //    var $parentBox = $(this).closest(".box");
-    //    $parentBox.siblings().find(".bottom").slideUp();
-    //    $parentBox.find(".bottom").slideToggle(500, "swing");
-    //});
 })();

@@ -12,23 +12,83 @@
         <p>User name : @Model.UserName</p>
         <p>User email : @Model.UserEmail</p>
     </div>
-    <br/>
+    <br />
 
     <h2>Orders</h2>
     <hr class="divider-title">
 
     @if (Model.UserOrders.Any())
     {
+        <div class="row">
+            <div class="col-md-2">
+                <b>Order date</b>
+            </div>
+            <div class="col-md-3">
+                <b>Shipping address</b>
+            </div>
+            <div class="col-md-3">
+                <b>Billing address</b>
+            </div>
+            <div class="col-md-1">
+                <b>Order status</b>
+            </div>
+            <div class="col-md-1">
+                <b>Order Total</b>
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+        <br />
+
         foreach (var order in Model.UserOrders)
         {
-            <div>
-                <span>@order.DateTime</span>
-                <span>@order.ShippingName</span>
-                <span>@order.ShippingAddress</span>
-                <span>@order.BillingName</span>
-                <span>@order.BillingAddress</span>
-                <span>@order.Status</span>
+            <div class="orderRow">
+                <div class="row">
+                    <div class="col-md-2">@order.DateTime</div>
+                    <div class="col-md-3">@order.ShippingAddress</div>
+                    <div class="col-md-3">@order.BillingAddress</div>
+                    <div class="col-md-1">@order.Status</div>
+                    <div class="col-md-1">@order.Total</div>
+                    <div class="col-md-1">Update</div>
+                    <div class="col-md-1">Delete</div>
+                </div>
+                <br />
+
+                <a class="showOrderItemButton btn btn-link">Show order item(s)</a>
+
+                <div class="orderItemRow">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <b>Dress</b>
+                        </div>
+                        <div class="col-md-2">
+                            <b>Size</b>
+                        </div>
+                        <div class="col-md-2">
+                            <b>Quantity</b>
+                        </div>
+                        <div class="col-md-2">
+                            <b>Price</b>
+                        </div>
+                    </div>
+
+                    @foreach (var item in order.OrderItems)
+                    {
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4">@item.ItemName</div>
+                            <div class="col-md-2">@item.ItemSize</div>
+                            <div class="col-md-2">@item.ItemQuantity</div>
+                            <div class="col-md-2">@item.Price</div>
+                        </div>
+                    }
+                </div>
             </div>
+
+            <br />
         }
     }
     else

@@ -558,3 +558,24 @@ div.thumbnail {
 	background: 50% 50% no-repeat rgb(249,249,249);
     /*url("../img/load.gif")*/
 }
+
+/*--------------------Account page--------------------*/
+
+.orderRow {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.orderRow a {
+    color: black;
+    text-decoration: none
+}
+
+.orderRow a:hover {
+    color: #e6ae48;
+    text-decoration: none
+}
+
+.orderItemRow {
+    display: none
+}

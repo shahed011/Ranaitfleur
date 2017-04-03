@@ -18,6 +18,7 @@ namespace Ranaitfleur.ViewModels
 
         public DateTime DateTime { get; set; }
         public OrderStatus Status { get; set; }
+        public int Total { get; set; }
         public string PaymentTransactionId { get; set; }
 
         public string ShippingAddress { get; set; }
@@ -30,6 +31,7 @@ namespace Ranaitfleur.ViewModels
             OrderId = order.OrderId;
             DateTime = order.DateTime;
             Status = order.Status;
+            Total = 0;
             PaymentTransactionId = order.PaymentTransactionId;
 
             var name = order.ShipFirstName + " " + order.ShipLastName;
@@ -53,10 +55,13 @@ namespace Ranaitfleur.ViewModels
                 
                 OrderItems.Add(new UserOrderItem
                 {
-                    ItemName = item.Name,
+                    ItemName = item?.Name ?? "",
                     ItemSize = line.Size,
-                    ItemQuantity = line.Quantity
+                    ItemQuantity = line.Quantity,
+                    Price = item?.Price ?? 0
                 });
+
+                Total += (item?.Price ?? 0)*line.Quantity;
             }
         }
 
@@ -65,6 +70,7 @@ namespace Ranaitfleur.ViewModels
             public string ItemName { get; set; }
             public int ItemSize { get; set; }
             public int ItemQuantity { get; set; }
+            public int Price { get; set; }
         }
     }
 }
