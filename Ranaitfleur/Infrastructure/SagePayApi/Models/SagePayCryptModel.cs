@@ -11,7 +11,7 @@
 
         public string CustomerEMail { get; set; }
         public string VendorEMail { get; set; }
-        public int SendEMail { get; set; } // TODO: flag
+        public SendMailFlag SendEMail { get; set; }
         public string EmailMessage { get; set; }
 
         public string BillingSurname { get; set; }
@@ -37,8 +37,8 @@
         public string Basket { get; set; }
         public string VendorData { get; set; }
 
-        public int AllowGiftAid { get; set; } // TODO: flag
-        public int ApplyAVSCV2 { get; set; } // TODO: flag
-        public int Apply3DSecure { get; set; } // TODO: flag
+        public AllowGiftAidFlag AllowGiftAid { get; set; }
+        public ApplyAVSCV2Flag ApplyAVSCV2 { get; set; }
+        public Apply3DSecureFlag Apply3DSecure { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Ranaitfleur.Infrastructure.SagePayApi.Models
+﻿using System.Runtime.Serialization;
+
+namespace Ranaitfleur.Infrastructure.SagePayApi.Models
 {
     public class SagePayResponseModel
     {
@@ -13,7 +15,8 @@
         public string PostCodeResult { get; set; }
         public string CV2Result { get; set; }
         public bool GiftAid { get; set; }
-        public string SecureStatus { get; set; } //TODO: 3DSecureStatus field name
+        [DataMember(Name = "3DSecureStatus")]
+        public string ThreeDSecureStatus { get; set; }
         public string CAVV { get; set; }
         public string AddressStatus { get; set; }
         public string PayerStatus { get; set; }

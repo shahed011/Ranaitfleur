@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -26,11 +27,12 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
         {
             string cryptString = SerializeToQueryString(model);
 
+            Encoding encoding = Encoding.GetEncoding("iso-8859-1");
             using (var aes = GetAesAlgorithm())
             {
                 string key = _configuration["SagePay:EncryptionKey"];
                 string vector = _configuration["SagePay:EncryptionVector"];
-                var encryptor = aes.CreateEncryptor(Encoding.ASCII.GetBytes(key), Encoding.ASCII.GetBytes(vector));
+                var encryptor = aes.CreateEncryptor(encoding.GetBytes(key), encoding.GetBytes(vector));
 
                 byte[] encrypted;
                 using (var msEncrypt = new MemoryStream())
@@ -52,16 +54,15 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
 
         public SagePayResponseModel DecryptModel(string crypt)
         {
-            crypt = crypt.TrimStart(_cryptPrefix);
+            crypt = crypt.ToUpper().TrimStart(_cryptPrefix);
             var cryptBytes = Encoding.UTF8.GetBytes(crypt);
 
+            Encoding encoding = Encoding.GetEncoding("iso-8859-1");
             using (var aes = GetAesAlgorithm())
             {
-                aes.Padding = PaddingMode.Zeros;
-
                 var key = _configuration["SagePay:EncryptionKey"];
                 var vector = _configuration["SagePay:EncryptionVector"];
-                var decryptor = aes.CreateDecryptor(Encoding.ASCII.GetBytes(key), Encoding.ASCII.GetBytes(vector));
+                var decryptor = aes.CreateDecryptor(encoding.GetBytes(key), encoding.GetBytes(vector));
 
                 string decryptedValue;
                 using (var msDecrypt = new MemoryStream(cryptBytes))
@@ -84,6 +85,7 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
         {
             var aes = Aes.Create();
             aes.BlockSize = int.Parse(_configuration["SagePay:EncryptionBlock"]);
+            aes.KeySize = int.Parse(_configuration["SagePay:EncryptionBlock"]);
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
 
@@ -93,8 +95,8 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
         private string SerializeToQueryString(object request)
         {
             var properties = from p in request.GetType().GetProperties()
-                             where p.GetValue(request, null) != null
-                             select p.Name + "=" + p.GetValue(request, null).ToString();
+                             where p.GetValue(request) != null
+                             select p.Name + "=" + (p.PropertyType.GetTypeInfo().IsEnum ? (int)p.GetValue(request) : p.GetValue(request));
 
             return string.Join("&", properties.ToArray());
         }
@@ -107,18 +109,28 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
             var properties = typeof(T).GetProperties();
             foreach (var property in properties)
             {
-                var valueAsString = dict[property.Name];
+                var name = GetPropertyName(property);
+                if (dict.ContainsKey(name) == false)
+                    continue;
+
+                var valueAsString = dict[name];
                 var value = Parse(property.PropertyType, valueAsString);
 
                 if (value == null)
                     continue;
 
-                property.SetValue(obj, value, null);
+                property.SetValue(obj, value);
             }
             return obj;
         }
 
-        public object Parse(Type dataType, string value)
+        private string GetPropertyName(PropertyInfo property)
+        {
+            var attribute = property.GetCustomAttribute<DataMemberAttribute>(false);
+            return attribute?.Name ?? property.Name;
+        }
+
+        private object Parse(Type dataType, string value)
         {
             TypeConverter obj = TypeDescriptor.GetConverter(dataType);
             return obj.ConvertFromString(null, CultureInfo.InvariantCulture, value);

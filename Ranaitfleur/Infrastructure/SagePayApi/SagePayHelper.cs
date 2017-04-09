@@ -11,13 +11,13 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
             var crypt = new SagePayCryptModel
             {
                 Amount = cart.ComputeTotalValue(),
-                Currency = "GBP", // TODO: Move to config
+                Currency = "GBP",
                 Description = "This is some order description",
                 VendorTxCode = order.OrderId.ToString(),
 
-                Apply3DSecure = 0,
-                ApplyAVSCV2 = 0,
-                AllowGiftAid = 0,
+                Apply3DSecure = Apply3DSecureFlag.YesIfRulesAllow,
+                ApplyAVSCV2 = ApplyAVSCV2Flag.CheckIfAvsOrCv2Enabled,
+                AllowGiftAid = AllowGiftAidFlag.No,
                 
                 BillingFirstnames = order.BillFirstName,
                 BillingSurname = order.BillLastName,
