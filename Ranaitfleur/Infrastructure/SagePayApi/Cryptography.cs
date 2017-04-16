@@ -55,7 +55,7 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
         public SagePayResponseModel DecryptModel(string crypt)
         {
             crypt = crypt.ToUpper().TrimStart(_cryptPrefix);
-            var cryptBytes = Encoding.UTF8.GetBytes(crypt);
+            var cryptBytes = StringToByteArray(crypt);
 
             Encoding encoding = Encoding.GetEncoding("iso-8859-1");
             using (var aes = GetAesAlgorithm())
@@ -132,8 +132,27 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
 
         private object Parse(Type dataType, string value)
         {
-            TypeConverter obj = TypeDescriptor.GetConverter(dataType);
-            return obj.ConvertFromString(null, CultureInfo.InvariantCulture, value);
+            // TODO: If you want you can create your own TypeConverters
+            // and override default in order to parse numbers with thousend separators and bool values
+            switch (dataType.Name)
+            {
+                case "Int32":
+                    return int.Parse(value);
+                case "Decimal":
+                    return decimal.Parse(value);
+                case "Boolean":
+                    return value == "1" ? true : false;
+                default:
+                    return value;
+            }
+        }
+
+        private byte[] StringToByteArray(string hex)
+        {
+            return Enumerable.Range(0, hex.Length)
+                             .Where(x => x % 2 == 0)
+                             .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                             .ToArray();
         }
     }
 }

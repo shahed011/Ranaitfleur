@@ -9,7 +9,7 @@ namespace Ranaitfleur.Infrastructure.SagePayApi.Models
         public string VendorTxCode { get; set; }
         public string VPSTxId { get; set; }
         public int TxAuthNo { get; set; }
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         public string AVSCV2 { get; set; }
         public string AddressResult { get; set; }
         public string PostCodeResult { get; set; }

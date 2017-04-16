@@ -164,7 +164,8 @@ namespace Ranaitfleur.Controllers.Web
                 }
             }
 
-            return View("Completed", response?.Status);
+            // TODO: display appropriate status
+            return View("Completed", response?.StatusDetail);
         }
     }
 }
