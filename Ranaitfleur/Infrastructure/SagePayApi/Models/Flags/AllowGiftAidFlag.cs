@@ -1,7 +1,8 @@
 ﻿namespace Ranaitfleur.Infrastructure.SagePayApi.Models
 {
-    public class Secure3D
+    public enum AllowGiftAidFlag
     {
-        public string Status { get; set; }
+        No = 0,
+        Yes = 1
     }
 }

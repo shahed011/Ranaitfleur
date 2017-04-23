@@ -76,7 +76,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Black Crushed Velvet Slip With Pearl Bead Straps",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 250,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/1.jpg,~/img/ReadyToWear/BlackCrushedVelvetSlipWithPearlBeadStraps/2.jpg",
@@ -90,7 +90,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Black V Neck Mini Dress",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 100,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/BlackVNeckMiniDress/1.jpg,~/img/ReadyToWear/BlackVNeckMiniDress/2.jpg,~/img/ReadyToWear/BlackVNeckMiniDress/3.jpg",
@@ -107,7 +107,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Gold Chain Backless Gown",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 350,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/GoldChainBacklessGown/1.jpg,~/img/ReadyToWear/GoldChainBacklessGown/2.jpg",
@@ -124,7 +124,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Blue Silk Slip Dress",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 120,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/BlueSilkSlipDress/1.jpg,~/img/ReadyToWear/BlueSilkSlipDress/2.jpg",
@@ -143,7 +143,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Thick Strap Backless Gown",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 250,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/ThickStrapBacklessGown/1.jpg,~/img/ReadyToWear/ThickStrapBacklessGown/2.jpg",
@@ -161,7 +161,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Bustier Pearl Detailed Long Dress",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 400,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/DemiCouture/BustierPearlDetailedLongDress/1.jpg,~/img/DemiCouture/BustierPearlDetailedLongDress/2.jpg,~/img/DemiCouture/BustierPearlDetailedLongDress/3.jpg",
@@ -175,7 +175,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Pink Fish Tale Gown",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 350,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/DemiCouture/PinkFishTaleGown/1.jpg,~/img/DemiCouture/PinkFishTaleGown/2.jpg,~/img/DemiCouture/PinkFishTaleGown/3.jpg",
@@ -193,7 +193,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Princess Pink Long Skirt",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 100,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/PrincessPinkLongSkirt/1.jpg,~/img/ReadyToWear/PrincessPinkLongSkirt/2.jpg",
@@ -207,7 +207,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Duchess Royal",
                     NoOfItemInStock = 5,
-                    Price = 2500,
+                    Price = 200,
                     Weight = 0.95f,
                     Dimentions = "30 x 20 x 20",
                     ImagePath = "~/img//ReadyToWear/DuchessRoyal/1.jpg",
@@ -225,7 +225,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Golden Vegas Neck Mini Dress",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 100,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/ReadyToWear/GoldenVegasNeckMiniDress/1.jpg,~/img/ReadyToWear/GoldenVegasNeckMiniDress/2.jpg,~/img/ReadyToWear/GoldenVegasNeckMiniDress/3.jpg",
@@ -237,29 +237,29 @@ namespace Ranaitfleur.Model
                 };
                 _context.Items.Add(item);
 
-                item = new Item
-                {
-                    ItemType = 2,
-                    Name = "Discotheque Dreams",
-                    NoOfItemInStock = 5,
-                    Price = 2500,
-                    Weight = 0.2f,
-                    Dimentions = "30 x 20 x 20",
-                    ImagePath = "~/img/DemiCouture/DiscothequeDreams/1.jpg",
-                    Description1 = "This Statement-making mini dress is topped by 24 carat gold chain straps, dripping in white sequins, soft cotton lining means you can party all night!  A body-skimming piece is crafted here in London with a fun mini skirt cut, allowing for a comfortable, flexible fit.",
-                    Description2 = ""
-                };
-                _context.Items.Add(item);
+                //item = new Item
+                //{
+                //    ItemType = 2,
+                //    Name = "Discotheque Dreams",
+                //    NoOfItemInStock = 5,
+                //    Price = 2500,
+                //    Weight = 0.2f,
+                //    Dimentions = "30 x 20 x 20",
+                //    ImagePath = "~/img/DemiCouture/DiscothequeDreams/1.jpg",
+                //    Description1 = "This Statement-making mini dress is topped by 24 carat gold chain straps, dripping in white sequins, soft cotton lining means you can party all night!  A body-skimming piece is crafted here in London with a fun mini skirt cut, allowing for a comfortable, flexible fit.",
+                //    Description2 = ""
+                //};
+                //_context.Items.Add(item);
 
                 item = new Item
                 {
                     ItemType = 2,
                     Name = "Discotheque Dress",
                     NoOfItemInStock = 5,
-                    Price = 1000,
-                    Weight = 0.0f,
-                    Dimentions = "",
-                    ImagePath = "~/img/DemiCouture/DiscothequeDress/1.jpg,~/img/DemiCouture/DiscothequeDress/2.jpg",
+                    Price = 2500,
+                    Weight = 0.2f,
+                    Dimentions = "30 x 20 x 20",
+                    ImagePath = "~/img/DemiCouture/DiscothequeDress/1.jpg,~/img/DemiCouture/DiscothequeDress/2.jpg,~/img/DemiCouture/DiscothequeDreams/1.jpg",
                     Description1 = @"With an attention to detail that seems incredible to achieve, this couture mini-length dress is most 
                                     definitely designed to dazzle. A myriad of large white sequins are stitched perfectly in 
                                     place in order to create movement and capture the light. The emphasis is on movement and 
@@ -274,7 +274,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Princess Pearl Jumpsuit",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 350,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/DemiCouture/PrincessPearlJumpsuit/1.jpg,~/img/DemiCouture/PrincessPearlJumpsuit/2.jpg",
@@ -291,7 +291,7 @@ namespace Ranaitfleur.Model
                     ItemType = 2,
                     Name = "Sapphire Lace Pencil Dress",
                     NoOfItemInStock = 5,
-                    Price = 1000,
+                    Price = 850,
                     Weight = 0.0f,
                     Dimentions = "",
                     ImagePath = "~/img/DemiCouture/SapphireLacePencilDress/1.jpg,~/img/DemiCouture/SapphireLacePencilDress/2.jpg",

@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Ranaitfleur.Infrastructure.SagePayApi;
 using Ranaitfleur.Model;
 using Ranaitfleur.Services;
+using Ranaitfleur.ViewModels;
+using Microsoft.Extensions.Configuration;
+using Ranaitfleur.Helper;
+using Ranaitfleur.Infrastructure;
 
 namespace Ranaitfleur.Controllers.Web
 {
@@ -13,13 +17,18 @@ namespace Ranaitfleur.Controllers.Web
     {
         private readonly IOrderRepository _repository;
         private readonly IMailService _emailService;
+        private readonly IConfigurationRoot _configuration;
+        private readonly ICryptography _cryptography;
         private readonly Cart _cart;
 
-        public OrderController(IOrderRepository repoService, IMailService emailService, Cart cartService)
+        public OrderController(IOrderRepository repoService, IMailService emailService,
+            IConfigurationRoot configuration, ICryptography cryptography, Cart cartService)
         {
             _repository = repoService;
             _emailService = emailService;
             _cart = cartService;
+            _configuration = configuration;
+            _cryptography = cryptography;
         }
 
         public IActionResult CheckoutOptions(string returnUrl)
@@ -86,6 +95,7 @@ namespace Ranaitfleur.Controllers.Web
                     order.BillEmail = order.ShipEmail;
                 }
 
+                order.Status = OrderStatus.Incomplete;
                 order.DateTime = DateTime.Now;
                 await _repository.SaveOrder(order);
 
@@ -98,34 +108,68 @@ namespace Ranaitfleur.Controllers.Web
 
         public async Task<IActionResult> Payments(int orderId)
         {
-            var sagePay = new SagePayClient();
-            ViewBag.MerchantSessionKey = (await sagePay.CreateMerchantSessionKey())?.MerchantSessionKey;
-            ViewBag.OrderId = orderId;
+            var order = await _repository.GetOrder(orderId).ConfigureAwait(false);
+            var successUrl = Url.AbsoluteAction("PaymentSuccess", "Order");
+            var failureUrl = Url.AbsoluteAction("PaymentFailure", "Order");
 
-            return View(_cart.Lines);
+            var cryptModel = SagePayHelper.GetCryptModel(_cart, order, _configuration["MailSettings:OrderAddress"], successUrl, failureUrl);
+
+            var summary = new OrderSummaryViewModel
+            {
+                Orders = _cart.Lines,
+                Vendor = _configuration["SagePay:VendorName"],
+                PaymentUrl = _configuration["SagePay:PaymentFormUrl"],
+                Crypt = _cryptography.EncryptModel(cryptModel),
+                BillingAddress = RanaitfleurHelper.GetBillingAddressFromOrder(order),
+                DeliveryAddress = RanaitfleurHelper.GetShippingAddressFromOrder(order)
+            };
+
+
+            await _repository.SaveOrder(order).ConfigureAwait(false);
+
+            return View(summary);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Payments(string cardIdentifier, string sessionId, int amount, int orderId)
+        public async Task<ViewResult> PaymentSuccess(string crypt)
         {
-            var order = await _repository.GetOrder(orderId);
+            var response = _cryptography.DecryptModel(crypt);
 
-            var sagePay = new SagePayClient();
-            var resp = await sagePay.CreateTransaction(cardIdentifier, sessionId, amount, "GBP", "This is new order", order);
+            int orderId;
+            if (int.TryParse(response?.VendorTxCode, out orderId))
+            {
+                var order = await _repository.GetOrder(orderId).ConfigureAwait(false);
+                if (order != null) 
+                {
+                    order.PaymentTransactionId = response?.VPSTxId;
+                    order.Status = OrderStatus.Authorised;
+                    await _repository.SaveOrder(order).ConfigureAwait(false);
+                }
+            }
 
-            order.PaymentTransactionId = resp.Value.TransactionId;
-            order.Status = resp.IsSuccess ? OrderStatus.Processing : OrderStatus.Declined;
-            await _repository.SaveOrder(order);
-
-            //_emailService.SendMail("email@email.com", "email@email.com", "Order", "Order paid");
-
-            return RedirectToAction(nameof(Completed), new {status = resp.Value?.Status ?? resp.StatusCode.ToString()});
-        }
-
-        public ViewResult Completed(string status)
-        {
             _cart.Clear();
-            return View(nameof(Completed), status);
+            return View("Completed", response?.Status);
+        }
+
+        public async Task<ViewResult> PaymentFailure(string crypt)
+        {
+            var response = _cryptography.DecryptModel(crypt);
+
+            int orderId;
+            if (int.TryParse(response?.VendorTxCode, out orderId))
+            {
+                //TODO: save status and description of failure and any other valid info
+                // maybe it is worth to store decrypted crypt as well.
+                var order = await _repository.GetOrder(orderId).ConfigureAwait(false);
+                if (order != null)
+                {
+                    order.PaymentTransactionId = response?.VPSTxId;
+                    order.Status = OrderStatus.Declined;
+                    await _repository.SaveOrder(order).ConfigureAwait(false);
+                }
+            }
+
+            // TODO: display appropriate status
+            return View("Completed", response?.StatusDetail);
         }
     }
 }

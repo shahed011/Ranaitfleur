@@ -174,7 +174,7 @@ ul li {
     color: #e6ae48;
     font-weight: bold;
     font-size: 22px;
-    text-shadow: 0 0 3px #FF0000;
+    text-shadow: 0 0 3px #e6ae48;
 }
 
 .navbar-fixed-top {
@@ -223,7 +223,8 @@ ul li {
 }
 
 .coutureImage {
-    height: 450px;
+    height: 350px;
+    width: 650px
 }
 
 @media screen and (max-width: 770px) {
@@ -506,11 +507,6 @@ div.thumbnail {
     height: 11pt;
 }
 
-.c3 {
-    background-color: #ffffff;
-    padding: 20pt 72pt 72pt 72pt;
-}
-
 .c4 {
     color: inherit;
     text-decoration: inherit;
@@ -557,4 +553,25 @@ div.thumbnail {
 	z-index: 9999;
 	background: 50% 50% no-repeat rgb(249,249,249);
     /*url("../img/load.gif")*/
+}
+
+/*--------------------Account page--------------------*/
+
+.orderRow {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.orderRow a {
+    color: black;
+    text-decoration: none
+}
+
+.orderRow a:hover {
+    color: #e6ae48;
+    text-decoration: none
+}
+
+.orderItemRow {
+    display: none
 }

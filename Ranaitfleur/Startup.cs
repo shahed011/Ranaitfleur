@@ -13,6 +13,7 @@ using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
 using WebMarkupMin.AspNetCore1;
+using Ranaitfleur.Infrastructure.SagePayApi;
 
 namespace Ranaitfleur
 {
@@ -47,6 +48,7 @@ namespace Ranaitfleur
             services.AddScoped<IMailService, MailService>();
             services.AddDbContext<RanaitfleurContext>();
             services.AddScoped<IRanaitfleurRepository, RanaitfleurRepository>();
+            services.AddScoped<ICryptography, Cryptography>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<RanaitfleurContextSeedData>();
             services.AddScoped(SessionCart.GetCart);

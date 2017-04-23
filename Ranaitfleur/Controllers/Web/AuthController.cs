@@ -60,8 +60,10 @@ namespace Ranaitfleur.Controllers.Web
 
                     if (signInResult.Succeeded)
                     {
+                        var userRole = await _userManager.GetRolesAsync(user);
+
                         return string.IsNullOrEmpty(returnUrl)
-                            ? User.IsInRole("NormalUser")
+                            ? userRole.Contains("NormalUser")
                                 ? RedirectToAction("UserAccount", "Account")
                                 : RedirectToAction("AdminAccount", "Account")
                             : (IActionResult) Redirect(returnUrl);

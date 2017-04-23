@@ -43,5 +43,17 @@ namespace Ranaitfleur.Model
         {
             return _context.Orders.Where(o => o.UserName == userName).Include(o => o.Lines).ToListAsync();
         }
+
+        public Task<List<Order>> GetAllOrders()
+        {
+            return _context.Orders.Include(o => o.Lines).ToListAsync();
+        }
+
+        public async Task RemoveIncompleteOrders()
+        {
+            var ordersToRemove = _context.Orders.Where(o => o.Status == OrderStatus.Incomplete).Include(o => o.Lines);
+            _context.Orders.RemoveRange(ordersToRemove);
+            await _context.SaveChangesAsync();
+        }
     }
 }
