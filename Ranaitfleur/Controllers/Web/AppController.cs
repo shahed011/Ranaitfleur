@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Ranaitfleur.Helper;
 

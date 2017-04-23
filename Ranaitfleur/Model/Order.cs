@@ -111,9 +111,12 @@ namespace Ranaitfleur.Model
 
     public enum OrderStatus
     {
-        Processing,
+        Incomplete,
+        Authorised,
+        Declined,
         Shipped,
-        Complete,
-        Declined
+        Completed,
+        UserCancelled,
+        AdminCancelled
     }
 }

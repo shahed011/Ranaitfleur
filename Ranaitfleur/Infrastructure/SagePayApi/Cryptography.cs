@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Ranaitfleur.Infrastructure.SagePayApi.Models;
 using System;
-using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -25,13 +23,13 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
 
         public string EncryptModel(SagePayCryptModel model)
         {
-            string cryptString = SerializeToQueryString(model);
+            var cryptString = SerializeToQueryString(model);
 
-            Encoding encoding = Encoding.GetEncoding("iso-8859-1");
+            var encoding = Encoding.GetEncoding("iso-8859-1");
             using (var aes = GetAesAlgorithm())
             {
-                string key = _configuration["SagePay:EncryptionKey"];
-                string vector = _configuration["SagePay:EncryptionVector"];
+                var key = _configuration["SagePay:EncryptionKey"];
+                var vector = _configuration["SagePay:EncryptionVector"];
                 var encryptor = aes.CreateEncryptor(encoding.GetBytes(key), encoding.GetBytes(vector));
 
                 byte[] encrypted;
@@ -57,7 +55,7 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
             crypt = crypt.ToUpper().TrimStart(_cryptPrefix);
             var cryptBytes = StringToByteArray(crypt);
 
-            Encoding encoding = Encoding.GetEncoding("iso-8859-1");
+            var encoding = Encoding.GetEncoding("iso-8859-1");
             using (var aes = GetAesAlgorithm())
             {
                 var key = _configuration["SagePay:EncryptionKey"];
@@ -92,7 +90,7 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
             return aes;
         }
 
-        private string SerializeToQueryString(object request)
+        private static string SerializeToQueryString(object request)
         {
             var properties = from p in request.GetType().GetProperties()
                              where p.GetValue(request) != null
@@ -101,7 +99,7 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
             return string.Join("&", properties.ToArray());
         }
 
-        private T DeserializeFromQueryString<T>(string response) where T : new()
+        private static T DeserializeFromQueryString<T>(string response) where T : new()
         {
             var dict = QueryHelpers.ParseNullableQuery(response);
 
@@ -124,13 +122,13 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
             return obj;
         }
 
-        private string GetPropertyName(PropertyInfo property)
+        private static string GetPropertyName(PropertyInfo property)
         {
             var attribute = property.GetCustomAttribute<DataMemberAttribute>(false);
             return attribute?.Name ?? property.Name;
         }
 
-        private object Parse(Type dataType, string value)
+        private static object Parse(Type dataType, string value)
         {
             // TODO: If you want you can create your own TypeConverters
             // and override default in order to parse numbers with thousend separators and bool values
@@ -141,13 +139,13 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
                 case "Decimal":
                     return decimal.Parse(value);
                 case "Boolean":
-                    return value == "1" ? true : false;
+                    return value == "1";
                 default:
                     return value;
             }
         }
 
-        private byte[] StringToByteArray(string hex)
+        private static byte[] StringToByteArray(string hex)
         {
             return Enumerable.Range(0, hex.Length)
                              .Where(x => x % 2 == 0)

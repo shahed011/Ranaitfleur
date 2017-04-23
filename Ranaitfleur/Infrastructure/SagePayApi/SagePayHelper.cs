@@ -1,4 +1,5 @@
-﻿using Ranaitfleur.Infrastructure.SagePayApi.Models;
+﻿using System.Linq;
+using Ranaitfleur.Infrastructure.SagePayApi.Models;
 using Ranaitfleur.Model;
 using Ranaitfleur.Helper;
 
@@ -6,13 +7,13 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
 {
     public class SagePayHelper
     {
-        public static SagePayCryptModel GetCryptModel(Cart cart, Order order, string successUrl, string failureUrl)
+        public static SagePayCryptModel GetCryptModel(Cart cart, Order order, string vendorEmail, string successUrl, string failureUrl)
         {
             var crypt = new SagePayCryptModel
             {
                 Amount = cart.ComputeTotalValue(),
                 Currency = "GBP",
-                Description = "This is some order description",
+                Description = "Products from Ranaitfleur Ltd",
                 VendorTxCode = order.OrderId.ToString(),
 
                 Apply3DSecure = Apply3DSecureFlag.YesIfRulesAllow,
@@ -38,10 +39,31 @@ namespace Ranaitfleur.Infrastructure.SagePayApi
                 DeliveryPhone = order.ShipPhone,
 
                 SuccessURL = successUrl,
-                FailureURL = failureUrl
+                FailureURL = failureUrl,
+
+                Basket = PopulateBasketFromCart(cart),
+
+                SendEMail = SendMailFlag.SendToCustomerAndVendor,
+                CustomerEMail = order.BillEmail,
+                VendorEMail = vendorEmail,
+                EmailMessage = "We will ship your order within three working days from the day of purchase. You will receive email notification once we have shipped your order."
             };
 
             return crypt;
+        }
+
+        private static string PopulateBasketFromCart(Cart cart)
+        {
+            var basket = cart.Lines.Count().ToString();
+            foreach (var line in cart.Lines)
+            {
+                basket += ":" + line.Item.Name + " (size " + line.Size + ")" + ":";
+                basket += line.Quantity + ":";
+                basket += line.Item.Price + ":::";
+                basket += line.Item.Price;
+            }
+
+            return basket;
         }
     }
 }

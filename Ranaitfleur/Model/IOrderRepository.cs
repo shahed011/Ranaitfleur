@@ -10,5 +10,6 @@ namespace Ranaitfleur.Model
         Task<Order> GetOrder(int orderId);
         Task<List<Order>> GetOrdersByUserName(string userName);
         Task<List<Order>> GetAllOrders();
+        Task RemoveIncompleteOrders();
     }
 }

@@ -9,18 +9,34 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="row cart-row text-center">Your Order</div>
+            <div class="cart-row text-center">Your Order</div>
             @foreach (var line in Model.Orders)
             {
                 <div class="row cart-row">
-                    <div class="col-md-6 text-center truncate">@line.Item.Name</div>
+                    <div class="col-md-6 text-left">@line.Item.Name (size @line.Size)</div>
                     <div class="col-md-4 text-center">@line.Quantity</div>
                     <div class="col-md-2 text-center">@((line.Item.Price * line.Quantity).ToString("C", CulturesHelper.UnitedKingdom))</div>
                 </div>
             }
-            <div class="row cart-row text-center">Delivery</div>
-            <div class="row cart-row">Delivery address here</div>
-            <div class="row cart-row text-center">Total to pay : @Model.TotalPrice</div>
+            
+            <br />
+            <br />
+            <br />
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12 text-center">
+                    <div>Billing address:</div>
+                    <div>@Model.BillingAddress</div>
+                </div>
+                <div class="col-md-6 col-sm-12 text-center">
+                    <div>Shipping address:</div>
+                    <div>@Model.DeliveryAddress</div>
+                </div>
+            </div>
+            
+            <br />
+            <br />
+            <div class="cart-row text-center">Total to pay : @Model.TotalPrice.ToString("C", CulturesHelper.UnitedKingdom)</div>
         </div>
     </div>
 </div>
@@ -28,9 +44,11 @@
 
 <form id="paymentForm" method="post" action="@Model.PaymentUrl">
     <div class="row">
-        <div class="col-md-7 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <div>
+                <br />
                 <img src="~/img/SagePayLogo.jpg" class="img-responsive center-block" alt="Sagepay Logo">
+                <div class="text-center text-muted">*This will take you to secured payment site. We don't store any payment information</div>
             </div>
             <div>
                 <br />

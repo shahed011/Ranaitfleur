@@ -1,10 +1,20 @@
 ﻿@using System.Threading.Tasks
+@using Ranaitfleur.Model
 @model Ranaitfleur.ViewModels.AccountViewModel
 @{
     ViewBag.Title = "Admin Account";
+
+    var activeOrders = Model.UserOrders.Where(o => o.Status == OrderStatus.Authorised || o.Status == OrderStatus.Shipped).ToList();
+    var archivedOrders = Model.UserOrders.Except(activeOrders).ToList();
 }
 
 <div>
+    @if (ViewBag.UserMessage != null)
+    {
+        <div class="text-center">@ViewBag.UserMessage</div>
+        <br />
+    }
+
     <h2>User Details</h2>
     <hr class="divider-title">
 
@@ -12,21 +22,24 @@
         <p>User name : @Model.UserName</p>
         <p>User email : @Model.UserEmail</p>
     </div>
-    <br />
+    <br/>
 
-    <h2>Orders</h2>
+    <h2>Active orders</h2>
     <hr class="divider-title">
 
-    @if (Model.UserOrders.Any())
+    @if (activeOrders.Any())
     {
         <div class="row">
             <div class="col-md-2">
                 <b>Order date</b>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <b>Transaction Id</b>
+            </div>
+            <div class="col-md-2">
                 <b>Shipping address</b>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <b>Billing address</b>
             </div>
             <div class="col-md-1">
@@ -40,23 +53,31 @@
             <div class="col-md-1">
             </div>
         </div>
-        <br />
+        <br/>
 
-        foreach (var order in Model.UserOrders)
+        foreach (var order in activeOrders)
         {
             <div class="orderRow">
-                <div class="row">
-                    <div class="col-md-2">@order.DateTime</div>
-                    <div class="col-md-3">@order.ShippingAddress</div>
-                    <div class="col-md-3">@order.BillingAddress</div>
-                    <div class="col-md-1">@order.Status</div>
-                    <div class="col-md-1">@order.Total</div>
-                    <div class="col-md-1">Update</div>
-                    <div class="col-md-1">Delete</div>
-                </div>
-                <br />
+                <form method="post" asp-action="UpdateOrderStatus">
+                    <div class="row">
+                        <div class="col-md-2">@order.DateTime</div>
+                        <div class="col-md-2">@order.PaymentTransactionId</div>
+                        <div class="col-md-2">@order.ShippingAddress</div>
+                        <div class="col-md-2">@order.BillingAddress</div>
+                        <div class="col-md-1">@order.Status</div>
+                        <div class="col-md-1 text-center">@order.Total</div>
+                        <div class="col-md-1">
+                            <input type="submit" @(order.Status == OrderStatus.Authorised ? "value=Ship" : "value=Complete") class="btn btn-default"/>
+                        </div>
+                        <div class="col-md-1">
+                            <input asp-controller="Account" asp-action="CancelOrder" type="submit" value="Cancel" class="btn btn-default"/>
+                        </div>
+                    </div>
+                    <input id="orderId" type="hidden" name="orderId" value=@order.OrderId />
+                </form>
+                <br/>
 
-                <a class="showOrderItemButton btn btn-link">Show order item(s)</a>
+                <a class="showOrderItemButton btn btn-link fa fa-chevron-down"> Show order item(s) </a>
 
                 <div class="orderItemRow">
                     <div class="row">
@@ -88,11 +109,91 @@
                 </div>
             </div>
 
-            <br />
+            <br/>
         }
     }
     else
     {
-        <div class="text-center">No Unshipped Orders</div>
+        <div class="text-center">No active order</div>
+    }
+
+    <h2>Closed orders</h2>
+    <hr class="divider-title">
+
+    @if (archivedOrders.Any())
+    {
+        <div class="row">
+            <div class="col-md-2">
+                <b>Order date</b>
+            </div>
+            <div class="col-md-2">
+                <b>Transaction Id</b>
+            </div>
+            <div class="col-md-2">
+                <b>Shipping address</b>
+            </div>
+            <div class="col-md-2">
+                <b>Billing address</b>
+            </div>
+            <div class="col-md-2">
+                <b>Order status</b>
+            </div>
+            <div class="col-md-2">
+                <b>Order Total</b>
+            </div>
+        </div>
+        <br/>
+
+        foreach (var order in archivedOrders)
+        {
+            <div class="orderRow">
+                <div class="row">
+                    <div class="col-md-2">@order.DateTime</div>
+                    <div class="col-md-2">@order.PaymentTransactionId</div>
+                    <div class="col-md-2">@order.ShippingAddress</div>
+                    <div class="col-md-2">@order.BillingAddress</div>
+                    <div class="col-md-2">@order.Status</div>
+                    <div class="col-md-2">@order.Total</div>
+                </div>
+                <br/>
+
+                <a class="showOrderItemButton btn btn-link fa fa-chevron-down"> Show order item(s) </a>
+
+                <div class="orderItemRow">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <b>Dress</b>
+                        </div>
+                        <div class="col-md-2">
+                            <b>Size</b>
+                        </div>
+                        <div class="col-md-2">
+                            <b>Quantity</b>
+                        </div>
+                        <div class="col-md-2">
+                            <b>Price</b>
+                        </div>
+                    </div>
+
+                    @foreach (var item in order.OrderItems)
+                    {
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4">@item.ItemName</div>
+                            <div class="col-md-2">@item.ItemSize</div>
+                            <div class="col-md-2">@item.ItemQuantity</div>
+                            <div class="col-md-2">@item.Price</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <br/>
+        }
+    }
+    else
+    {
+        <div class="text-center">No closed order</div>
     }
 </div>

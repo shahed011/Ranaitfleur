@@ -174,7 +174,7 @@ ul li {
     color: #e6ae48;
     font-weight: bold;
     font-size: 22px;
-    text-shadow: 0 0 3px #FF0000;
+    text-shadow: 0 0 3px #e6ae48;
 }
 
 .navbar-fixed-top {
@@ -223,7 +223,8 @@ ul li {
 }
 
 .coutureImage {
-    height: 450px;
+    height: 350px;
+    width: 650px
 }
 
 @media screen and (max-width: 770px) {
@@ -504,11 +505,6 @@ div.thumbnail {
 
 .c2 {
     height: 11pt;
-}
-
-.c3 {
-    background-color: #ffffff;
-    padding: 20pt 72pt 72pt 72pt;
 }
 
 .c4 {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +28,7 @@ namespace Ranaitfleur.Controllers.Web
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> AdminAccount()
         {
+            await _orderRepository.RemoveIncompleteOrders();
             var userOrders = await _orderRepository.GetAllOrders();
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
@@ -36,11 +38,12 @@ namespace Ranaitfleur.Controllers.Web
                 UserEmail = user.Email
             };
 
-            foreach (var order in userOrders)
+            foreach (var order in userOrders.OrderByDescending(o => o.DateTime))
             {
                 userAccountVm.UserOrders.Add(new UserOrder(order, _allDresses));
             }
 
+            ViewBag.UserMessage = Convert.ToString(TempData["Message"]);
             return View(userAccountVm);
         }
 
@@ -56,7 +59,7 @@ namespace Ranaitfleur.Controllers.Web
                 UserEmail = user.Email
             };
 
-            foreach (var order in userOrders)
+            foreach (var order in userOrders.OrderByDescending(o => o.DateTime))
             {
                 userAccountVm.UserOrders.Add(new UserOrder(order, _allDresses));
             }
@@ -70,8 +73,25 @@ namespace Ranaitfleur.Controllers.Web
             var order = await _orderRepository.GetOrder(orderId);
             if (order != null)
             {
-                order.Status = OrderStatus.Shipped;
+                order.Status = order.Status == OrderStatus.Authorised ? OrderStatus.Shipped : OrderStatus.Completed;
                 await _orderRepository.SaveOrder(order);
+
+                TempData["Message"] = "Order " + order.Status.ToString().ToLower();
+            }
+
+            return RedirectToAction(nameof(AdminAccount));
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> CancelOrder(int orderId)
+        {
+            var order = await _orderRepository.GetOrder(orderId);
+            if (order != null)
+            {
+                order.Status = OrderStatus.AdminCancelled;
+                await _orderRepository.SaveOrder(order);
+
+                TempData["Message"] = "Order cancelled";
             }
 
             return RedirectToAction(nameof(AdminAccount));

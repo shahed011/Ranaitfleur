@@ -8,6 +8,7 @@ using Ranaitfleur.Model;
 using Ranaitfleur.Services;
 using Ranaitfleur.ViewModels;
 using Microsoft.Extensions.Configuration;
+using Ranaitfleur.Helper;
 using Ranaitfleur.Infrastructure;
 
 namespace Ranaitfleur.Controllers.Web
@@ -94,6 +95,7 @@ namespace Ranaitfleur.Controllers.Web
                     order.BillEmail = order.ShipEmail;
                 }
 
+                order.Status = OrderStatus.Incomplete;
                 order.DateTime = DateTime.Now;
                 await _repository.SaveOrder(order);
 
@@ -110,17 +112,19 @@ namespace Ranaitfleur.Controllers.Web
             var successUrl = Url.AbsoluteAction("PaymentSuccess", "Order");
             var failureUrl = Url.AbsoluteAction("PaymentFailure", "Order");
 
-            var cryptModel = SagePayHelper.GetCryptModel(_cart, order, successUrl, failureUrl);
+            var cryptModel = SagePayHelper.GetCryptModel(_cart, order, _configuration["MailSettings:OrderAddress"], successUrl, failureUrl);
 
-            var summary = new OrderSummaryViewModel()
+            var summary = new OrderSummaryViewModel
             {
                 Orders = _cart.Lines,
                 Vendor = _configuration["SagePay:VendorName"],
                 PaymentUrl = _configuration["SagePay:PaymentFormUrl"],
-                Crypt = _cryptography.EncryptModel(cryptModel)
+                Crypt = _cryptography.EncryptModel(cryptModel),
+                BillingAddress = RanaitfleurHelper.GetBillingAddressFromOrder(order),
+                DeliveryAddress = RanaitfleurHelper.GetShippingAddressFromOrder(order)
             };
 
-            order.Status = OrderStatus.Processing;
+
             await _repository.SaveOrder(order).ConfigureAwait(false);
 
             return View(summary);
@@ -137,7 +141,7 @@ namespace Ranaitfleur.Controllers.Web
                 if (order != null) 
                 {
                     order.PaymentTransactionId = response?.VPSTxId;
-                    order.Status = OrderStatus.Complete;
+                    order.Status = OrderStatus.Authorised;
                     await _repository.SaveOrder(order).ConfigureAwait(false);
                 }
             }

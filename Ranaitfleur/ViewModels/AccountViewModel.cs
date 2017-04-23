@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ranaitfleur.Helper;
 using Ranaitfleur.Model;
 
 namespace Ranaitfleur.ViewModels
@@ -34,19 +35,8 @@ namespace Ranaitfleur.ViewModels
             Total = 0;
             PaymentTransactionId = order.PaymentTransactionId;
 
-            var name = order.ShipFirstName + " " + order.ShipLastName;
-            ShippingAddress = name + ", " + order.ShipLine1
-                              + (!string.IsNullOrEmpty(order.ShipLine2) ? ", " + order.ShipLine2 : "")
-                              + (!string.IsNullOrEmpty(order.ShipLine3) ? ", " + order.ShipLine3 : "")
-                              + ", " + order.ShipCity + ", " + order.ShipPostcode + ", " + order.ShipCountry
-                              + ", " + order.ShipEmail + ", " + order.ShipPhone;
-
-            name = order.BillFirstName + " " + order.BillLastName;
-            BillingAddress = name + ", " + order.BillLine1
-                             + (!string.IsNullOrEmpty(order.BillLine2) ? ", " + order.BillLine2 : "")
-                             + (!string.IsNullOrEmpty(order.BillLine3) ? ", " + order.BillLine3 : "")
-                             + ", " + order.BillCity + ", " + order.BillPostcode + ", " + order.BillCountry
-                             + ", " + order.BillEmail + ", " + order.BillPhone;
+            ShippingAddress = RanaitfleurHelper.GetShippingAddressFromOrder(order);
+            BillingAddress = RanaitfleurHelper.GetBillingAddressFromOrder(order);
 
             OrderItems = new List<UserOrderItem>();
             foreach (var line in order.Lines)

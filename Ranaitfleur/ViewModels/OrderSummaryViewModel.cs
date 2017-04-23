@@ -15,5 +15,8 @@ namespace Ranaitfleur.ViewModels
         public int TotalPrice => Orders.Select(l => l.Item.Price * l.Quantity).Sum();
 
         public string PaymentUrl { get; set; }
+
+        public string DeliveryAddress { get; set; }
+        public string BillingAddress { get; set; }
     }
 }
